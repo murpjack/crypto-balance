@@ -1,0 +1,28 @@
+{
+  "manifest_version": 2,
+  "name": "Crypto-balance",
+  "version": "0.1",
+   "permissions": [
+     "declarativeContent",
+     "storage"
+   ],
+   "browser_action": {
+    "default_popup": "extension.html",
+    "default_icon": "images/placeholder.png"
+  },
+  "content_scripts": [{
+    "matches": [
+      "http://*/*",
+      "https://*/*"
+    ],
+    "js": [
+      "myScript.js"
+    ]
+  }],
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  }
+
+}

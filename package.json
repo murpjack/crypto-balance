@@ -1,0 +1,24 @@
+{
+  "name": "crypto-balance",
+  "version": "1.0.0",
+  "description": "Follow Bitcoin and friends, without opening anymore tabs in your browser",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/murpjack/crypto-balance.git"
+  },
+  "keywords": [
+    "chrome",
+    "chrome-extension",
+    "crypto"
+  ],
+  "author": "Jack Murphy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/murpjack/crypto-balance/issues"
+  },
+  "homepage": "https://github.com/murpjack/crypto-balance#readme"
+}
