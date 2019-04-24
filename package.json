@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/murpjack/crypto-balance/issues"
   },
-  "homepage": "https://github.com/murpjack/crypto-balance#readme"
+  "homepage": "https://github.com/murpjack/crypto-balance#readme",
+  "dependencies": {
+    "cryptocurrency-icons": "^0.13.0"
+  }
 }

@@ -8,7 +8,7 @@
    ],
    "browser_action": {
     "default_popup": "extension.html",
-    "default_icon": "images/placeholder.png"
+    "default_icon": "node_modules/cryptocurrency-icons/32/color/btc.png"
   },
   "content_scripts": [{
     "matches": [
@@ -16,7 +16,7 @@
       "https://*/*"
     ],
     "js": [
-      "myScript.js"
+      "myscript.js"
     ]
   }],
   "background": {
