@@ -30,26 +30,34 @@ let selectedRates = [{
   }
 ];
 
-document.addEventListener("DOMContentLoaded", getRatesData());
+document.addEventListener("DOMContentLoaded", () => {
+  getRatesData();
+});
 
 // Improve naming conventions!!! *** TODO ***
 function getRatesData() {
-  selectedRates.forEach((rate, index) => {
-  fetch(spotPriceURL(rate.id))
-    .then(response => response.json())
-    .then(json => returnRateData(json.data))
-    .then(value => {
-      addDataToSelectedRates(value,rate,index);
-    });
-  });
-  console.log(selectedRates);
+  let promise = new Promise((resolve) => {
+      selectedRates.forEach((rate, index) => {
+        fetch(spotPriceURL(rate.id))
+          .then(response => response.json())
+          .then(json => returnRateData(json.data))
+          .then(value => {
+            resolve(addDataToSelectedRates(value, rate, index));
+          });
+      }); // END loop
+    })
+    .then(result => appendRatesListToBody(result));
+  // console.log(promise);
 
-  function addDataToSelectedRates(value, rate, index) {
-    let icon = returnRateIcon(rate);
-    return selectedRates[index] = { ...rate, ...value, ...icon };
-  }
-
-  appendRatesListToBody(selectedRates);
+}
+function addDataToSelectedRates(value, rate, index) {
+  let icon = returnRateIcon(rate);
+  selectedRates[index] = {
+    ...rate,
+    ...value,
+    ...icon
+  };
+  return selectedRates;
 }
 
 function returnRateIcon(rate) {
@@ -60,31 +68,31 @@ function returnRateIcon(rate) {
   return icon;
 }
 
-  function toLowerCase(abr) {
-    switch (abr) {
-      case "BTC":
+function toLowerCase(abr) {
+  switch (abr) {
+    case "BTC":
       return "btc"
       break;
-      case "BAT":
+    case "BAT":
       return "bat"
       break;
-      case "ETC":
+    case "ETC":
       return "etc"
       break;
-      case "ETH":
+    case "ETH":
       return "eth"
       break;
-      case "LTC":
+    case "LTC":
       return "ltc"
       break;
-      case "XRP":
+    case "XRP":
       return "xrp"
       break;
-      default:
+    default:
       return "btc"
       break;
-    }
   }
+}
 
 function setCurrencySymbol(curr) {
   switch (curr) {
@@ -106,19 +114,22 @@ function setCurrencySymbol(curr) {
   }
 }
 
-
 function returnRateData(data) {
   let currencySymbol = setCurrencySymbol(data.currency);
   let valueString = currencySymbol + data.amount;
-  let value = { "currentValue": valueString };
-  console.log(data);
+  let value = {
+    "currentValue": valueString
+  };
+  // console.log(data);
   return value;
 }
 
 function appendRatesListToBody(data) {
+  console.log(data);
   let rates = document.getElementById("rates");
   rates.innerHTML = "";
   let ratesList = buildRatesList(data);
+  console.log(ratesList);
   ratesList.map(item => rates.appendChild(item));
 }
 
@@ -156,7 +167,7 @@ function refreshRates(e) {
   if (target.id === "refreshRates" ||
     parent.id === "refreshRates") {
     // Refresh those rates
-      getRatesData();
+    getRatesData();
     // });
     // add feedback once refreshed!! *** TODO ***
   }
