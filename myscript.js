@@ -57,6 +57,9 @@ function returnRateIcon(rate) {
     "icon": `./node_modules/cryptocurrency-icons/32/color/${toLowerCase(rate.id)}.png`
   };
 
+  return icon;
+}
+
   function toLowerCase(abr) {
     switch (abr) {
       case "BTC":
@@ -83,7 +86,24 @@ function returnRateIcon(rate) {
     }
   }
 
-  return icon;
+function setCurrencySymbol(curr) {
+  switch (curr) {
+    case "BTC":
+      return "Ƀ"
+      break;
+    case "EUR":
+      return "€"
+      break;
+    case "GBP":
+      return "£"
+      break;
+    case "USD":
+      return "$"
+      break;
+    default:
+      return "£"
+      break;
+  }
 }
 
 
@@ -92,27 +112,6 @@ function returnRateData(data) {
   let valueString = currencySymbol + data.amount;
   let value = { "currentValue": valueString };
   console.log(data);
-
-  function setCurrencySymbol(curr) {
-    switch (curr) {
-      case "BTC":
-        return "Ƀ"
-        break;
-      case "EUR":
-        return "€"
-        break;
-      case "GBP":
-        return "£"
-        break;
-      case "USD":
-        return "$"
-        break;
-      default:
-        return "£"
-        break;
-    }
-  }
-
   return value;
 }
 
@@ -158,7 +157,7 @@ function refreshRates(e) {
     parent.id === "refreshRates") {
     // Refresh those rates
       getRatesData();
-    });
+    // });
     // add feedback once refreshed!! *** TODO ***
   }
 
@@ -183,7 +182,7 @@ function updateExtensionIcon(e) {
 
     if (el.tagName === "ARTICLE") {
       chrome.browserAction.setIcon({
-        path: `./node_modules/cryptocurrency-icons/32/color/${setImage(el.id)}.png`
+        path: `./node_modules/cryptocurrency-icons/32/color/${toLowerCase(el.id)}.png`
       });
       chrome.browserAction.setBadgeText({
         text: ""
