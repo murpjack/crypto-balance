@@ -1,7 +1,7 @@
 const BASE_CURRENCY = "GBP";
 const URL = "https://api.coinbase.com/v2/exchange-rates?currency=" + BASE_CURRENCY;
 
-function spotPriceURL(id) {
+function ratePriceURL(id) {
   return `https://api.coinbase.com/v2/prices/${id}-${BASE_CURRENCY}/spot`
 };
 let selectedRates = [{
@@ -36,36 +36,89 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Improve naming conventions!!! *** TODO ***
 function getRatesData() {
-  let promise = new Promise((resolve) => {
-      selectedRates.forEach((rate, index) => {
-        fetch(spotPriceURL(rate.id))
-          .then(response => response.json())
-          .then(json => returnRateData(json.data))
-          .then(value => {
-            resolve(addDataToSelectedRates(value, rate, index));
-          });
-      }); // END loop
-    })
-    .then(result => appendRatesListToBody(result));
-  // console.log(promise);
 
+  // loop through fetches
+  // MUST wait for current fetch to finish before starting next one
+
+  // watch for last fetch
+
+  // on last fetch resolve to promise & build HTML
+
+  let promise = new Promise((resolve) => {
+
+    function fetchData(rate, index, array) {
+      fetch(ratePriceURL("BTC"))
+        .then(response => {
+          // console.log(1, index, rate.id);
+          return response.json()
+        })
+        .then(json => returnRateData(json.data))
+        .then(value => {
+          if (index === array.length - 1) {
+            resolve(addDataToSelectedRates(value, rate, index));
+          } else {
+            addDataToSelectedRates(value, rate, index);
+          }
+        });
+
+    }
+    // Conventional for loop doesn't wait for fetch .thens to finish before
+    // jumping on to the next item so async/await are used
+    async function asyncForEach(array, callback) {
+      for (let index = 0; index < array.length; index++) {
+        console.log(1, array[index].id, index);
+        await callback(array[index], index, array);
+      } // END for loop
+    } // END asyncForEach fn
+
+    const start = async () => {
+      await asyncForEach(selectedRates, async (rate, index, array) => {
+        // loop through rates in array, wait for fn below before carrying on
+        await fetchData(rate, index, array);
+        console.log(2, rate.id, index);
+      });
+      console.log("selectedRates");
+    };
+    start();
+
+  }).then(result => {
+    console.log(result);
+    appendRatesListToBody(result);
+  });
 }
+
 function addDataToSelectedRates(value, rate, index) {
   let icon = returnRateIcon(rate);
-  selectedRates[index] = {
-    ...rate,
-    ...value,
-    ...icon
-  };
+  let promise = new Promise((resolve) => {
+      resolve(selectedRates[index] = {
+        ...rate,
+        ...value,
+        ...icon
+      })
+    })
+    .then(result => function(result) {
+      console.log(result);
+    });
   return selectedRates;
 }
 
+
+function returnRateData(data) {
+  let currencySymbol = setCurrencySymbol(data.currency);
+  // convert string into a number, then to 2dp
+  let value = parseFloat(data.amount).toFixed(2);
+  let valueString = currencySymbol + value;
+  let currentValue = {
+    "currentValue": valueString
+  };
+  // console.log(data);
+  return currentValue;
+}
+
 function returnRateIcon(rate) {
-  let icon = {
+  return {
     "icon": `./node_modules/cryptocurrency-icons/32/color/${toLowerCase(rate.id)}.png`
   };
-
-  return icon;
 }
 
 function toLowerCase(abr) {
@@ -114,22 +167,12 @@ function setCurrencySymbol(curr) {
   }
 }
 
-function returnRateData(data) {
-  let currencySymbol = setCurrencySymbol(data.currency);
-  let valueString = currencySymbol + data.amount;
-  let value = {
-    "currentValue": valueString
-  };
-  // console.log(data);
-  return value;
-}
-
 function appendRatesListToBody(data) {
-  console.log(data);
+  // console.log(data);
   let rates = document.getElementById("rates");
   rates.innerHTML = "";
   let ratesList = buildRatesList(data);
-  console.log(ratesList);
+  // console.log(ratesList);
   ratesList.map(item => rates.appendChild(item));
 }
 
@@ -196,7 +239,7 @@ function updateExtensionIcon(e) {
         path: `./node_modules/cryptocurrency-icons/32/color/${toLowerCase(el.id)}.png`
       });
       chrome.browserAction.setBadgeText({
-        text: ""
+        text: "DWN"
       });
       chrome.browserAction.setBadgeBackgroundColor({
         color: "#ff3231"
