@@ -41,8 +41,8 @@ h1, h2, h3, p {
 }
 
 .rate:hover {
-  background-color: #f6f6f6;
-  border: 2px solid #ccc;
+  background-color: #d4e1ff;
+  border: 2px solid #c0cae3;
   z-index: 1;
 }
 
@@ -83,6 +83,7 @@ h1, h2, h3, p {
   background-color: #d2ffe0;
   border: 2px solid transparent;
   border-radius: 9999px;
+  color: #0A950A;
   display: inline-block;
   font-size: 13px;
   font-weight: 600;
@@ -97,12 +98,9 @@ h1, h2, h3, p {
   transform: translate(0, -50%);
 }
 
-.value--up {
-  color: #0A950A;
-}
-
 .value--down {
-  color: red;
+  background-color: #ffd2d2;
+  color: #ff3231;
 }
 
 .footer {

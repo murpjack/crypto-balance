@@ -1,5 +1,9 @@
-const baseCurrency = "?currency=GBP";
-const URL = "https://api.coinbase.com/v2/exchange-rates" + baseCurrency;
+const BASE_CURRENCY = "GBP";
+const URL = "https://api.coinbase.com/v2/exchange-rates?currency=" + BASE_CURRENCY;
+
+function spotPriceURL(id) {
+  return `https://api.coinbase.com/v2/prices/${id}-${BASE_CURRENCY}/spot`
+};
 let selectedRates = [{
     id: "BAT",
     name: "Basic Attention Token"
@@ -26,138 +30,90 @@ let selectedRates = [{
   }
 ];
 
-document.addEventListener("DOMContentLoaded", function() {
-  getRatesData();
+document.addEventListener("DOMContentLoaded", getRatesData());
 
-});
 // Improve naming conventions!!! *** TODO ***
 function getRatesData() {
-  fetch(URL)
+  selectedRates.forEach((rate, index) => {
+  fetch(spotPriceURL(rate.id))
     .then(response => response.json())
-    .then(json => addRatesDataToObject(json.data))
-    .then(data => appendRatesListToBody(data));
-}
-
-function addImagesToObject() {
-  selectedRates.map((rate, index) => {
-    let icon = {
-      "icon": `./node_modules/cryptocurrency-icons/32/color/${setImage(rate.id)}.png`
-    };
-    selectedRates[index] = { ...rate,
-      ...icon
-    };
-
-  });
-
-}
-
-function setImage(abr) {
-  switch (abr) {
-    case "BTC":
-      return "btc"
-      break;
-    case "BAT":
-      return "bat"
-      break;
-    case "ETC":
-      return "etc"
-      break;
-    case "ETH":
-      return "eth"
-      break;
-    case "LTC":
-      return "ltc"
-      break;
-    case "XRP":
-      return "xrp"
-      break;
-    default:
-      return "btc"
-      break;
-  }
-}
-
-function addRatesDataToObject(data) {
-  // loop through data.rates.keys and loop through selectedRates.id and
-  // if data.rates[n].keys === selectedRates.id[i], selectedRates[i] + data.rates.value
-  let currencySymbol = setCurrencySymbol(data.currency);
-  let dataIds = Object.keys(data.rates);
-
-  dataIds.forEach((id, idIndex) => {
-    selectedRates.map((rate, index) => {
-      let idInSelectedRates = (id === rate.id);
-      if (idInSelectedRates) {
-        let value = parseFloat(data.rates[id]);
-        let valueString = value.toPrecision(4);
-
-        let addedValue = {
-          "value": valueString
-        };
-        selectedRates[index] = { ...rate,
-          ...addedValue
-        };
-
-      }
+    .then(json => returnRateData(json.data))
+    .then(value => {
+      addDataToSelectedRates(value,rate,index);
     });
   });
-  // put this in a better location!!!  *** TODO ***
-  addImagesToObject();
-  // console.log(1, selectedRates);
-  return selectedRates;
-}
+  console.log(selectedRates);
 
-function setCurrencySymbol(curr) {
-  switch (curr) {
-    case "BTC":
-      return "Ƀ"
-      break;
-    case "EUR":
-      return "€"
-      break;
-    case "GBP":
-      return "£"
-      break;
-    case "USD":
-      return "$"
-      break;
-    default:
-      return "£"
-      break;
+  function addDataToSelectedRates(value, rate, index) {
+    let icon = returnRateIcon(rate);
+    return selectedRates[index] = { ...rate, ...value, ...icon };
   }
+
+  appendRatesListToBody(selectedRates);
 }
 
+function returnRateIcon(rate) {
+  let icon = {
+    "icon": `./node_modules/cryptocurrency-icons/32/color/${toLowerCase(rate.id)}.png`
+  };
 
-
-function buildRatesList(data) {
-  let ratesContent = [];
-
-  function createArticle(rate, list) {
-    let article = document.createElement("article");
-    article.setAttribute("id", rate.id);
-    article.classList.add('rate');
-    if (rate.id === "BAT") {
-      article.innerHTML =
-        `<img src="${rate.icon}" class="rate__image"/>
-    <div class='rate__name name name--bat'>
-    <h1 class='name--full'><strong>${rate.name}</strong></h1>
-    <h2 class='name--short'>${rate.id}</h2>
-    </div>
-    <div class='rate__value value value--up'>${rate.value}
-    </span>`;
-    } else {
-      article.innerHTML =
-        `<img src="${rate.icon}" class="rate__image"/>
-  <div class='rate__name name'>
-  <h1 class='name--full'><strong>${rate.name}</strong></h1>
-  <h2 class='name--short'>${rate.id}</h2>
-  </div>
-  <span class='rate__value value value--up'>${rate.value}
-  </span>`;
+  function toLowerCase(abr) {
+    switch (abr) {
+      case "BTC":
+      return "btc"
+      break;
+      case "BAT":
+      return "bat"
+      break;
+      case "ETC":
+      return "etc"
+      break;
+      case "ETH":
+      return "eth"
+      break;
+      case "LTC":
+      return "ltc"
+      break;
+      case "XRP":
+      return "xrp"
+      break;
+      default:
+      return "btc"
+      break;
     }
-    return list.push(article);
   }
-  data.map(rate => createArticle(rate, ratesContent));
-  return ratesContent;
+
+  return icon;
+}
+
+
+function returnRateData(data) {
+  let currencySymbol = setCurrencySymbol(data.currency);
+  let valueString = currencySymbol + data.amount;
+  let value = { "currentValue": valueString };
+  console.log(data);
+
+  function setCurrencySymbol(curr) {
+    switch (curr) {
+      case "BTC":
+        return "Ƀ"
+        break;
+      case "EUR":
+        return "€"
+        break;
+      case "GBP":
+        return "£"
+        break;
+      case "USD":
+        return "$"
+        break;
+      default:
+        return "£"
+        break;
+    }
+  }
+
+  return value;
 }
 
 function appendRatesListToBody(data) {
@@ -167,6 +123,30 @@ function appendRatesListToBody(data) {
   ratesList.map(item => rates.appendChild(item));
 }
 
+function buildRatesList(data) {
+  let ratesContent = [];
+
+  function createArticle(rate, list) {
+    let article = document.createElement("article");
+    let bat = "";
+    article.setAttribute("id", rate.id);
+    article.classList.add('rate');
+    if (rate.id === "BAT") {
+      bat = "name--bat";
+    }
+    article.innerHTML =
+      `<img src="${rate.icon}" class="rate__image"/>
+       <div class='rate__name name ${bat}'>
+         <h1 class='name--full'><strong>${rate.name}</strong></h1>
+         <h2 class='name--short'>${rate.id}</h2>
+       </div>
+       <span class='rate__value value'>${rate.currentValue}
+       </span>`;
+    return list.push(article);
+  }
+  data.map(rate => createArticle(rate, ratesContent));
+  return ratesContent;
+}
 
 
 
@@ -177,7 +157,8 @@ function refreshRates(e) {
   if (target.id === "refreshRates" ||
     parent.id === "refreshRates") {
     // Refresh those rates
-    getRatesData();
+      getRatesData();
+    });
     // add feedback once refreshed!! *** TODO ***
   }
 
@@ -200,38 +181,53 @@ function updateExtensionIcon(e) {
   let pathTo = e.path;
   pathTo.forEach((el) => {
 
-    if(el.tagName === "ARTICLE") {
+    if (el.tagName === "ARTICLE") {
       chrome.browserAction.setIcon({
         path: `./node_modules/cryptocurrency-icons/32/color/${setImage(el.id)}.png`
+      });
+      chrome.browserAction.setBadgeText({
+        text: ""
+      });
+      chrome.browserAction.setBadgeBackgroundColor({
+        color: "#ff3231"
       });
     }
   });
 }
 
 function updateBadge(change) {
-    change? priceUp() : priceDown();
-  function setBadgeTxt(txt) {
-    chrome.browserAction.setBadgeText({
-      text: txt
-    });
+  const green = "#0A950A";
+  const red = "#ff3231";
+
+  change ? priceUp() : priceDown();
+
+  function priceUp(green) {
+    setBadgeBGColor(green);
+    setBadgeTxt("UP");
   }
+
+  function priceDown(red) {
+    setBadgeBGColor(red);
+    setBadgeTxt("DWN");
+  }
+
+  function setBadgeTxt(txt) {
+    if (isPriceChange) {
+      chrome.browserAction.setBadgeText({
+        text: txt
+      });
+    } else {
+      chrome.browserAction.setBadgeText({
+        text: ""
+      });
+    }
+  }
+
   function setBadgeBGColor(col) {
     chrome.browserAction.setBadgeBackgroundColor({
       color: col
     });
   }
-  function priceUp() {
-    const green = "#0A950A";
-    setBadgeBGColor(green);
-    setBadgeTxt("UP");
-   }
-
-  function priceDown() {
-    const red = "#ff6565";
-    setBadgeBGColor(red);
-    setBadgeTxt("DWN");
-  }
-
 }
 
 
