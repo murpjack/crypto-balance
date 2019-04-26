@@ -1,9 +1,4 @@
-const BASE_CURRENCY = "GBP";
-const URL = "https://api.coinbase.com/v2/exchange-rates?currency=" + BASE_CURRENCY;
 
-function ratePriceURL(id) {
-  return `https://api.coinbase.com/v2/prices/${id}-${BASE_CURRENCY}/spot`
-};
 let selectedRates = [{
     id: "BAT",
     name: "Basic Attention Token"
@@ -30,92 +25,6 @@ let selectedRates = [{
   }
 ];
 
-document.addEventListener("DOMContentLoaded", () => {
-  getRatesData();
-});
-
-// Improve naming conventions!!! *** TODO ***
-function getRatesData() {
-
-  // loop through fetches
-  // MUST wait for current fetch to finish before starting next one
-  // watch for last fetch
-  // on last fetch resolve to promise & build HTML
-
-  function fetchData(rate, index, array) {
-    fetch(ratePriceURL("BTC"))
-      .then(response => {
-        // console.log(1, index, rate.id);
-        return response.json()
-      })
-      .then(json => returnRateData(json.data))
-      .then(value => {
-        addDataToSelectedRates(value, rate, index);
-      })
-      .catch(function(err) {
-        console.log('Fetch Error :-S', err);
-      });
-
-  }
-  // Conventional for loop doesn't wait for fetch .thens to finish before
-  // jumping on to the next item so async/await are used
-  async function asyncForEach(array, callback) {
-    for (let index = 0; index < array.length; index++) {
-      // console.log(1, array[index].id, index);
-      await callback(array[index], index, array);
-    } // END for loop
-  } // END asyncForEach fn
-
-  const start = async () => {
-    // let promise = new Promise((resolve) => {
-    await asyncForEach(selectedRates, async (rate, index, array) => {
-      // loop through rates in array, wait for fn below before carrying on
-      await fetchData(rate, index, array);
-      // console.log(2, rate.id, index);
-    });
-    console.log("selectedRates", array);
-    appendRatesListToBody(selectedRates);
-  };
-  start();
-}
-
-function addDataToSelectedRates(value, rate, index) {
-  let promise = new Promise((resolve) => {
-      resolve(selectedRates.currentValue > 0);
-
-  }).then(result => function(result) {
-
-    console.log(result);
-    let icon = returnRateIcon(rate);
-    selectedRates[index] = {
-      ...rate,
-      ...value,
-      ...icon
-    };
-
-    return selectedRates;
-  });
-
-}
-
-
-function returnRateData(data) {
-  let currencySymbol = setCurrencySymbol(data.currency);
-  // convert string into a number, then to 2dp
-  let value = parseFloat(data.amount).toFixed(2);
-  let valueString = currencySymbol + value;
-  let currentValue = {
-    "currentValue": valueString
-  };
-  // console.log(data);
-  return currentValue;
-}
-
-function returnRateIcon(rate) {
-  return {
-    "icon": `./node_modules/cryptocurrency-icons/32/color/${toLowerCase(rate.id)}.png`
-  };
-}
 
 function toLowerCase(abr) {
   switch (abr) {
@@ -163,13 +72,100 @@ function setCurrencySymbol(curr) {
   }
 }
 
+
+document.addEventListener("DOMContentLoaded", () => {
+  getRatesData();
+});
+
+const BASE_CURRENCY = "GBP";
+function url(id) {
+  return `https://api.coinbase.com/v2/prices/${id}-${BASE_CURRENCY}/spot`
+};
+// Improve naming conventions!!! *** To do ***
+// loop through fetches
+function getRatesData() {
+  // loop through fetch synchronously,
+  // on last fetch resolve promise && build HTML
+  function fetchData(rate, index, array) {
+    console.log(rate.id);
+    fetch(url(rate.id))
+      .then(response => {
+        console.log(rate.id);
+        return response.json();
+      })
+      .then(json => {
+        // Add data to selectedRates obj
+        console.log(21,rate);
+        console.log("data to selectedRates", json.data);
+        return returnRateData(json.data, rate, array);
+      })
+      .then(array => {
+        console.log("array", array);
+        return array;
+        // returnRateData(json.data);
+      })
+      .catch(function(err) {
+        console.log('Fetch Error :-S', err);
+      });
+    //   // addDataToSelectedRates(value, rate, index, array);
+  }
+
+  // forEach doesn't wait for fetch.thens so I am using async/await
+  async function asyncForEach(array, callback) {
+    for (let index = 0; index < array.length; index++) {
+      await callback(array[index], index, array);
+    } // END for loop
+  } // END asyncForEach fn
+
+
+  const start = async () => {
+    await asyncForEach(selectedRates, async (rate, index, array) => {
+      await fetchData(rate, index, array);
+    });
+    console.log("Callback", fetchData());
+    // appendRatesListToBody(selectedRates);
+  };
+  start();
+}
+
+function returnRateAmount(data) {
+  console.log(230);
+  let currencySymbol = setCurrencySymbol(data.currency);
+  // convert string into a number, then to 2dp
+  let value = parseFloat(data.amount).toFixed(2);
+  let valueString = currencySymbol + value;
+  return {
+    "currentValue": valueString
+  };
+}
+
+function returnRateIcon(data) {
+  console.log(231);
+  return {
+    "icon": `./node_modules/cryptocurrency-icons/32/color/${toLowerCase(data.id)}.png`
+  };
+}
+
+function addValueToRate(namedValue, rate) {
+  console.log(232);
+  let newRate = {
+    ...rate,
+    ...namedValue
+  };
+}
+
+function returnRateData(data, rate, array) {
+  console.log(22, );
+  addValueToRate(returnRateIcon(data), rate);
+  addValueToRate(returnRateAmount(data), rate);
+  return array;
+}
+
 function appendRatesListToBody(data) {
-  console.log(3, data);
-  // console.log(data);
+  console.log(4, data);
   let rates = document.getElementById("rates");
   rates.innerHTML = "";
   let ratesList = buildRatesList(data);
-  // console.log(ratesList);
   ratesList.map(item => rates.appendChild(item));
 }
 
