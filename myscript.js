@@ -39,67 +39,63 @@ function getRatesData() {
 
   // loop through fetches
   // MUST wait for current fetch to finish before starting next one
-
   // watch for last fetch
-
   // on last fetch resolve to promise & build HTML
 
-  let promise = new Promise((resolve) => {
-
-    function fetchData(rate, index, array) {
-      fetch(ratePriceURL("BTC"))
-        .then(response => {
-          // console.log(1, index, rate.id);
-          return response.json()
-        })
-        .then(json => returnRateData(json.data))
-        .then(value => {
-          if (index === array.length - 1) {
-            resolve(addDataToSelectedRates(value, rate, index));
-          } else {
-            addDataToSelectedRates(value, rate, index);
-          }
-        });
-
-    }
-    // Conventional for loop doesn't wait for fetch .thens to finish before
-    // jumping on to the next item so async/await are used
-    async function asyncForEach(array, callback) {
-      for (let index = 0; index < array.length; index++) {
-        console.log(1, array[index].id, index);
-        await callback(array[index], index, array);
-      } // END for loop
-    } // END asyncForEach fn
-
-    const start = async () => {
-      await asyncForEach(selectedRates, async (rate, index, array) => {
-        // loop through rates in array, wait for fn below before carrying on
-        await fetchData(rate, index, array);
-        console.log(2, rate.id, index);
+  function fetchData(rate, index, array) {
+    fetch(ratePriceURL("BTC"))
+      .then(response => {
+        // console.log(1, index, rate.id);
+        return response.json()
+      })
+      .then(json => returnRateData(json.data))
+      .then(value => {
+        addDataToSelectedRates(value, rate, index);
+      })
+      .catch(function(err) {
+        console.log('Fetch Error :-S', err);
       });
-      console.log("selectedRates");
-    };
-    start();
 
-  }).then(result => {
-    console.log(result);
-    appendRatesListToBody(result);
-  });
+  }
+  // Conventional for loop doesn't wait for fetch .thens to finish before
+  // jumping on to the next item so async/await are used
+  async function asyncForEach(array, callback) {
+    for (let index = 0; index < array.length; index++) {
+      // console.log(1, array[index].id, index);
+      await callback(array[index], index, array);
+    } // END for loop
+  } // END asyncForEach fn
+
+  const start = async () => {
+    // let promise = new Promise((resolve) => {
+    await asyncForEach(selectedRates, async (rate, index, array) => {
+      // loop through rates in array, wait for fn below before carrying on
+      await fetchData(rate, index, array);
+      // console.log(2, rate.id, index);
+    });
+    console.log("selectedRates", array);
+    appendRatesListToBody(selectedRates);
+  };
+  start();
 }
 
 function addDataToSelectedRates(value, rate, index) {
-  let icon = returnRateIcon(rate);
   let promise = new Promise((resolve) => {
-      resolve(selectedRates[index] = {
-        ...rate,
-        ...value,
-        ...icon
-      })
-    })
-    .then(result => function(result) {
-      console.log(result);
-    });
-  return selectedRates;
+      resolve(selectedRates.currentValue > 0);
+
+  }).then(result => function(result) {
+
+    console.log(result);
+    let icon = returnRateIcon(rate);
+    selectedRates[index] = {
+      ...rate,
+      ...value,
+      ...icon
+    };
+
+    return selectedRates;
+  });
+
 }
 
 
@@ -168,6 +164,7 @@ function setCurrencySymbol(curr) {
 }
 
 function appendRatesListToBody(data) {
+  console.log(3, data);
   // console.log(data);
   let rates = document.getElementById("rates");
   rates.innerHTML = "";
@@ -180,6 +177,7 @@ function buildRatesList(data) {
   let ratesContent = [];
 
   function createArticle(rate, list) {
+    console.log(33, rate);
     let article = document.createElement("article");
     let bat = "";
     article.setAttribute("id", rate.id);
