@@ -1,9 +1,11 @@
+// const futures = require("src/futures.js");
+
 let selectedRates = [
-  "BAT",
   "BTC",
   "ETC",
   "ETH",
   "LTC",
+  // "NEO",
   "XRP"
 ];
 
@@ -12,9 +14,6 @@ function returnImgName(abr) {
   switch (abr) {
     case "BTC":
       return "btc"
-      break;
-    case "BAT":
-      return "bat"
       break;
     case "ETC":
       return "etc"
@@ -25,6 +24,9 @@ function returnImgName(abr) {
     case "LTC":
       return "ltc"
       break;
+    // case "NEO":
+    //   return "neo"
+    //   break;
     case "XRP":
       return "xrp"
       break;
@@ -39,9 +41,6 @@ function returnFullName(abr) {
     case "BTC":
       return "Bitcoin"
       break;
-    case "BAT":
-      return "Basic Attention Token"
-      break;
     case "ETC":
       return "Etherium Classic"
       break;
@@ -54,6 +53,9 @@ function returnFullName(abr) {
     case "XRP":
       return "Ripple"
       break;
+    // case "NEO":
+    //   return "neo"
+    //   break;
     default:
       return "Bitcoin"
       break;
@@ -82,25 +84,31 @@ function returnCurrencySymbol(curr) {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-  getRatesData()
+  getRatesData();
 });
 
 function getRatesData() {
-  selectedRates.map((rate) => {
-    fetchData(rate);
-    console.log(fetchData(rate));
-    // Promise.all([])
-  });
+
+  let promises = selectedRates.map((rate) => fetchData(rate));
+
+  Promise.all(promises)
+    .then(result => appendRatesListToBody(result));
 }
 
 function fetchData(rate) {
   let spotUrl = `https://api.coinbase.com/v2/prices/${rate}-GBP/spot`;
   return fetch(spotUrl)
     .then(response => response.json())
-    .then(json => (json) => createArticle(json.data))
+    .then(json => createArticle(json.data))
     .catch(function(err) {
       console.log('Fetch Error :-S', err);
     });
+}
+
+function appendRatesListToBody(data) {
+  let rates = document.getElementById("rates");
+  rates.innerHTML = "";
+  data.map(item => rates.appendChild(item));
 }
 
 function createArticle(data) {
@@ -114,30 +122,16 @@ function createArticle(data) {
   let valueString = currencySymbol + roundUpValue;
 
   let bat = "";
-  base === "BAT" ? bat = "name--bat" : bat = "";
+  // bat = base === "BAT" ? "name--bat" : "";
   article.innerHTML =
-    `<img src="./node_modules/cryptocurrency-icons/32/color/${returnImgName(base)}.png" class="rate__image"/>
-     <div class='rate__name name ${bat}'>
+    `<img src="./images/32/color/${returnImgName(base)}.png" class="rate__image"/>
+     <div class='rate__name name'>
        <h1 class='name--full'><strong>${returnFullName(base)}</strong></h1>
        <h2 class='name--short'>${base}</h2>
      </div>
      <span class='rate__value value'>${valueString}
      </span>`;
   return article;
-}
-
-function buildRatesList(data) {
-  let ratesContent = [];
-  data.map(rate => createArticle(rate, ratesContent));
-  return ratesContent;
-}
-
-function appendRatesListToBody(data) {
-  console.log(4, data);
-  let rates = document.getElementById("rates");
-  rates.innerHTML = "";
-  let ratesList = buildRatesList(data);
-  ratesList.map(item => rates.appendChild(item));
 }
 
 
@@ -149,14 +143,16 @@ function refreshRates(e) {
     parent.id === "refreshRates") {
     // Refresh those rates
     getRatesData();
-    // });
     // add feedback once refreshed!! *** TODO ***
   }
 
+  const ratesContainer = document.getElementById("rates");
   if (target.id === "refreshRates") {
     rotateRefreshBtn(target);
+    flashWhiteScreen(ratesContainer);
   } else if (parent.id === "refreshRates") {
     rotateRefreshBtn(parent);
+    flashWhiteScreen(ratesContainer);
   }
 
   function rotateRefreshBtn(el) {
@@ -165,68 +161,77 @@ function refreshRates(e) {
       el.classList.remove("refresh--rotate");
     }, 400);
   }
+
+  function flashWhiteScreen(el) {
+    el.classList.add("rates__container--refresh");
+    setTimeout(function() {
+      el.classList.remove("rates__container--refresh");
+    }, 1000);
+  }
 } // END refreshRates fn
 
-
-function updateExtensionIcon(e) {
-  let pathTo = e.path;
-  pathTo.forEach((el) => {
-
-    if (el.tagName === "ARTICLE") {
-      chrome.browserAction.setIcon({
-        path: `./node_modules/cryptocurrency-icons/32/color/${toLowerCase(el.id)}.png`
-      });
-      chrome.browserAction.setBadgeText({
-        text: "DWN"
-      });
-      chrome.browserAction.setBadgeBackgroundColor({
-        color: "#ff3231"
-      });
-    }
-  });
-}
-
-function updateBadge(change) {
-  const green = "#0A950A";
-  const red = "#ff3231";
-
-  change ? priceUp() : priceDown();
-
-  function priceUp(green) {
-    setBadgeBGColor(green);
-    setBadgeTxt("UP");
-  }
-
-  function priceDown(red) {
-    setBadgeBGColor(red);
-    setBadgeTxt("DWN");
-  }
-
-  function setBadgeTxt(txt) {
-    if (isPriceChange) {
-      chrome.browserAction.setBadgeText({
-        text: txt
-      });
-    } else {
-      chrome.browserAction.setBadgeText({
-        text: ""
-      });
-    }
-  }
-
-  function setBadgeBGColor(col) {
-    chrome.browserAction.setBadgeBackgroundColor({
-      color: col
-    });
-  }
-}
-
+//
+// function updateExtensionIcon(e) {
+//   let pathTo = e.path;
+//   pathTo.forEach((el) => {
+//
+//     if (el.tagName === "ARTICLE") {
+//       chrome.browserAction.setIcon({
+//         path: `./images/32/color/${returnImgName(el.id)}.png`
+//       });
+//       chrome.browserAction.setBadgeText({
+//         text: ""
+//       });
+//       chrome.browserAction.setBadgeBackgroundColor({
+//         color: "#ff3231"
+//       });
+//     }
+//   });
+// }
+//
+// function updateBadge(change) {
+//   const green = "#0A950A";
+//   const red = "#ff3231";
+//
+//   change ? priceUp() : priceDown();
+//
+//   function priceUp(green) {
+//     setBadgeBGColor(green);
+//     // setBadgeTxt("UP");
+//     setBadgeTxt("");
+//   }
+//
+//   function priceDown(red) {
+//     setBadgeBGColor(red);
+//     // setBadgeTxt("DWN");
+//     setBadgeTxt("");
+//   }
+//
+//   function setBadgeTxt(txt) {
+//     if (isPriceChange) {
+//       chrome.browserAction.setBadgeText({
+//         text: txt
+//       });
+//     } else {
+//       chrome.browserAction.setBadgeText({
+//         text: ""
+//       });
+//     }
+//   }
+//
+//   function setBadgeBGColor(col) {
+//     chrome.browserAction.setBadgeBackgroundColor({
+//       color: col
+//     });
+//   }
+// }
+//
 
 
 // Click events
 document.addEventListener("click", function(e) {
 
   refreshRates(e);
-  updateExtensionIcon(e);
+  // updateExtensionIcon(e);
 
 });

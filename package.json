@@ -2,7 +2,7 @@
   "name": "crypto-balance",
   "version": "1.0.0",
   "description": "Follow Bitcoin and friends, without opening anymore tabs in your browser",
-  "main": "index.js",
+  "main": "src/myscript.js",
   "scripts": {
     "test": "test"
   },
@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/murpjack/crypto-balance#readme",
   "dependencies": {
-    "cryptocurrency-icons": "^0.13.0"
+    "cryptocurrency-icons": "^0.13.0",
+    "fluture": "^11.0.1"
   }
 }
