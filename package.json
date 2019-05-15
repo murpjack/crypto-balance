@@ -2,9 +2,10 @@
   "name": "crypto-balance",
   "version": "1.0.0",
   "description": "Follow Bitcoin and friends, without opening anymore tabs in your browser",
-  "main": "src/myscript.js",
+  "main": "src/js/myscript.js",
   "scripts": {
-    "test": "test"
+    "build": "webpack --config ./build/webpack.config.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,14 @@
   "homepage": "https://github.com/murpjack/crypto-balance#readme",
   "dependencies": {
     "cryptocurrency-icons": "^0.13.0",
-    "fluture": "^11.0.1"
+    "css-loader": "^2.1.1",
+    "fluture": "^11.0.1",
+    "html-webpack-plugin": "^3.2.0",
+    "node-sass": "^4.12.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.31.0",
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.3.1"
   }
 }
