@@ -1,4 +1,5 @@
-import "../css/style.css";
-import "../scss/style.scss";
+import './../css/style.css'
+import './../scss/style.scss'
+import * as helperModule from './my-helper-module.js'
 
-console.log("Mikaela Smells");
+console.log(helperModule.Greetings);

@@ -1,9 +1,32 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Webpack App</title>
-  </head>
-  <body>
-  <script type="text/javascript" src="build/bundle.js?7c43af03a522c8d5b12a"></script></body>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="./src/css/style.css"/>
+  <!-- <script type="text/javascript" src="./src/js/background.js"></script> -->
+
+  <title></title>
+</head>
+
+<body>
+  <div class="header">
+    <h1 class="header__title">Crypto-balance</h1>
+  </div>
+  <div id="rates" class="rates__container">
+  <!-- rates go in here... -->
+  </div>
+  <!-- END Rates -->
+  <div class="footer">
+    <div id="refreshRates" class="refresh">
+      <a class="refresh__arrow"></a>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="./src/js/myscript.js"></script>
+  <!-- Webpack -->
+  <script type="text/javascript" src="./src/js/index.js"></script>
+<script type="text/javascript" src="bundle.js?c5b2ffad0842533565fc"></script></body>
+
 </html>

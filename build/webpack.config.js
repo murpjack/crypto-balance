@@ -28,18 +28,13 @@ module.exports = {
       use: ['style-loader', 'css-loader', 'sass-loader']
     }]
   },
+  watch:true,
   plugins: [
-    // /** Since Webpack 4 */
-    // new webpack.LoaderOptionsPlugin({
-    //   options: {
-    //     handlebarsLoader: {}
-    //   }
-    // })
     new HtmlWebpackPlugin({
       hash: true,
       pageHeader: 'Crypto-balance',
-      template: './../src/extension.html',
-      filename: './../extension.html' //relative to root of the application
+      template: './src/extension.html',
+      filename: 'extension.html' //relative to root of the application
     })
   ]
 };
