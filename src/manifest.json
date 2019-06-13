@@ -8,7 +8,7 @@
     "storage"
   ],
   "browser_action": {
-    "default_popup": "extension.html",
+    "default_popup": "popup.html",
     "default_icon": "images/32/color/btc.png"
   },
   "content_scripts": [{
@@ -17,15 +17,15 @@
       "https://*/*"
     ],
     "js": [
-      "./src/js/myscript.js",
-      "./src/js/my-helper-module.js",
-      "./src/js/index.js"
+      "js/myscript.js",
+      "js/my-helper-module.js",
+      "js/index.js"
 
     ]
   }],
   "background": {
     "scripts": [
-      "./src/js/background.js"
+      "js/background.js"
     ]
   }
 

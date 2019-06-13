@@ -4,7 +4,7 @@
   "description": "Follow Bitcoin and friends, without opening anymore tabs in your browser",
   "main": "src/js/myscript.js",
   "scripts": {
-    "build": "webpack --config ./build/webpack.config.js",
+    "build": "webpack --config webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
