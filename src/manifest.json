@@ -17,15 +17,15 @@
       "https://*/*"
     ],
     "js": [
-      "js/myscript.js",
-      "js/my-helper-module.js",
-      "js/index.js"
+      "scripts/myscript.js",
+      "scripts/my-helper-module.js",
+      "scripts/index.js"
 
     ]
   }],
   "background": {
     "scripts": [
-      "js/background.js"
+      "scripts/background.js"
     ]
   }
 

@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/js/index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/scripts/index.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -153,26 +153,26 @@ eval("\nvar content = __webpack_require__(/*! !../../node_modules/css-loader/dis
 
 /***/ }),
 
-/***/ "./src/js/index.js":
-/*!*************************!*\
-  !*** ./src/js/index.js ***!
-  \*************************/
+/***/ "./src/scripts/index.js":
+/*!******************************!*\
+  !*** ./src/scripts/index.js ***!
+  \******************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _my_helper_module_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./my-helper-module.js */ \"./src/js/my-helper-module.js\");\n/* harmony import */ var _my_helper_module_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_my_helper_module_js__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _css_style_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../css/style.css */ \"./src/css/style.css\");\n/* harmony import */ var _css_style_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_css_style_css__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _scss_style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../scss/style.scss */ \"./src/scss/style.scss\");\n/* harmony import */ var _scss_style_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_scss_style_scss__WEBPACK_IMPORTED_MODULE_2__);\n\n\n\n\nconsole.log(_my_helper_module_js__WEBPACK_IMPORTED_MODULE_0__[\"Greetings\"]);\n\n\n//# sourceURL=webpack:///./src/js/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _my_helper_module_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./my-helper-module.js */ \"./src/scripts/my-helper-module.js\");\n/* harmony import */ var _my_helper_module_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_my_helper_module_js__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _css_style_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../css/style.css */ \"./src/css/style.css\");\n/* harmony import */ var _css_style_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_css_style_css__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _scss_style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../scss/style.scss */ \"./src/scss/style.scss\");\n/* harmony import */ var _scss_style_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_scss_style_scss__WEBPACK_IMPORTED_MODULE_2__);\n\n\n\nconsole.log(_my_helper_module_js__WEBPACK_IMPORTED_MODULE_0__[\"Greetings\"]);\n\n//# sourceURL=webpack:///./src/scripts/index.js?");
 
 /***/ }),
 
-/***/ "./src/js/my-helper-module.js":
-/*!************************************!*\
-  !*** ./src/js/my-helper-module.js ***!
-  \************************************/
+/***/ "./src/scripts/my-helper-module.js":
+/*!*****************************************!*\
+  !*** ./src/scripts/my-helper-module.js ***!
+  \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = {\n  Greetings: 'Hello from my-helper-module!!'\n};\n\n\n//# sourceURL=webpack:///./src/js/my-helper-module.js?");
+eval("module.exports = {\n  Greetings: 'Hello from my-helper-module!!'\n};\n\n//# sourceURL=webpack:///./src/scripts/my-helper-module.js?");
 
 /***/ }),
 

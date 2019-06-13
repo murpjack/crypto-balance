@@ -1,4 +1,10 @@
 {
+  "author": "Jack Murphy",
+  "homepage": "https://github.com/murpjack/crypto-balance#readme",
+  "bugs": {
+    "url": "https://github.com/murpjack/crypto-balance/issues"
+  },
+  "license": "MIT",
   "name": "crypto-balance",
   "version": "1.0.0",
   "description": "Follow Bitcoin and friends, without opening anymore tabs in your browser",
@@ -16,13 +22,17 @@
     "chrome-extension",
     "crypto"
   ],
-  "author": "Jack Murphy",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/murpjack/crypto-balance/issues"
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ]
   },
-  "homepage": "https://github.com/murpjack/crypto-balance#readme",
   "dependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
     "cryptocurrency-icons": "^0.13.0",
     "css-loader": "^2.1.1",
     "fluture": "^11.0.1",

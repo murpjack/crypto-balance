@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 let options = {
-  entry: path.join(__dirname, "src", "js", "index.js"),
+  entry: path.join(__dirname, "src", "scripts", "index.js"),
 
   output: {
     path: path.join(__dirname, "src"),
@@ -14,10 +14,20 @@ let options = {
 
   module: {
     rules: [{
-      test: /\.(s*)css$/,
-      use: ['style-loader', 'css-loader', 'sass-loader']
-    }]
+        test: /\.(s*)css$/,
+        use: ['style-loader', 'css-loader', 'sass-loader']
+      },
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: ['babel-loader']
+      }
+    ]
   },
+
+  resolve: {
+     extensions: ['*', '.js', '.jsx']
+   },
 
   watch: true,
 
