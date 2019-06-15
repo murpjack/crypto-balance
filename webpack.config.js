@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 let options = {
+  mode: 'development',
+
   entry: path.join(__dirname, "src", "scripts", "index.js"),
 
   output: {
@@ -10,7 +12,6 @@ let options = {
     filename: "bundle.js"
   },
 
-  mode: 'development',
 
   module: {
     rules: [{
