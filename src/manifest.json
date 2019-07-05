@@ -19,7 +19,7 @@
     "js": [
       "scripts/myscript.js",
       "scripts/my-helper-module.js",
-      "scripts/index.js"
+      "scripts/app.js"
 
     ]
   }],

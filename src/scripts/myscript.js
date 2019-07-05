@@ -5,7 +5,6 @@ let selectedRates = [
   "ETC",
   "ETH",
   "LTC",
-  // "NEO",
   "XRP"
 ];
 
@@ -24,9 +23,6 @@ function returnImgName(abr) {
     case "LTC":
       return "ltc"
       break;
-    // case "NEO":
-    //   return "neo"
-    //   break;
     case "XRP":
       return "xrp"
       break;
@@ -53,9 +49,6 @@ function returnFullName(abr) {
     case "XRP":
       return "Ripple"
       break;
-    // case "NEO":
-    //   return "neo"
-    //   break;
     default:
       return "Bitcoin"
       break;

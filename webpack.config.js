@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 let options = {
   mode: 'development',
 
-  entry: path.join(__dirname, "src", "scripts", "index.js"),
+  entry: path.join(__dirname, "src", "scripts", "app.js"),
 
   output: {
     path: path.join(__dirname, "src"),
