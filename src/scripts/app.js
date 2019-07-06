@@ -8,15 +8,6 @@ import ReactDOM from 'react-dom';
 // import {rateItem} from "./components.jsx"
 // console.log(rateItem);
 
-let selectedRates = [
-  "BTC",
-  "ETC",
-  "ETH",
-  "LTC",
-  "XRP"
-];
-
-
 function returnImgName(abr) {
   switch (abr) {
     case "BTC":
@@ -89,15 +80,39 @@ function rtnValueStr(data) {
   return currencySym + roundUpValue;
 }
 
-class RateItem extends React.Component {
+let selectedRates = [
+  "BTC",
+  "ETC",
+  "ETH",
+  "LTC",
+  "XRP"
+];
 
+const RateItem = (props) => {
+  // console.log(props);
+  return (
+    <article id={ props.base } className="rate">
+      <img src={ "./images/32/color/" + returnImgName(props.base) + ".png" } className="rate__image" />
+      <div className="rate__name name">
+        <h1 className="name--full"> <strong> {returnFullName(props.base)} </strong> </h1>
+        <h2 className="name--short"> { props.base } </h2>
+      </div>
+      <span className="rate__value value"> { props.valueStr } </span>
+    </article>
+  );
+}
+
+class AllTheRateItems extends React.Component {
     constructor(props) {
       super(props);
-      this.state = { base: "ETC", valueStr: "$227.93" };
+      this.state = {};
     }
 
     componentDidMount() {
-      this.fetchData(selectedRates[2]);
+      selectedRates.map(rate => {
+        this.fetchData(rate);
+      });
+
     }
 
     fetchData(rate) {
@@ -105,27 +120,27 @@ class RateItem extends React.Component {
       return fetch(spotUrl)
         .then(response => response.json())
         .then(json => {
-          this.setState({ base: json.data.base, valueStr: rtnValueStr(json.data) })
+          this.setState({ [json.data.base]: rtnValueStr(json.data) })
         })
-        // .then(json => console.log(this, json))
-          .catch(function(err) {
+        .catch(function(err) {
             console.log('Fetch Error :-S', err);
-          });
-        }
-
-      render() {
-        return (
-          <article id={ this.state.base } className="rate">
-            <img src={ "./images/32/color/" + returnImgName(this.state.base) + ".png" } className="rate__image" />
-            <div className="rate__name name">
-              <h1 className="name--full"> <strong> {returnFullName(this.state.base)} </strong> </h1>
-              <h2 className="name--short"> { this.state.base } </h2>
-            </div>
-            <span className="rate__value value"> { this.state.valueStr } </span>
-        </article>
-        );
-      }
+        });
     }
 
-    const RatesHook = document.getElementById('rates');
-    ReactDOM.render( <RateItem/> , RatesHook );
+    render() {
+      let keys = Object.keys(this.state);
+      let values = keys.map((key) => {
+        return { base: key, valueStr: this.state[key] }
+      });
+      console.log(values)
+      return (
+      <div>
+        {values.map((item, index) => {
+          return <RateItem key={index} base={item.base} valueStr={item.valueStr}/>
+      })}
+      </div> )
+    }
+  }
+
+const RatesHook = document.getElementById('rates');
+ReactDOM.render( <AllTheRateItems/> , RatesHook );
