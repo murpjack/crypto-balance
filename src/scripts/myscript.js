@@ -1,33 +1,24 @@
-// const futures = require("src/futures.js");
-
-let selectedRates = [
-  "BTC",
-  "ETC",
-  "ETH",
-  "LTC",
-  "XRP"
-];
-
+let selectedRates = ["BTC", "ETC", "ETH", "LTC", "XRP"];
 
 function returnImgName(abr) {
   switch (abr) {
     case "BTC":
-      return "btc"
+      return "btc";
       break;
     case "ETC":
-      return "etc"
+      return "etc";
       break;
     case "ETH":
-      return "eth"
+      return "eth";
       break;
     case "LTC":
-      return "ltc"
+      return "ltc";
       break;
     case "XRP":
-      return "xrp"
+      return "xrp";
       break;
     default:
-      return "btc"
+      return "btc";
       break;
   }
 }
@@ -35,22 +26,22 @@ function returnImgName(abr) {
 function returnFullName(abr) {
   switch (abr) {
     case "BTC":
-      return "Bitcoin"
+      return "Bitcoin";
       break;
     case "ETC":
-      return "Etherium Classic"
+      return "Etherium Classic";
       break;
     case "ETH":
-      return "Etherium"
+      return "Etherium";
       break;
     case "LTC":
-      return "Litecoin"
+      return "Litecoin";
       break;
     case "XRP":
-      return "Ripple"
+      return "Ripple";
       break;
     default:
-      return "Bitcoin"
+      return "Bitcoin";
       break;
   }
 }
@@ -58,23 +49,22 @@ function returnFullName(abr) {
 function returnCurrencySymbol(curr) {
   switch (curr) {
     case "BTC":
-      return "Ƀ"
+      return "Ƀ";
       break;
     case "EUR":
-      return "€"
+      return "€";
       break;
     case "GBP":
-      return "£"
+      return "£";
       break;
     case "USD":
-      return "$"
+      return "$";
       break;
     default:
-      return "£"
+      return "£";
       break;
   }
 }
-
 
 // document.addEventListener("DOMContentLoaded", () => {
 //   getRatesData();
@@ -127,13 +117,11 @@ function returnCurrencySymbol(curr) {
 //   return article;
 // }
 
-
 function refreshRates(e) {
   let target = e.target;
   let parent = target.parentElement;
 
-  if (target.id === "refreshRates" ||
-    parent.id === "refreshRates") {
+  if (target.id === "refreshRates" || parent.id === "refreshRates") {
     // Refresh those rates
     getRatesData();
     // add feedback once refreshed!! *** TODO ***
@@ -163,11 +151,9 @@ function refreshRates(e) {
   }
 } // END refreshRates fn
 
-
 function updateExtensionIcon(e) {
   let pathTo = e.path;
-  pathTo.forEach((el) => {
-
+  pathTo.forEach(el => {
     if (el.tagName === "ARTICLE") {
       chrome.browserAction.setIcon({
         path: `./images/32/color/${returnImgName(el.id)}.png`
@@ -219,12 +205,8 @@ function updateBadge(change) {
   }
 }
 
-
-
 // Click events
 document.addEventListener("click", function(e) {
-
   // refreshRates(e);
   updateExtensionIcon(e);
-
 });
