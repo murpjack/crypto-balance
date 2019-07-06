@@ -57,12 +57,12 @@ function returnCurrencySymbol(curr) {
 }
 
 function rtnValueStr(data) {
-  let currencySym = returnCurrencySymbol(data.currency);
-  let roundUpValue = parseFloat(data.amount).toFixed(2);
+  const currencySym = returnCurrencySymbol(data.currency);
+  const roundUpValue = parseFloat(data.amount).toFixed(2);
   return currencySym + roundUpValue;
 }
 
-let selectedRates = ["BTC", "ETC", "ETH", "LTC", "XRP"];
+const selectedRates = ["BTC", "ETC", "ETH", "LTC", "XRP"];
 
 const RateItem = props => {
   // console.log(props);
@@ -89,43 +89,86 @@ RateItem.propTypes = {
   value: PropTypes.string
 };
 
+// Our state property can be in one of these states depending on our fetch request
+// success
+//   state = {
+//     status: "Success",
+//     content: {}
+//   };
+//   // not asked
+//   state = {
+//     status: "NotAsked"
+//   };
+//   // loading
+//   state = {
+//     status: "Loading"
+//   };
+//   // Failure
+//   state = {
+//     status: "Failure",
+//     error: ...
+//   };
+// }
 class AllTheRateItems extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
-  }
+    this.state = selectedRates
+      .map(r => ({ [r]: { status: "NotAsked" } }))
+      .reduce((acc, v) => Object.assign(acc, v), {});
 
-  componentDidMount() {
     selectedRates.map(rate => {
       this.fetchData(rate);
     });
   }
 
   fetchData(rate) {
-    let spotUrl = `https://api.coinbase.com/v2/prices/${rate}-GBP/spot`;
+    const spotUrl = `https://api.coinbase.com/v2/prices/${rate}-GBP/spot`;
+    this.setState({ [rate]: { status: "Loading" } });
+
     return fetch(spotUrl)
       .then(response => response.json())
       .then(json => {
-        this.setState({ [json.data.base]: rtnValueStr(json.data) });
+        this.setState({
+          [rate]: {
+            status: "Success",
+            content: rtnValueStr(json.data)
+          }
+        });
       })
-      .catch(function(err) {
-        console.log("Fetch Error :-S", err);
+      .catch(err => {
+        this.setState({
+          [rate]: {
+            status: "Failure",
+            error: `Oh no Jimmy, that's a nasty ${err} you've got there.`
+          }
+        });
       });
   }
 
   render() {
-    let keys = Object.keys(this.state);
-    let values = keys.map(key => {
-      return { base: key, value: this.state[key] };
+    const cryptos = Object.keys(this.state);
+    const cryptoStatuses = cryptos.map(crypto => {
+      return {
+        base: crypto,
+        value: this.state[crypto]
+      };
     });
-    console.log(values);
-    return (
-      <div>
-        {values.map((item, index) => {
-          return <RateItem key={index} base={item.base} value={item.value} />;
-        })}
-      </div>
-    );
+
+    return cryptoStatuses.map((item, index) => {
+      switch (item.value.status) {
+        case "NotAsked":
+        case "Loading":
+          return "Loading";
+        case "Failure":
+          return item.value.error;
+        case "Success":
+          return (
+            <RateItem key={index} base={item.base} value={item.value.content} />
+          );
+        default:
+          return "Oops, unexpected...";
+      }
+    });
   }
 }
 

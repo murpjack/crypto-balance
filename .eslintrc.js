@@ -1,3 +1,7 @@
+const error = "error";
+const warning = "warning";
+const off = "off";
+
 module.exports = {
   extends: [
     "eslint:recommended",
@@ -5,15 +9,19 @@ module.exports = {
     "plugin:prettier/recommended"
   ],
   parserOptions: {
-    "ecmaVersion": 6,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
+    ecmaVersion: 6,
+    sourceType: "module",
+    ecmaFeatures: {
+      jsx: true
     }
   },
   env: {
     es6: true,
     browser: true,
     node: true
+  },
+  rules: {
+    "prefer-const": error,
+    "no-console": error
   }
-}
+};
