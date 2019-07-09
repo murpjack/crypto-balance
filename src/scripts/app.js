@@ -145,6 +145,42 @@ class AllTheRateItems extends React.Component {
       });
   }
 
+  refreshRates(e) {
+    const target = e.target;
+    const parent = target.parentElement;
+
+    if (target.id === "refreshRates" || parent.id === "refreshRates") {
+      // Refresh those rates
+      selectedRates.map(rate => {
+        this.fetchData(rate);
+      });
+      // add feedback once refreshed!! *** TODO ***
+    }
+
+    const ratesContainer = document.getElementById("rates");
+    if (target.id === "refreshRates") {
+      rotateRefreshBtn(target);
+      flashWhiteScreen(ratesContainer);
+    } else if (parent.id === "refreshRates") {
+      rotateRefreshBtn(parent);
+      flashWhiteScreen(ratesContainer);
+    }
+  } // END refreshRates fn
+
+  rotateRefreshBtn(el) {
+    el.classList.add("refresh--rotate");
+    setTimeout(function() {
+      el.classList.remove("refresh--rotate");
+    }, 400);
+  }
+
+  flashWhiteScreen(el) {
+    el.classList.add("rates__container--refresh");
+    setTimeout(function() {
+      el.classList.remove("rates__container--refresh");
+    }, 1000);
+  }
+
   render() {
     const cryptos = Object.keys(this.state);
     const cryptoStatuses = cryptos.map(crypto => {
