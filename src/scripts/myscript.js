@@ -1,4 +1,4 @@
-let selectedRates = ["BTC", "ETC", "ETH", "LTC", "XRP"];
+const selectedRates = ["BTC", "ETC", "ETH", "LTC", "XRP"];
 
 function returnImgName(abr) {
   switch (abr) {
@@ -118,8 +118,8 @@ function returnCurrencySymbol(curr) {
 // }
 
 function refreshRates(e) {
-  let target = e.target;
-  let parent = target.parentElement;
+  const target = e.target;
+  const parent = target.parentElement;
 
   if (target.id === "refreshRates" || parent.id === "refreshRates") {
     // Refresh those rates
@@ -152,7 +152,7 @@ function refreshRates(e) {
 } // END refreshRates fn
 
 function updateExtensionIcon(e) {
-  let pathTo = e.path;
+  const pathTo = e.path;
   pathTo.forEach(el => {
     if (el.tagName === "ARTICLE") {
       chrome.browserAction.setIcon({

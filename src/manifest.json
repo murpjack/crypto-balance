@@ -20,13 +20,7 @@
       "scripts/myscript.js",
       "scripts/my-helper-module.js",
       "scripts/app.js"
-
     ]
-  }],
-  "background": {
-    "scripts": [
-      "scripts/background.js"
-    ]
-  }
+  }]
 
 }
