@@ -1,5 +1,5 @@
 const path = require("path");
-const webpack = require("webpack");
+// const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const options = {
@@ -17,6 +17,10 @@ const options = {
       {
         test: /\.(s*)css$/,
         use: ["style-loader", "css-loader", "sass-loader"]
+      },
+      {
+        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+        loader: "file-loader"
       },
       {
         test: /\.(js|jsx)$/,

@@ -4,22 +4,21 @@ function returnImgName(abr) {
   switch (abr) {
     case "BTC":
       return "btc";
-      break;
+
     case "ETC":
       return "etc";
-      break;
+
     case "ETH":
       return "eth";
-      break;
+
     case "LTC":
       return "ltc";
-      break;
+
     case "XRP":
       return "xrp";
-      break;
+
     default:
       return "btc";
-      break;
   }
 }
 
@@ -27,22 +26,21 @@ function returnFullName(abr) {
   switch (abr) {
     case "BTC":
       return "Bitcoin";
-      break;
+
     case "ETC":
       return "Etherium Classic";
-      break;
+
     case "ETH":
       return "Etherium";
-      break;
+
     case "LTC":
       return "Litecoin";
-      break;
+
     case "XRP":
       return "Ripple";
-      break;
+
     default:
       return "Bitcoin";
-      break;
   }
 }
 
@@ -50,19 +48,18 @@ function returnCurrencySymbol(curr) {
   switch (curr) {
     case "BTC":
       return "Ƀ";
-      break;
+
     case "EUR":
       return "€";
-      break;
+
     case "GBP":
       return "£";
-      break;
+
     case "USD":
       return "$";
-      break;
+
     default:
       return "£";
-      break;
   }
 }
 
