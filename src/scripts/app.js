@@ -168,7 +168,7 @@ class AllTheRateItems extends React.Component {
             <RateItem key={index} base={item.base} value={item.value.content} />
           );
         default:
-          return "Oops, unexpected...";
+          return "Oops, that was unexpected...";
       }
     });
   }

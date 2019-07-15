@@ -17,7 +17,7 @@
       "https://*/*"
     ],
     "js": [
-      "scripts/app.js"
+      "./bundle.js"
     ]
   }]
 
