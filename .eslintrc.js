@@ -18,6 +18,8 @@ module.exports = {
   env: {
     es6: true,
     browser: true,
+    chrome: true,
+    webextensions: true,
     node: true
   },
   rules: {

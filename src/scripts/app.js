@@ -1,4 +1,3 @@
-// import * as data from "./data.js"
 import "./../scss/style.scss";
 
 import React from "react";
@@ -64,7 +63,6 @@ function rtnValueStr(data) {
 const selectedRates = ["BTC", "ETC", "ETH", "LTC", "XRP"];
 
 const RateItem = props => {
-  // console.log(props);
   return (
     <article id={props.base} className="rate">
       <img
