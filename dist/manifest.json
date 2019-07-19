@@ -9,7 +9,7 @@
   ],
   "browser_action": {
     "default_popup": "popup.html",
-    "default_icon": "images/turtle.png"
+    "default_icon": "images/turtle-color.png"
   },
   "content_scripts": [{
     "matches": [

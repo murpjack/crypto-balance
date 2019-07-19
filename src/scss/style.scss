@@ -22,7 +22,8 @@ p {
 }
 
 .header {
-  background-color: #0055d8;
+  // background-color: #0055D8;
+  background-color: #05668D;
   color: #eee;
   font-family: 'Roboto-Regular';
   text-align: center;
@@ -59,14 +60,16 @@ p {
 .rate {
   border: 2px solid #ddd;
   cursor: pointer;
-  height: 70px;
+  height: 60px;
   margin: -2px;
   position: relative;
 }
 
 .rate:hover {
-  background-color: #d4e1ff;
-  border: 2px solid #c0cae3;
+  // background-color: #d4e1ff;
+  // border: 2px solid #c0cae3;
+  background-color: #ddfff7;
+  border: 2px solid #b4ffe0;
   z-index: 1;
 }
 
@@ -75,7 +78,7 @@ p {
   display: inline-block;
   float: left;
   height: 30px;
-  padding: 20px 10px;
+  padding: 15px 10px;
   // /* margin-right: 5px; */
   width: 30px;
 }
@@ -83,7 +86,7 @@ p {
 .rate__name {
   display: inline-block;
   height: 30px;
-  padding: 20px 0;
+  padding: 15px 0;
   width: 170px;
 }
 
@@ -92,22 +95,24 @@ p {
 }
 
 .name--full {
+
   font-size: 14px;
   letter-spacing: 2px;
 }
 
 .name--short {
-  color: #a6a6a6;
+  // color: #a6a6a6;
+  color: #05668d;
   font-size: 13px;
   letter-spacing: 1px;
   text-transform: uppercase;
 }
 
 .rate__value {
-  background-color: #d2ffe0;
+  background-color: #ddfff7;
   border: 2px solid transparent;
   border-radius: 9999px;
-  color: #0A950A;
+  color: #05668d;
   display: inline-block;
   font-size: 13px;
   font-weight: 600;
