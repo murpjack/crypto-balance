@@ -65,13 +65,12 @@ p {
   position: relative;
 }
 
-.rate:hover {
-  // background-color: #d4e1ff;
-  // border: 2px solid #c0cae3;
-  background-color: #ddfff7;
-  border: 2px solid #b4ffe0;
-  z-index: 1;
-}
+// .rate:hover {
+//   // background-color: #d4e1ff;
+//   // border: 2px solid #c0cae3;
+//   background-color: #f3fffc;
+//   z-index: 1;
+// }
 
 .rate__image {
   // /* border: 1px solid red; */
@@ -95,7 +94,6 @@ p {
 }
 
 .name--full {
-
   font-size: 14px;
   letter-spacing: 2px;
 }
