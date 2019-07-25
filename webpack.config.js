@@ -1,5 +1,5 @@
 const path = require("path");
-// const webpack = require("webpack");
+
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const options = {
@@ -38,8 +38,8 @@ const options = {
 
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, "src", "extension.html"),
-      filename: "popup.html", //relative to root of the application
+      template: path.join(__dirname, "src", "template.html"),
+      filename: "extension.html", //relative to root of the application
       pageHeader: "Crypto-balance",
       hash: true
     })

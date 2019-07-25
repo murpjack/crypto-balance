@@ -2,13 +2,13 @@
   "author": "Jack Murphy",
   "homepage": "https://github.com/murpjack/crypto-balance#readme",
   "bugs": {
-    "url": "https://github.com/murpjack/crypto-balance/issues"
+    "url": "https://github.com/murpjack/crypto-balance#readme"
   },
   "license": "MIT",
   "name": "crypto-balance",
   "version": "1.0.0",
   "description": "Follow Bitcoin and friends, without opening anymore tabs in your browser",
-  "main": "src/js/myscript.js",
+  "main": "dist/bundle.js",
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"

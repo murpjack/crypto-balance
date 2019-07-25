@@ -138,7 +138,7 @@ class AllTheRateItems extends React.Component {
         this.setState({
           [rate]: {
             status: "Failure",
-            error: `Oh no Jimmy, that's a nasty ${err} you've got there.`
+            error: `<p class="rates__error">Oh no Jimmy, that's a nasty ${err} you've got there.</p>`
           }
         });
       });
