@@ -16,10 +16,9 @@ module.exports = {
     }
   },
   env: {
-    es6: true,
-    browser: true,
-    chrome: true,
     webextensions: true,
+    browser: true,
+    es6: true,
     node: true
   },
   rules: {
