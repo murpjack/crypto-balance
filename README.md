@@ -9,18 +9,18 @@ Cryptocurrencies regularly change in price throughout the course of the day and 
 **Note.** This Chrome extension currently requires no browser permissions as it handles no personal data.
 
 ****
-#### Built using
+## Built using
 
 * [ReactJS](https://reactjs.org/docs/getting-started.html) - JavaScript library for building user interfaces.
 * [WebpackJS](https://webpack.js.org/) - Static module bundler for modern JavaScript applications.
 
-#### License
+## License
 
 [MIT licensed](LICENSE.md)
 
 
 ****
-### Acknowledgments
+## Acknowledgments
 
 * The Coinbase API developers
 * A good friend called Marcelo has been really supportive

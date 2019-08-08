@@ -63,57 +63,6 @@ function returnCurrencySymbol(curr) {
   }
 }
 
-// document.addEventListener("DOMContentLoaded", () => {
-//   getRatesData();
-// });
-//
-// function getRatesData() {
-//
-//   let promises = selectedRates.map((rate) => fetchData(rate));
-//
-//   Promise.all(promises)
-//     .then(result => appendRatesListToBody(result));
-// }
-//
-// function fetchData(rate) {
-//   let spotUrl = `https://api.coinbase.com/v2/prices/${rate}-GBP/spot`;
-//   return fetch(spotUrl)
-//     .then(response => response.json())
-//     .then(json => createArticle(json.data))
-//     .catch(function(err) {
-//       console.log('Fetch Error :-S', err);
-//     });
-// }
-//
-// function appendRatesListToBody(data) {
-//   let rates = document.getElementById("rates");
-//   rates.innerHTML = "";
-//   data.map(item => rates.appendChild(item));
-// }
-//
-// function createArticle(data) {
-//   let base = data.base;
-//   let article = document.createElement("article");
-//   article.setAttribute("id", base);
-//   article.classList.add('rate');
-//
-//   let currencySymbol = returnCurrencySymbol(data.currency);
-//   let roundUpValue = parseFloat(data.amount).toFixed(2);
-//   let valueString = currencySymbol + roundUpValue;
-//
-//   let bat = "";
-//   // bat = base === "BAT" ? "name--bat" : "";
-//   article.innerHTML =
-//     `<img src="./images/32/color/${returnImgName(base)}.png" class="rate__image"/>
-//      <div class='rate__name name'>
-//        <h1 class='name--full'><strong>${returnFullName(base)}</strong></h1>
-//        <h2 class='name--short'>${base}</h2>
-//      </div>
-//      <span class='rate__value value'>${valueString}
-//      </span>`;
-//   return article;
-// }
-
 function refreshRates(e) {
   const target = e.target;
   const parent = target.parentElement;

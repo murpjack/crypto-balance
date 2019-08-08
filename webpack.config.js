@@ -40,7 +40,8 @@ const options = {
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "src", "template.html"),
       filename: "extension.html", //relative to root of the application
-      pageHeader: "Crypto-balance",
+      extensionTitle: "Calypso - Crypto rates",
+      pageHeader: "Crypto rates",
       hash: true
     })
   ]

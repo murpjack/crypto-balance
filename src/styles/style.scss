@@ -5,9 +5,9 @@
 }
 
 #cExtension {
-  color: #444;
+  color: $color-font-primary;
   font-size: 14px;
-  font-family: "Roboto-Regular";
+  font-family: $font-family-primary;
   margin: 0;
   min-height: 300px;
   width: 340px;
@@ -22,10 +22,9 @@ p {
 }
 
 .header {
-  // background-color: #0055D8;
-  background-color: #05668D;
-  color: #eee;
-  font-family: 'Roboto-Regular';
+  background-color: $color-background-header;
+  color: $color-font-header;
+  font-family: $font-primary;
   text-align: center;
 }
 
@@ -33,7 +32,6 @@ p {
   font-size: 16px;
   letter-spacing: 2px;
   padding: 12px 0;
-  // text-transform: uppercase;
 }
 
 .rates__container {
@@ -65,20 +63,11 @@ p {
   position: relative;
 }
 
-// .rate:hover {
-//   // background-color: #d4e1ff;
-//   // border: 2px solid #c0cae3;
-//   background-color: #f3fffc;
-//   z-index: 1;
-// }
-
 .rate__image {
-  // /* border: 1px solid red; */
   display: inline-block;
   float: left;
   height: 30px;
   padding: 15px 10px;
-  // /* margin-right: 5px; */
   width: 30px;
 }
 
@@ -99,7 +88,6 @@ p {
 }
 
 .name--short {
-  // color: #a6a6a6;
   color: #05668d;
   font-size: 13px;
   letter-spacing: 1px;
@@ -137,7 +125,6 @@ p {
 // /* container */
 
 .refresh {
-  // /*   border: 2px solid #333; */
   bottom: 7px;
   cursor: pointer;
   display: inline-block;
