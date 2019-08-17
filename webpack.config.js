@@ -1,6 +1,7 @@
 const path = require("path");
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 const options = {
   mode: "development",
@@ -43,7 +44,21 @@ const options = {
       extensionTitle: "Calypso - Crypto rates",
       pageHeader: "Crypto rates",
       hash: true
-    })
+    }),
+    new CopyPlugin([
+      {
+        from: path.join(__dirname, "src", "fonts"),
+        to: path.join(__dirname, "dist", "fonts")
+      },
+      {
+        from: path.join(__dirname, "src", "manifest.json"),
+        to: path.join(__dirname, "dist")
+      },
+      {
+        from: path.join(__dirname, "src", "images"),
+        to: path.join(__dirname, "dist", "images")
+      }
+    ])
   ]
 };
 
