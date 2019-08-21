@@ -1,5 +1,5 @@
 
-![crypto_the_turtle](/calypso_header.png)
+![crypto_the_turtle](/assets/calypso_header_350x100.png)
 
 ****       
 Calypso is a simple Chrome extension written using ReactJS.
@@ -13,10 +13,6 @@ Cryptocurrencies regularly change in price throughout the course of the day and 
 
 * [ReactJS](https://reactjs.org/docs/getting-started.html) - JavaScript library for building user interfaces.
 * [WebpackJS](https://webpack.js.org/) - Static module bundler for modern JavaScript applications.
-
-## License
-
-[MIT licensed](LICENSE.md)
 
 
 ****
