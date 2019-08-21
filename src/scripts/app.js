@@ -86,26 +86,6 @@ RateItem.propTypes = {
   value: PropTypes.string
 };
 
-// Our state property can be in one of these states depending on our fetch request
-// success
-//   state = {
-//     status: "Success",
-//     content: {}
-//   };
-//   // not asked
-//   state = {
-//     status: "NotAsked"
-//   };
-//   // loading
-//   state = {
-//     status: "Loading"
-//   };
-//   // Failure
-//   state = {
-//     status: "Failure",
-//     error: ...
-//   };
-// }
 class AllTheRateItems extends React.Component {
   constructor(props) {
     super(props);
