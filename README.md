@@ -1,5 +1,5 @@
 
-![crypto_the_turtle](/assets/calypso_header_350x100.png)
+![crypto_the_turtle](assets/calypso_header_350x100.png)
 
 ****       
 Calypso is a simple Chrome extension written using ReactJS.
