@@ -1,0 +1,23 @@
+@font-face {
+  font-family: "Roboto-Regular";
+  src: url("./../fonts/Roboto-Regular.ttf") format("ttf");
+}
+
+/// Font Families ///
+$font-primary: "Roboto-Regular";
+
+/// Colors ///
+$color-background-primary: #FFFFFF;
+$color-border-primary: #DDDDDD;
+$color-font-primary: #444444;
+$color-font-secondary: #333333;
+
+$color-background-header: #05668D;
+$color-font-header: #FFFFFF;
+
+$color-background-price-primary: #C8EFFF;
+$color-font-price-primary: #05668D;
+$color-background-price-increase: #C3FFF2;
+$color-font-price-increase: #02C39A;
+$color-background-price-decrease: #FFD2D2;
+$color-font-price-decrease: #FF3231;
