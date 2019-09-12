@@ -7,15 +7,5 @@
     "default_popup": "extension.html",
     "default_icon": "images/logo-favicon-tablet.png"
   },
-  "permissions": ["activeTab"],
-  "content_scripts": [{
-    "matches": [
-      "http://*/*",
-      "https://*/*"
-    ],
-    "js": [
-      "./bundle.js"
-    ]
-  }]
-
+  "permissions": ["activeTab"]
 }
