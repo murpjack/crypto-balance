@@ -6,7 +6,7 @@
   },
   "license": "MIT",
   "name": "crypto-balance",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Follow Bitcoin and friends, without opening anymore tabs in your browser",
   "main": "dist/bundle.js",
   "scripts": {

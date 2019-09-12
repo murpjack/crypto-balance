@@ -6,7 +6,8 @@ Calypso is a simple Chrome extension written using ReactJS.
 Keep track of a handful of cryptocurrencies from your Chrome browser.
 Cryptocurrencies regularly change in price throughout the course of the day and it only takes a quick peek to keep up to speed.   
 
-**Note.** This Chrome extension currently requires no browser permissions as it handles no personal data.
+**Note.** This Chrome extension currently requires the 'activeTab' browser permission. 
+It handles no personal data.
 
 ****
 ## Built using
