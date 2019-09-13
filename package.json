@@ -5,8 +5,8 @@
     "url": "https://github.com/murpjack/crypto-balance#readme"
   },
   "license": "MIT",
-  "name": "crypto-balance",
-  "version": "1.0.1",
+  "name": "Calypso",
+  "version": "1.0.2",
   "description": "Follow Bitcoin and friends, without opening anymore tabs in your browser",
   "main": "dist/bundle.js",
   "scripts": {
