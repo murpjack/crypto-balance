@@ -5,6 +5,8 @@ import ReactDOM from "react-dom";
 
 import PropTypes from "prop-types";
 
+import { map, after, parallel } from "fluture/index.js";
+
 function returnImgName(abr) {
   switch (abr) {
     case "BTC":
@@ -96,14 +98,24 @@ class AllTheRateItems extends React.Component {
 
   componentDidMount() {
     selectedRates.map(rate => {
+      // TODO: determine if error or success
+      // TODO: handle outcome of fetch Call
       this.fetchData(rate);
     });
   }
-
+  // TODO: return a future from fetchData
+  // populate state with fetched data
   fetchData(rate) {
     const spotUrl = `https://api.coinbase.com/v2/prices/${rate}-GBP/spot`;
     this.setState({ [rate]: { status: "Loading" } });
 
+    // const arr = Array.from(Array(10).keys())
+    //   .map(after(20))
+    //   .map(arr => arr.map(v => `Number ${v}`));
+    // const newArr = parallel(5, arr).fork(console.error, console.log);
+    // console.log(arr);
+
+    // Make fetch requests
     return fetch(spotUrl)
       .then(response => response.json())
       .then(json => {
@@ -118,7 +130,7 @@ class AllTheRateItems extends React.Component {
         this.setState({
           [rate]: {
             status: "Failure",
-            error: `<p class="rates__error">Oh no Jimmy, that's a nasty ${err} you've got there.</p>`
+            error: `Oh no Jimmy, that's a nasty ${err} you've got there.`
           }
         });
       });

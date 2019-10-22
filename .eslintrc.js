@@ -22,7 +22,6 @@ module.exports = {
     node: true
   },
   rules: {
-    "prefer-const": error,
-    "no-console": error
+    "prefer-const": error
   }
 };
