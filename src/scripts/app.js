@@ -5,7 +5,10 @@ import ReactDOM from "react-dom";
 
 import PropTypes from "prop-types";
 
-import { map, after, parallel } from "fluture/index.js";
+import Future, { map, fork, chain, tryP } from "fluture/index.js";
+
+const something = 34;
+console.log(something);
 
 function returnImgName(abr) {
   switch (abr) {
@@ -19,8 +22,14 @@ function returnImgName(abr) {
       return "ltc";
     case "XRP":
       return "xrp";
+    case "DAI":
+      return "dai";
+    case "BCH":
+      return "bch";
+    case "XLM":
+      return "xlm";
     default:
-      return "btc";
+      return "crypto";
   }
 }
 
@@ -36,8 +45,14 @@ function returnFullName(abr) {
       return "Litecoin";
     case "XRP":
       return "Ripple";
+    case "BCH":
+      return "Bitcoin Cash";
+    case "DAI":
+      return "Dai";
+    case "XLM":
+      return "Stellar Lumens";
     default:
-      return "Bitcoin";
+      return "Crypto";
   }
 }
 
@@ -62,7 +77,7 @@ function rtnValueStr(data) {
   return currencySym + roundUpValue;
 }
 
-const selectedRates = ["BTC", "ETC", "ETH", "LTC", "XRP"];
+const selectedRates = ["BTC", "BCH", "DAI", "ETC", "ETH", "LTC", "XRP", "XLM"];
 
 const RateItem = props => {
   return (
@@ -97,43 +112,43 @@ class AllTheRateItems extends React.Component {
   }
 
   componentDidMount() {
-    selectedRates.map(rate => {
-      // TODO: determine if error or success
-      // TODO: handle outcome of fetch Call
-      this.fetchData(rate);
-    });
+    const futureList = selectedRates.map(r => this.fetchData(r));
+    console.log("list ", futureList);
+
+    const result = Future.parallel(selectedRates.length, futureList);
+
+    // .value(data => this.setState({ data }));
+    //   .fork(console.error, console.log);
+    // console.log("result ", result);
+    return result;
   }
-  // TODO: return a future from fetchData
+
   // populate state with fetched data
   fetchData(rate) {
-    const spotUrl = `https://api.coinbase.com/v2/prices/${rate}-GBP/spot`;
     this.setState({ [rate]: { status: "Loading" } });
 
-    // const arr = Array.from(Array(10).keys())
-    //   .map(after(20))
-    //   .map(arr => arr.map(v => `Number ${v}`));
-    // const newArr = parallel(5, arr).fork(console.error, console.log);
-    // console.log(arr);
+    const rateObject = d => ({
+      [rate]: { status: "Success", content: rtnValueStr(d.data) }
+    });
 
-    // Make fetch requests
-    return fetch(spotUrl)
-      .then(response => response.json())
-      .then(json => {
-        this.setState({
-          [rate]: {
-            status: "Success",
-            content: rtnValueStr(json.data)
-          }
-        });
-      })
-      .catch(err => {
-        this.setState({
-          [rate]: {
-            status: "Failure",
-            error: `Oh no Jimmy, that's a nasty ${err} you've got there.`
-          }
-        });
-      });
+    const errorObject = error => ({
+      [rate]: {
+        status: "Failure",
+        error: `Oh no Jimmy, that looks like a [resource ${error.errors[0].id}]!`
+      }
+    });
+
+    const fetchF = Future.encaseP(fetch);
+
+    const spotUrl = `https://api.coinbase.com/v2/prices/${rate}-GBP/spot`;
+
+    const responseJSON = fetchF(spotUrl).chain(res => tryP(_ => res.json()));
+
+    const fetched = responseJSON.map(obj =>
+      obj.errors ? errorObject(obj) : rateObject(obj)
+    );
+    // // .value(obj => obj);
+    return fetched;
   }
 
   render() {
