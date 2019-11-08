@@ -5,10 +5,7 @@ import ReactDOM from "react-dom";
 
 import PropTypes from "prop-types";
 
-import Future, { map, fork, chain, tryP } from "fluture/index.js";
-
-const something = 34;
-console.log(something);
+import Future, { tryP, parallel } from "fluture/index.js";
 
 function returnImgName(abr) {
   switch (abr) {
@@ -98,6 +95,10 @@ const RateItem = props => {
   );
 };
 
+const Warning = props => {
+  return <article className="rate__message">{props.value}</article>;
+};
+
 RateItem.propTypes = {
   base: PropTypes.string,
   value: PropTypes.string
@@ -113,30 +114,31 @@ class AllTheRateItems extends React.Component {
 
   componentDidMount() {
     const futureList = selectedRates.map(r => this.fetchData(r));
-    console.log("list ", futureList);
 
-    const result = Future.parallel(selectedRates.length, futureList);
-
-    // .value(data => this.setState({ data }));
-    //   .fork(console.error, console.log);
-    // console.log("result ", result);
-    return result;
+    parallel(selectedRates.length, futureList).value(x => x);
   }
 
   // populate state with fetched data
   fetchData(rate) {
     this.setState({ [rate]: { status: "Loading" } });
 
-    const rateObject = d => ({
-      [rate]: { status: "Success", content: rtnValueStr(d.data) }
-    });
-
-    const errorObject = error => ({
-      [rate]: {
-        status: "Failure",
-        error: `Oh no Jimmy, that looks like a [resource ${error.errors[0].id}]!`
+    const createObjct = res => {
+      if (res.errors) {
+        return {
+          [rate]: {
+            status: "Failure",
+            error: `Oh no Jimmy, that looks like a [resource ${res.errors[0].id}]!`
+          }
+        };
+      } else {
+        return {
+          [rate]: {
+            status: "Success",
+            content: rtnValueStr(res.data)
+          }
+        };
       }
-    });
+    };
 
     const fetchF = Future.encaseP(fetch);
 
@@ -144,11 +146,11 @@ class AllTheRateItems extends React.Component {
 
     const responseJSON = fetchF(spotUrl).chain(res => tryP(_ => res.json()));
 
-    const fetched = responseJSON.map(obj =>
-      obj.errors ? errorObject(obj) : rateObject(obj)
-    );
-    // // .value(obj => obj);
-    return fetched;
+    const newObject = responseJSON.map(createObjct);
+
+    const updateState = newObject.value(obj => this.setState(obj));
+
+    return Future.of(updateState);
   }
 
   render() {
@@ -164,9 +166,15 @@ class AllTheRateItems extends React.Component {
       switch (item.value.status) {
         case "NotAsked":
         case "Loading":
-          return "Loading";
+          if (index === 0) {
+            return <Warning key={index} value={"Loading Cryptos"} />;
+          }
+          break;
         case "Failure":
-          return item.value.error;
+          if (index === 0) {
+            return <Warning key={index} value={item.value.error} />;
+          }
+          break;
         case "Success":
           return (
             <RateItem key={index} base={item.base} value={item.value.content} />
