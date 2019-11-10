@@ -177,16 +177,26 @@ class AllTheRateItems extends React.Component {
           }
           break;
         case "Failure":
-          if (index === 0) {
-            return <WarningItem key={index} value={item.value.error} />;
-          }
-          break;
+          // if (index === 0) {
+          //   return <WarningItem key={index} value={item.value.error} />;
+          // }
+          // break;
+          return;
         case "Success":
           return (
             <RateItem key={index} base={item.base} value={item.value.content} />
           );
         default:
-          return "Oops, that was unexpected...";
+          if (index === 0) {
+            return (
+              <RateItem
+                key={index}
+                base={item.base}
+                value={"Oops, that was unexpected..."}
+              />
+            );
+          }
+          break;
       }
     });
   }
