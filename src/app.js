@@ -169,7 +169,6 @@ class AllTheRateItems extends React.Component {
     });
 
     return cryptoStatuses.map((item, index) => {
-      console.log(item);
       switch (item.value.status) {
         case "NotAsked":
         case "Loading":
