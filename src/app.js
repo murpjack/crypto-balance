@@ -1,4 +1,4 @@
-import "./../styles/style.scss";
+import "./styles/style.scss";
 
 import React from "react";
 import ReactDOM from "react-dom";
@@ -95,7 +95,7 @@ const RateItem = props => {
   );
 };
 
-const Warning = props => {
+const WarningItem = props => {
   return <article className="rate__message">{props.value}</article>;
 };
 
@@ -104,11 +104,15 @@ RateItem.propTypes = {
   value: PropTypes.string
 };
 
+WarningItem.propTypes = {
+  value: PropTypes.string
+};
+
 class AllTheRateItems extends React.Component {
   constructor(props) {
     super(props);
     this.state = selectedRates
-      .map(r => ({ [r]: { status: "NotAsked" } }))
+      .map(r => ({ [r]: { status: "NotAsked", content: "Loading Cryptos" } }))
       .reduce((acc, v) => Object.assign(acc, v), {});
   }
 
@@ -120,7 +124,9 @@ class AllTheRateItems extends React.Component {
 
   // populate state with fetched data
   fetchData(rate) {
-    this.setState({ [rate]: { status: "Loading" } });
+    this.setState({
+      [rate]: { status: "Loading", content: "Loading Cryptos" }
+    });
 
     const createObjct = res => {
       if (res.errors) {
@@ -163,16 +169,17 @@ class AllTheRateItems extends React.Component {
     });
 
     return cryptoStatuses.map((item, index) => {
+      console.log(item);
       switch (item.value.status) {
         case "NotAsked":
         case "Loading":
           if (index === 0) {
-            return <Warning key={index} value={"Loading Cryptos"} />;
+            return <WarningItem key={index} value={item.value.content} />;
           }
           break;
         case "Failure":
           if (index === 0) {
-            return <Warning key={index} value={item.value.error} />;
+            return <WarningItem key={index} value={item.value.error} />;
           }
           break;
         case "Success":

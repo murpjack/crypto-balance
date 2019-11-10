@@ -6,7 +6,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 const options = {
   mode: "development",
 
-  entry: path.join(__dirname, "src", "scripts", "app.js"),
+  entry: path.join(__dirname, "src", "app.js"),
 
   output: {
     path: path.join(__dirname, "dist"),

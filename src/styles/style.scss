@@ -20,7 +20,6 @@ p {
 .header {
   background-color: $color-background-header;
   color: $color-font-header;
-  font-family: $font-primary;
   text-align: center;
 }
 
@@ -34,6 +33,7 @@ p {
   background-color: $color-background-primary;
   display: block;
   margin: 0;
+  min-height: 260px;
   position: relative;
 }
 
@@ -57,21 +57,34 @@ p {
   height: 60px;
   margin: -2px;
   position: relative;
+
+  &__image {
+    display: inline-block;
+    float: left;
+    height: 30px;
+    padding: 15px 10px;
+    width: 30px;
+  }
+
+  &__name {
+    display: inline-block;
+    height: 30px;
+    padding: 15px 0;
+    width: 170px;
+  }
 }
 
-.rate__image {
-  display: inline-block;
-  float: left;
-  height: 30px;
-  padding: 15px 10px;
-  width: 30px;
-}
-
-.rate__name {
-  display: inline-block;
-  height: 30px;
-  padding: 15px 0;
-  width: 170px;
+.rate__message {
+  line-height: 25px;
+  height: 25px;
+  box-sizing: border-box;
+  position: absolute;
+  text-align: center;
+  bottom: 10px;
+  width: 100%;
+  font-weight: 600;
+  letter-spacing: 2px;
+  font-size: 13px;
 }
 
 .name--bat {
