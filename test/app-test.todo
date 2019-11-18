@@ -1,0 +1,5 @@
+- [ ] Fetch rate request returns data
+- [ ] State updates on fetch complete
+- [ ] Create RateItem success
+- [ ] Create WarningItem success
+- [ ] Image files exist/ return success 
