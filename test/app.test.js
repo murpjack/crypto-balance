@@ -1,4 +1,3 @@
-const fetchMock = require("fetch-mock")
 const fetch = require("node-fetch")
 const Future = require('fluture')
 
@@ -16,24 +15,34 @@ describe("fetchRate", () => {
   });
 
   it("FetchRate item", () => {
-    const url = "https://api.coinbase.com/v2/prices/BTC-GBP/spot";
-    const response = {
-      "data": {
-        "amount": "5853.81420561",
-        "base": "BTC",
-        "currency": "GBP",
+    const rate = "BTC";
+    const responseJSON = res => Future.tryP(_ => res.json());
+    const url = `https://api.coinbase.com/v2/prices/${rate}-GBP/spot`;
+
+    const failure = res => ({
+      [rate]: {
+        status: "Failure",
+        error: `Oh no Jimmy, that looks like a [resource ${res.errors[0].id}]!`
       }
-    };
+    });
 
-    fetchMock.mock(url, 200)
-    fetch(url)
-      .then(res => res.json())
-      .then(res => {
-        if (res.status >= 200 && res.status < 300) {
-          expect(res).toEqual(response)
-        }
-      })
-      .catch(err => `Oops! ${err.message}`)
+    const success = res => ({
+      [rate]: {
+        status: "Success",
+        content: res.data
+      }
+    });
+
+    const createRateObject = res => res.errors ? failure : success;
+    const isSuccess = obj => expect(obj["BTC"].status).toEqual("Success");
+
+    const fetchF = Future.encaseP(fetch);
+    const newObject = fetchF(url)
+      .chain(responseJSON)
+      .map(createRateObject)
+      .value(isSuccess);
+
+    Future.of(newObject);
+
   });
-
 });
