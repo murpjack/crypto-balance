@@ -5,11 +5,10 @@ import ReactDOM from "react-dom";
 import Future from "fluture/index.js";
 import PropTypes from "prop-types";
 
-import { getImgName, getFullName } from "./scripts/helpers";
 import RateItem from "./scripts/RateItem";
 import getRate from "./scripts/rate-call";
 
-import SELECTED from "./scripts/variables";
+import { SELECTED, CLIENT_ID, SIGNIN_REDIRECT_URI } from "./scripts/variables";
 
 const WarningItem = props => {
   return <article className="rate__message">{props.value}</article>;
@@ -25,6 +24,7 @@ class AllTheRateItems extends React.Component {
     this.state = SELECTED.map(r => ({
       [r]: { status: "NotAsked", content: "Loading Cryptos" }
     })).reduce((acc, v) => Object.assign(acc, v), {});
+    console.log(this.state);
   }
 
   componentDidMount() {
@@ -81,5 +81,41 @@ class AllTheRateItems extends React.Component {
   }
 }
 
-const container = document.getElementById("rates");
-ReactDOM.render(<AllTheRateItems />, container);
+const NewApp = () => {
+  return (
+    <div>
+      <div className="login">
+        <p className="login__text">
+          Sign in with Coinbase to check your crypto assets.
+        </p>
+        <SigninButton />
+      </div>
+
+      <div className="rates container">
+        <h2 className="container__title"></h2>
+      </div>
+
+      <div className="accounts container">
+        <h2 className="container__title"></h2>
+      </div>
+    </div>
+  );
+};
+
+function SigninButton() {
+  const url =
+    "https://www.coinbase.com/oauth/authorize?client_id=" +
+    CLIENT_ID +
+    "&redirect_uri=" +
+    encodeURIComponent(SIGNIN_REDIRECT_URI) +
+    "&response_type=code&scope=wallet%3Aaccounts%3Aread&account=all";
+  return (
+    <button className="login__button" href={url}>
+      Sign in
+    </button>
+  );
+}
+
+const container = document.getElementById("app");
+// ReactDOM.render(<AllTheRateItems />, container);
+ReactDOM.render(<NewApp />, container);
