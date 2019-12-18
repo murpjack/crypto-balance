@@ -1,20 +1,47 @@
 import { getAccounts, requestAccess, exchangeCode } from "./scripts/apiCalls";
-const accessTokenValue = "abc";
-// const refreshTokenValue = "def";
+import Future from "fluture/index.js";
 
-// TODO: compose temporaryCode => exchangeCodeOptions
-const temporaryCode = codeFromParams();
-const exchangeCodeOptions = exchangeCode.options(temporaryCode);
-const accountsUrl = getAccounts.url();
-const accountsOptions = getAccounts.options(accessTokenValue);
+function getAccountsList() {
+  const fetchF = Future.encaseP(fetch);
+  const getRequestObject = fetchF(requestAccess.url, requestAccess.options);
+  const responseJSON = res => Future.tryP(_ => res.json());
+  const parameters = location.search.slice(1);
+  const getTemporaryCode = () => codeFromParams(parameters, "code");
+  const setExchangeOptions = code => exchangeCode.options(code);
+  const getExchangeCode = options => fetchF(exchangeCode.url, options);
+  const accessTokenValue = "abc";
+  const accountsOptions = token => getAccounts.options(token);
+  const accountsUrl = currency => getAccounts.url(currency);
+  const getAccountData = fetchF(
+    accountsUrl("GBP"),
+    accountsOptions(accessTokenValue)
+  );
+  getRequestObject
+    .chain(responseJSON)
+    .then(getTemporaryCode)
+    .chain(setExchangeOptions)
+    .chain(getExchangeCode)
+    .chain(responseJSON)
+    .then(getAccountData)
+    .chain(responseJSON);
 
-// TODO: compose fetches
-fetch(requestAccess.url, requestAccess.options).then(console.log);
-fetch(exchangeCode.url, exchangeCodeOptions).then(console.log);
-fetch(accountsUrl, accountsOptions).then(console.log);
+  return Future.of(getRequestObject);
 
-// TODO： get code from params
-// TODO： use routing
-function codeFromParams() {
-  return "ddd";
+  function codeFromParams(p, str) {
+    let queryString = p.slice(1);
+    if (queryString) {
+      queryString = queryString.split("#")[0];
+      const arr = queryString.split("&");
+
+      let code = null;
+      arr.map(a => {
+        const param = a.split("=");
+        if (param[0].indexOf(str) > -1) {
+          code = param[1];
+        }
+      });
+      return code;
+    }
+  }
 }
+getAccountsList();
