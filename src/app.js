@@ -2,120 +2,141 @@ import "./styles/style.scss";
 
 import React from "react";
 import ReactDOM from "react-dom";
-import Future from "fluture/index.js";
+
 import PropTypes from "prop-types";
+import Future from "fluture/index.js";
+// import { createStore } from "redux";
+import { CLIENT_ID, SIGNIN_REDIRECT_URI } from "./scripts/variables";
+Future.of(12);
 
-import RateItem from "./scripts/RateItem";
-import getRate from "./scripts/rate-call";
+// const rateData = setData(SELECTED);
+// const accountData = setData(SELECTED);
 
-import { SELECTED, CLIENT_ID, SIGNIN_REDIRECT_URI } from "./scripts/variables";
-
-const WarningItem = props => {
-  return <article className="rate__message">{props.value}</article>;
-};
-
-WarningItem.propTypes = {
-  value: PropTypes.string
-};
-
-class AllTheRateItems extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = SELECTED.map(r => ({
+function setData(cryptoList) {
+  return cryptoList
+    .map(r => ({
       [r]: { status: "NotAsked", content: "Loading Cryptos" }
-    })).reduce((acc, v) => Object.assign(acc, v), {});
-    console.log(this.state);
-  }
-
-  componentDidMount() {
-    const futureList = SELECTED.map(r => this.fetchData(r));
-
-    Future.parallel(SELECTED.length, futureList).value(x => x);
-  }
-
-  // populate state with fetched data
-  fetchData(rate) {
-    this.setState({
-      [rate]: { status: "Loading", content: "Loading Cryptos" }
-    });
-
-    return getRate(rate);
-  }
-
-  render() {
-    const cryptos = Object.keys(this.state);
-    const cryptoStatuses = cryptos.map(crypto => {
-      return {
-        base: crypto,
-        value: this.state[crypto]
-      };
-    });
-
-    return cryptoStatuses.map((item, index) => {
-      switch (item.value.status) {
-        case "NotAsked":
-        case "Loading":
-          if (index === 0) {
-            return <WarningItem key={index} value={item.value.content} />;
-          }
-          break;
-        case "Failure":
-          return;
-        case "Success":
-          return (
-            <RateItem key={index} base={item.base} value={item.value.content} />
-          );
-        default:
-          if (index === 0) {
-            return (
-              <RateItem
-                key={index}
-                base={item.base}
-                value={"Oops, that was unexpected..."}
-              />
-            );
-          }
-          break;
-      }
-    });
-  }
+    }))
+    .reduce((acc, v) => Object.assign(acc, v), {});
 }
 
-const NewApp = () => {
+// const initialState = {
+//   isLoggedin: false,
+//   rateData: rateData,
+//   accountData: accountData
+// };
+
+// const store = createStore(console.log("fun"), initialState);
+// console.log(1, store);
+
+const HeaderBanner = () => (
+  <div className="header">
+    <h1 className="header__title">Calypso</h1>
+  </div>
+);
+
+function AccountsList(list) {
+  return CryptoList("My Portfolio", list, GetAccountItem);
+}
+function RatesList(list) {
+  return CryptoList("Prices", list, GetRateItem);
+}
+
+function GetRateItem() {
+  return ListItem("rate");
+}
+function GetAccountItem() {
+  return ListItem("account");
+}
+
+function CryptoList(title, list, GetItem) {
   return (
     <div>
-      <div className="login">
-        <p className="login__text">
-          Sign in with Coinbase to check your crypto assets.
-        </p>
-        <SigninButton />
-      </div>
-
-      <div className="rates container">
-        <h2 className="container__title"></h2>
-      </div>
-
-      <div className="accounts container">
-        <h2 className="container__title"></h2>
-      </div>
+      <h2>{title}</h2>
+      <ul>{list.map(GetItem)}</ul>
     </div>
   );
+}
+CryptoList.propTypes = {
+  title: PropTypes.string.isRequired,
+  list: PropTypes.array.isRequired,
+  GetItem: PropTypes.func.isRequired
 };
 
-function SigninButton() {
-  const url =
+function ListItem(crypto) {
+  const ValueContent = GetValueContent(crypto);
+  return (
+    <li>
+      <div>{crypto.icon}</div>
+      <div>
+        <p>{crypto.fullname}</p>
+        <p>{crypto.abreviated}</p>
+      </div>
+      <div className={"crypto--" + crypto}>
+        <ValueContent />
+      </div>
+    </li>
+  );
+}
+ListItem.propTypes = {
+  crypto: PropTypes.object.isRequired
+};
+
+function GetValueContent(crypto) {
+  switch (crypto.content) {
+    case "rateData":
+      return (
+        <div>
+          <p>{crypto.price}</p>
+          <p>{crypto.quantity}</p>
+        </div>
+      );
+    case "accountData":
+      return (
+        <div>
+          <p>{crypto.price}</p>
+        </div>
+      );
+  }
+}
+GetValueContent.propTypes = {
+  crypto: PropTypes.object.isRequired
+};
+
+const Calypso = () => {
+  const isLoggedin = false;
+  return <div>{isLoggedin ? <CryptosPage /> : <LoginPage />}</div>;
+};
+
+function LoginPage() {
+  const signinUrl =
     "https://www.coinbase.com/oauth/authorize?client_id=" +
     CLIENT_ID +
     "&redirect_uri=" +
     encodeURIComponent(SIGNIN_REDIRECT_URI) +
     "&response_type=code&scope=wallet%3Aaccounts%3Aread&account=all";
   return (
-    <button className="login__button" href={url}>
-      Sign in
-    </button>
+    <div>
+      <img />
+      <h1>Calypso</h1>
+      <p>Sign in to track your Crypto assets.</p>
+      <a href={signinUrl} target="_blank">
+        Sign in
+      </a>
+      <p>Made with ❤ by Jack Murphy</p>
+    </div>
+  );
+}
+
+function CryptosPage() {
+  return (
+    <div>
+      <HeaderBanner />
+      <RatesList />
+      <AccountsList />
+    </div>
   );
 }
 
 const container = document.getElementById("app");
-// ReactDOM.render(<AllTheRateItems />, container);
-ReactDOM.render(<NewApp />, container);
+ReactDOM.render(<Calypso />, container);

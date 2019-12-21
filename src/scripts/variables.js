@@ -13,8 +13,8 @@ export const CLIENT_ID =
 export const CLIENT_SECRET =
   "2767ca0eb1ffa53f2791899cb6f3a816208e3b2f3cf9ec19b02ca04b314a9b6b";
 export const SUCCESS_REDIRECT_URI =
-  "https://www.murphyme.co.uk/cryptos/success/";
-export const SIGNIN_REDIRECT_URI = "https://www.murphyme.co.uk/cryptos/";
+  "https://www.murphyme.co.uk/calypso/success";
+export const SIGNIN_REDIRECT_URI = "https://www.murphyme.co.uk/calypso/signin";
 
 export const ACCESS_TOKEN_KEY = "ACCESS_TOKEN_KEY";
 

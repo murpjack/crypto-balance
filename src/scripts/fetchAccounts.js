@@ -16,14 +16,20 @@ function getAccountsList() {
     accountsUrl("GBP"),
     accountsOptions(accessTokenValue)
   );
+  const successObj = obj => obj;
+
   getRequestObject
     .chain(responseJSON)
+    //TODO: ADD left/right handler
+    // L-pass,R-error
     .then(getTemporaryCode)
     .chain(setExchangeOptions)
     .chain(getExchangeCode)
     .chain(responseJSON)
+    //TODO: ADD left/right handler
     .then(getAccountData)
-    .chain(responseJSON);
+    .chain(responseJSON)
+    .value(successObj);
 
   return Future.of(getRequestObject);
 
