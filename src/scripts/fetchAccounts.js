@@ -1,12 +1,11 @@
 import { getAccounts, requestAccess, exchangeCode } from "./scripts/apiCalls";
 import Future from "fluture/index.js";
-
+import TEMPORARY_CODE from "./scripts/variables";
 function getAccountsList() {
   const fetchF = Future.encaseP(fetch);
   const getRequestObject = fetchF(requestAccess.url, requestAccess.options);
   const responseJSON = res => Future.tryP(_ => res.json());
-  const parameters = location.search.slice(1);
-  const getTemporaryCode = () => codeFromParams(parameters, "code");
+  const getTemporaryCode = () => localStorage.getItem(TEMPORARY_CODE);
   const setExchangeOptions = code => exchangeCode.options(code);
   const getExchangeCode = options => fetchF(exchangeCode.url, options);
   const accessTokenValue = "abc";
@@ -32,22 +31,5 @@ function getAccountsList() {
     .value(successObj);
 
   return Future.of(getRequestObject);
-
-  function codeFromParams(p, str) {
-    let queryString = p.slice(1);
-    if (queryString) {
-      queryString = queryString.split("#")[0];
-      const arr = queryString.split("&");
-
-      let code = null;
-      arr.map(a => {
-        const param = a.split("=");
-        if (param[0].indexOf(str) > -1) {
-          code = param[1];
-        }
-      });
-      return code;
-    }
-  }
 }
 getAccountsList();

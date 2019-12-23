@@ -4,17 +4,19 @@
 }
 
 body {
-  background-color: #05668D;
+  background-color: #1652f0;
   font-family: "Roboto";
+  min-height: 80vh;
 }
 
 .message__container {
   background-color: #fff;
-  border-radius: 3px;
+  border-radius: 4px;
   height: 500px;
-  margin: 70px auto;
+  margin: 120px auto 70px;
   padding: 10px 20px;
-  width: 300px;
+  /* width: 300px; */
+  max-width: 480px;
 }
 
 .message__image {

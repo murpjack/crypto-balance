@@ -1,0 +1,46 @@
+.signin {
+  color: #222;
+  text-align: center;
+
+  &__image {
+    display: inline-block;
+    height: 130px;
+    margin: 40px 0 20px;
+    width: 130px;
+  }
+
+  &__title {
+    font-size: 18px;
+    letter-spacing: 1px;
+  }
+
+  &__text {
+    font-size: 13px;
+    letter-spacing: 1px;
+    line-height: 25px;
+    margin: 0;
+    padding: 10px 0 30px;
+    text-align: center;
+  }
+
+  &__button {
+    background-color: #1652f0;
+    border: 2px solid;
+    border-radius: 5px;
+    color: white;
+    height: 40px;
+    line-height: 40px;
+    width: 195px;
+    display: inline-block;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 11px;
+    text-decoration: none;
+
+    &:hover {
+      color: #1652f0;
+      background-color: white;
+    }
+  }
+}

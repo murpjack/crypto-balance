@@ -6,19 +6,23 @@ import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import Future from "fluture/index.js";
 // import { createStore } from "redux";
-import { CLIENT_ID, SIGNIN_REDIRECT_URI } from "./scripts/variables";
+import {
+  CLIENT_ID,
+  SIGNIN_REDIRECT_URI,
+  TEMPORARY_CODE
+} from "./scripts/variables";
 Future.of(12);
 
 // const rateData = setData(SELECTED);
 // const accountData = setData(SELECTED);
 
-function setData(cryptoList) {
-  return cryptoList
-    .map(r => ({
-      [r]: { status: "NotAsked", content: "Loading Cryptos" }
-    }))
-    .reduce((acc, v) => Object.assign(acc, v), {});
-}
+// function setData(cryptoList) {
+//   return cryptoList
+//     .map(r => ({
+//       [r]: { status: "NotAsked", content: "Loading Cryptos" }
+//     }))
+//     .reduce((acc, v) => Object.assign(acc, v), {});
+// }
 
 // const initialState = {
 //   isLoggedin: false,
@@ -116,18 +120,23 @@ function LoginPage() {
     encodeURIComponent(SIGNIN_REDIRECT_URI) +
     "&response_type=code&scope=wallet%3Aaccounts%3Aread&account=all";
   return (
-    <div>
-      <img />
-      <h1>Calypso</h1>
-      <p>Sign in to track your Crypto assets.</p>
-      <a href={signinUrl} target="_blank">
+    <div className="calypso__signin signin">
+      <img className="signin__image" />
+      <h1 className="signin__title">Calypso</h1>
+      <p className="signin__text">Sign in to check your Coinbase account.</p>
+      <a
+        className="signin__button"
+        href={signinUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         Sign in
       </a>
-      <p>Made with ❤ by Jack Murphy</p>
+      <p className="signin__text">Made with ❤ by Jack Murphy</p>
     </div>
   );
 }
-
+console.log(localStorage.getItem(TEMPORARY_CODE));
 function CryptosPage() {
   return (
     <div>
