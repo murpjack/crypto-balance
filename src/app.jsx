@@ -8,10 +8,45 @@ import Future from "fluture/index.js";
 // import { createStore } from "redux";
 import {
   CLIENT_ID,
-  SIGNIN_REDIRECT_URI,
+  SUCCESS_REDIRECT_URI,
   TEMPORARY_CODE
 } from "./scripts/variables";
 Future.of(12);
+
+//TODO: compose this!!!
+chrome.tabs.query({}, tabs => {
+  const getSuccessTab = getTabParams(tabs);
+  const getParameters = t => t[0].url.slice(SUCCESS_REDIRECT_URI.length + 1);
+  const parameters = getParameters(getSuccessTab);
+
+  const tempCode = codeFromParams(parameters, "code");
+  const encodeTempCode = code => encodeURIComponent(code);
+  const codeToStorage = code => localStorage.setItem(TEMPORARY_CODE, code);
+
+  const encoded = encodeTempCode(tempCode);
+  codeToStorage(encoded);
+});
+
+function getTabParams(t) {
+  return t.filter(t => t.url.includes(SUCCESS_REDIRECT_URI));
+}
+
+function codeFromParams(query, str) {
+  if (!query) return false;
+
+  const q = query.split("#")[0];
+  const arr = q.split("&");
+
+  let code = null;
+  arr.map(a => {
+    const param = a.split("=");
+    if (param[0] === str) {
+      code = param[1];
+      return code;
+    }
+  });
+  return code;
+}
 
 // const rateData = setData(SELECTED);
 // const accountData = setData(SELECTED);
@@ -117,7 +152,7 @@ function LoginPage() {
     "https://www.coinbase.com/oauth/authorize?client_id=" +
     CLIENT_ID +
     "&redirect_uri=" +
-    encodeURIComponent(SIGNIN_REDIRECT_URI) +
+    encodeURIComponent(SUCCESS_REDIRECT_URI) +
     "&response_type=code&scope=wallet%3Aaccounts%3Aread&account=all";
   return (
     <div className="calypso__signin signin">
@@ -136,7 +171,6 @@ function LoginPage() {
     </div>
   );
 }
-console.log(localStorage.getItem(TEMPORARY_CODE));
 function CryptosPage() {
   return (
     <div>
