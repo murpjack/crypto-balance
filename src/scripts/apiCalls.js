@@ -1,9 +1,9 @@
 import {
   CLIENT_ID,
   CLIENT_SECRET,
-  SIGNIN_REDIRECT_URI,
-  SUCCESS_REDIRECT_URI
-} from "./scripts/variables";
+  SUCCESS_REDIRECT_URI,
+  AUTHORIZATION_CODE
+} from "./variables";
 
 const apiCalls = {
   // request access code
@@ -13,33 +13,32 @@ const apiCalls = {
       method: "GET",
       response_type: "code",
       client_id: CLIENT_ID,
-      redirect_uri: SIGNIN_REDIRECT_URI
+      redirect_uri: SUCCESS_REDIRECT_URI
     }
   },
   // exchange code for access token
   exchangeCode: {
-    url: "https://api.coinbase.com/oauth/token",
-    options: code => ({
-      grant_type: "authorization_code",
+    url: code =>
+      "https://api.coinbase.com/oauth/token" +
+      `/?grant_type=${AUTHORIZATION_CODE}&code=${code}&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&redirect_uri=${SUCCESS_REDIRECT_URI}`,
+    options: {
       method: "POST",
-      code: code,
-      client_id: CLIENT_ID,
-      client_secret: CLIENT_SECRET,
-      redirect_uri: SUCCESS_REDIRECT_URI
-    })
-  },
-  getAccounts: {
-    url: asset => `https://api.coinbase.com/v2/accounts${asset}`,
-    options: token => ({
       headers: {
-        Authorization: `Bearer ${token}`
+        "CB-Version": "2019-12-12"
+      }
+    }
+  },
+  // TODO: store headers as params in url
+  getAccounts: {
+    url: "https://api.coinbase.com/v2/accounts",
+    options: accessToken => ({
+      headers: {
+        Authorization: "Bearer " + accessToken
       }
     })
   }
 };
 
-const requestAccess = apiCalls.requestAccess;
-const exchangeCode = apiCalls.exchangeCode;
-const getAccounts = apiCalls.getAccounts;
-
-export default { getAccounts, requestAccess, exchangeCode };
+export const requestAccess = apiCalls.requestAccess;
+export const exchangeCode = apiCalls.exchangeCode;
+export const getAccounts = apiCalls.getAccounts;

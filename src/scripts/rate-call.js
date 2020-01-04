@@ -1,3 +1,4 @@
+import { fetchF } from "fetch-future";
 import Future from "fluture/index.js";
 import { getValue } from "./helpers";
 
@@ -22,8 +23,8 @@ function getRate(rate) {
   const createRateObject = res => (res.errors ? left : right);
   const isSuccess = obj => obj;
 
-  const fetchF = Future.encaseP(fetch);
-  const newObject = fetchF(url)
+  const fetch = fetchF(Future);
+  const newObject = fetch(url)
     .chain(responseJSON)
     .map(createRateObject)
     .value(isSuccess);
