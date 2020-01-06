@@ -1,7 +1,7 @@
 import {
   CLIENT_ID,
   CLIENT_SECRET,
-  SUCCESS_REDIRECT_URI,
+  SUCCESS_URI,
   AUTHORIZATION_CODE
 } from "./variables";
 
@@ -13,14 +13,14 @@ const apiCalls = {
       method: "GET",
       response_type: "code",
       client_id: CLIENT_ID,
-      redirect_uri: SUCCESS_REDIRECT_URI
+      redirect_uri: SUCCESS_URI
     }
   },
   // exchange code for access token
   exchangeCode: {
     url: code =>
       "https://api.coinbase.com/oauth/token" +
-      `/?grant_type=${AUTHORIZATION_CODE}&code=${code}&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&redirect_uri=${SUCCESS_REDIRECT_URI}`,
+      `/?grant_type=${AUTHORIZATION_CODE}&code=${code}&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&redirect_uri=${SUCCESS_URI}`,
     options: {
       method: "POST",
       headers: {

@@ -1,12 +1,12 @@
 import React from "react";
-import { CLIENT_ID, SUCCESS_REDIRECT_URI } from "./scripts/variables";
+import { CLIENT_ID, SUCCESS_URI } from "./../variables";
 
 export default function LoginPage() {
   const signinUrl =
     "https://www.coinbase.com/oauth/authorize?client_id=" +
     CLIENT_ID +
     "&redirect_uri=" +
-    encodeURIComponent(SUCCESS_REDIRECT_URI) +
+    encodeURIComponent(SUCCESS_URI) +
     "&response_type=code&scope=wallet%3Aaccounts%3Aread&account=all";
   return (
     <div className="calypso__signin signin">

@@ -1,30 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { getImgName } from "./helpers";
+import { getImgName, getFullName } from "../helpers";
 
-export default function AccountItem({ code, name, amount, value }) {
-  // value = rateData.value * accountData.amount
+export default function RateItem({ code, value }) {
   return (
-    <li>
+    <li id={code} className="rate">
       <img
         src={`./images/32/color/${getImgName(code)}.png`}
         className="rate__image"
       />
-      <div>
-        <p>{name}</p>
-        <p>{code}</p>
+      <div className="rate__name name">
+        <p className="name--full">{getFullName(code)}</p>
+        <p className="name--short">{code}</p>
       </div>
       <div className={`crypto--${code}`}>
-        <p>{value}</p>
-        <p>{amount}</p>
+        <p className="rate__value value">{value}</p>
       </div>
     </li>
   );
 }
-
-AccountItem.propTypes = {
+RateItem.propTypes = {
   code: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  amount: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired
 };

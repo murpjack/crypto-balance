@@ -15,10 +15,23 @@ export const CLIENT_ID =
 export const CLIENT_SECRET =
   "2767ca0eb1ffa53f2791899cb6f3a816208e3b2f3cf9ec19b02ca04b314a9b6b";
 
-export const SUCCESS_REDIRECT_URI = "https://murphyme.co.uk/calypso/success";
+export const SUCCESS_URI = "https://murphyme.co.uk/calypso/success";
 
 export const ACCESS_TOKEN_KEY = "ACCESS_TOKEN_KEY";
 
 export const TEMPORARY_CODE = "TEMPORARY_CODE";
 
 export const AUTHORIZATION_CODE = "authorization_code";
+
+export const LOAD_ACCOUNTS = "LOAD_ACCOUNTS";
+
+export default {
+  SELECTED,
+  CLIENT_ID,
+  CLIENT_SECRET,
+  SUCCESS_URI,
+  ACCESS_TOKEN_KEY,
+  TEMPORARY_CODE,
+  LOAD_ACCOUNTS,
+  AUTHORIZATION_CODE
+};
