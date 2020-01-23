@@ -44,25 +44,24 @@ export function getFullName(abr) {
   }
 }
 
-function getCurrencySymbol(curr) {
-  switch (curr) {
-    case "BTC":
-      return "Ƀ";
-    case "EUR":
-      return "€";
-    case "GBP":
-      return "£";
-    case "USD":
-      return "$";
-    default:
-      return "£";
-  }
-}
+// function getCurrencySymbol(curr) {
+//   switch (curr) {
+//     case "BTC":
+//       return "Ƀ";
+//     case "EUR":
+//       return "€";
+//     case "GBP":
+//       return "£";
+//     case "USD":
+//       return "$";
+//     default:
+//       return "£";
+//   }
+// }
 
-export function getValue(data) {
-  const currencySym = getCurrencySymbol(data.currency);
-  const roundUpValue = parseFloat(data.amount).toFixed(2);
-  return currencySym + roundUpValue;
+export function getValue(amount) {
+  const roundUpValue = parseFloat(amount).toFixed(2);
+  return roundUpValue;
 }
 
 export default {

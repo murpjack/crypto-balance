@@ -2,6 +2,7 @@ import { SELECTED } from "./variables";
 
 const initialState = {
   isLoggedin: false,
+  currency: "GBP",
   rateData: setData(SELECTED),
   accountData: setData(SELECTED)
 };

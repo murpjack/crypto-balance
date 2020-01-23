@@ -29,7 +29,7 @@ const apiCalls = {
     }
   },
   // TODO: store headers as params in url
-  getAccounts: {
+  fetchAccounts: {
     url: "https://api.coinbase.com/v2/accounts",
     options: accessToken => ({
       headers: {
@@ -41,4 +41,4 @@ const apiCalls = {
 
 export const requestAccess = apiCalls.requestAccess;
 export const exchangeCode = apiCalls.exchangeCode;
-export const getAccounts = apiCalls.getAccounts;
+export const fetchAccounts = apiCalls.fetchAccounts;

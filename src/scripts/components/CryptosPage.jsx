@@ -1,11 +1,14 @@
 import React, { useContext } from "react";
-import AccountItem from "./AccountItem";
-import RateItem from "./RateItem";
+// import AccountItem from "./AccountItem";
+// import RateItem from "./RateItem";
 import { CalypsoContext } from "./../context";
 
 export default function CryptosPage() {
   const { state } = useContext(CalypsoContext);
-  const { rateData, accountData } = state;
+  console.log(state);
+  // if (state.accountData === null) return false;
+  // const { rateData } = state;
+  // console.log(rateData);
   return (
     <>
       <div className="header">
@@ -14,21 +17,23 @@ export default function CryptosPage() {
       <div>
         <div>
           <h2>Prices</h2>
-          <ul>
-            {rateData.map((c, idx) => (
-              <RateItem key={idx} props={c} />
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h2>My Portfolio</h2>
-          <ul>
-            {accountData.map((c, idx) => (
-              <AccountItem key={idx} props={c} />
-            ))}
-          </ul>
+          Accounts
         </div>
       </div>
     </>
   );
 }
+
+// <ul>
+//   {rateData.map((c, idx) => (
+//     <RateItem key={idx} props={c} />
+//   ))}
+// </ul>
+//        <div>
+//   <h2>My Portfolio</h2>
+//   <ul>
+//     {accountData.map((c, idx) => (
+//       <AccountItem key={idx} props={c} />
+//     ))}
+//   </ul>
+// </div>

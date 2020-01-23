@@ -25,6 +25,10 @@ export const AUTHORIZATION_CODE = "authorization_code";
 
 export const LOAD_ACCOUNTS = "LOAD_ACCOUNTS";
 
+export const USER_LOGIN = "USER_LOGIN";
+
+export const LOAD_RATES = "LOAD_RATES";
+
 export default {
   SELECTED,
   CLIENT_ID,
@@ -33,5 +37,7 @@ export default {
   ACCESS_TOKEN_KEY,
   TEMPORARY_CODE,
   LOAD_ACCOUNTS,
+  USER_LOGIN,
+  LOAD_RATES,
   AUTHORIZATION_CODE
 };

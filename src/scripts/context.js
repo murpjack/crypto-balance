@@ -1,14 +1,22 @@
 import React from "react";
 import initialState from "./initialState";
-import { LOAD_ACCOUNTS } from "./variables";
+import { USER_LOGIN, LOAD_ACCOUNTS } from "./variables";
 
 export function reducer(state, { type, payload }) {
   switch (type) {
+    case USER_LOGIN:
+      return {
+        isLoggedin: payload.isLoggedin,
+        currency: state.currency,
+        rateData: payload.ratesData,
+        accountData: state.accountsData
+      };
     case LOAD_ACCOUNTS:
       return {
-        isLoggedIn: !state.isLoggedIn,
-        ratesData: payload.ratesData,
-        accountsData: payload.accountsData
+        isLoggedin: state.isLoggedin,
+        currency: payload.currency,
+        rateData: payload.ratesData,
+        accountData: payload.accountsData
       };
     default:
       return state;
