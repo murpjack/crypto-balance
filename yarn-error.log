@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/bin/node /home/jack/.yarn/bin/yarn.js add fetch-future
+  /usr/bin/node /home/jack/.yarn/bin/yarn.js add react-combine-reducers
 
 PATH: 
   /home/jack/gems/bin:/home/jack/.yarn/bin:/home/jack/.config/yarn/global/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/jack/.local/bin:/home/user_directory/Android/Sdk/tools:/home/user_directory/Android/Sdk/platform-tools:/home/jack/Android/Sdk/platform-tools:/home/jack/Android/Sdk/tools:/home/jack/npm/bin
@@ -14,17 +14,8 @@ Platform:
   linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/fetch-future: Not found
-      at Request.params.callback [as _callback] (/home/jack/.yarn/lib/cli.js:66926:18)
-      at Request.self.callback (/home/jack/.yarn/lib/cli.js:140564:22)
-      at emitTwo (events.js:126:13)
-      at Request.emit (events.js:214:7)
-      at Request.<anonymous> (/home/jack/.yarn/lib/cli.js:141536:10)
-      at emitOne (events.js:116:13)
-      at Request.emit (events.js:211:7)
-      at IncomingMessage.<anonymous> (/home/jack/.yarn/lib/cli.js:141458:12)
-      at Object.onceWrapper (events.js:313:30)
-      at emitNone (events.js:111:20)
+  Error: getaddrinfo ENOTFOUND registry.yarnpkg.com registry.yarnpkg.com:443
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:67:26)
 
 npm manifest: 
   {

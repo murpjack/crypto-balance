@@ -1,5 +1,5 @@
 import React from "react";
-import { CLIENT_ID, SUCCESS_URI } from "./../variables";
+import { CLIENT_ID, SUCCESS_URI } from "../constants/login";
 
 export default function LoginPage() {
   const signinUrl =

@@ -6321,6 +6321,11 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-combine-reducers@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-combine-reducers/-/react-combine-reducers-1.0.2.tgz#58e84e17a509e7343be6b60ad776b2147d5f8dd6"
+  integrity sha512-qT0cScAttbHVIJ1IfA5UIAEw/HvPJY+LcKau5NA3BkbDrU4U5gU+GhDZlS0IonMq3ZzhA7Knj6QGzckmnDcCoQ==
+
 react-dom@^16.9.0:
   version "16.12.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.12.0.tgz#0da4b714b8d13c2038c9396b54a92baea633fe11"

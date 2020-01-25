@@ -1,11 +1,14 @@
-import { SELECTED } from "./variables";
+import selectedAssets from "../constants/selectedAssets";
 
-const initialState = {
-  isLoggedin: false,
+export const initialState = {
+  selectedAssets: selectedAssets,
   currency: "GBP",
-  rateData: setData(SELECTED),
-  accountData: setData(SELECTED)
+  loggedIn: false,
+  accounts: setData(selectedAssets),
+  rates: setData(selectedAssets),
+  loadedAccountsAndRates: false
 };
+
 export default initialState;
 
 function setData(cryptoArray) {
