@@ -1,5 +1,5 @@
 import React from "react";
-import initialState from "./services/initialState";
+import initialState from "./initialState";
 
 export const CalypsoContext = React.createContext(initialState);
 

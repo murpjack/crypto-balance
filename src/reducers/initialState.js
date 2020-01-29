@@ -6,7 +6,7 @@ export const initialState = {
   loggedIn: false,
   accounts: setData(selectedAssets),
   rates: setData(selectedAssets),
-  loadedAccountsAndRates: false
+  loadedAssets: false
 };
 
 export default initialState;

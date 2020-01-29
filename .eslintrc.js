@@ -8,6 +8,7 @@ module.exports = {
     "plugin:react/recommended",
     "plugin:prettier/recommended"
   ],
+  parser: "babel-eslint",
   parserOptions: {
     ecmaVersion: 6,
     sourceType: "module",

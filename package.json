@@ -11,6 +11,7 @@
   "main": "dist/bundle.js",
   "scripts": {
     "build": "webpack --config webpack.config.js",
+    "build_dev": "webpack-dev-server --mode development",
     "test": "jest --coverage"
   },
   "repository": {
@@ -56,6 +57,10 @@
     "style-loader": "^0.23.1",
     "webpack": "^4.39.1",
     "webpack-cli": "^3.3.9",
-    "webpack-dev-server": "^3.7.2"
+    "webpack-dev-server": "^3.10.1"
+  },
+  "devDependencies": {
+    "axios": "^0.19.2",
+    "babel-eslint": "^10.0.3"
   }
 }

@@ -1,14 +1,20 @@
 import React, { useContext } from "react";
+
+import { CalypsoContext } from "../reducers/context";
+
 // import AccountItem from "./AccountItem";
 // import RateItem from "./RateItem";
-import { CalypsoContext } from "./../context";
 
 export default function CryptosPage() {
   const { state } = useContext(CalypsoContext);
-  console.log(state);
+  // const { accounts, rates } = state;
+  console.log(3, state);
+
   // if (state.accountData === null) return false;
+
   // const { rateData } = state;
   // console.log(rateData);
+
   return (
     <>
       <div className="header">

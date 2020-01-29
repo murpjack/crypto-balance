@@ -7,5 +7,18 @@
     "default_popup": "extension.html",
     "default_icon": "images/logo-favicon-tablet.png"
   },
-  "permissions": ["activeTab", "storage", "tabs"]
+  "permissions": [
+    "activeTab",
+    "storage",
+    "identity",
+    "tabs",
+    "https://api.coinbase.com/v2/accounts/*",
+    "https://www.coinbase.com/oauth/*",
+    "http://murphyme.co.uk/success.html/*"
+  ],
+  "content_scripts": [{
+    "js": [
+      "bundle.js"
+    ]
+  }]
 }

@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { getImgName, getFullName } from "../helpers";
+// TODO: getImageName in object not in component
+// import { getImageName, getFullName } from "../helpers";
 
 export default function RateItem({ code, value }) {
   return (
     <li id={code} className="rate">
       <img
-        src={`./images/32/color/${getImgName(code)}.png`}
+        src={`./images/32/color/${getImageName(code)}.png`}
         className="rate__image"
       />
       <div className="rate__name name">
