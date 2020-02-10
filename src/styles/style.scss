@@ -3,11 +3,11 @@
 
 #cExtension {
   color: $color-font-primary;
-  font-size: 14px;
+  font-size: 12px;
   font-family: $font-primary;
   margin: 0;
   min-height: 300px;
-  width: 340px;
+  width: 400px;
 }
 
 h1,
@@ -53,24 +53,27 @@ p {
 // /* Rate style */
 
 .rate {
-  border: 2px solid $color-border-primary;
+  border: 1px solid $color-border-primary;
+  box-sizing: border-box;
   cursor: pointer;
-  height: 60px;
-  margin: -2px;
+  display: inline-block;
+  height: 50px;
+  margin: 0px;
   position: relative;
+  width: 50%;
 
   &__image {
     display: inline-block;
     float: left;
     height: 30px;
-    padding: 15px 10px;
+    padding: 10px 5px;
     width: 30px;
   }
 
   &__name {
     display: inline-block;
     height: 30px;
-    padding: 15px 0;
+    padding: 10px 0;
     width: 170px;
   }
 }
@@ -93,8 +96,8 @@ p {
 }
 
 .name--full {
-  font-size: 14px;
-  letter-spacing: 2px;
+  font-size: 12px;
+  letter-spacing: 0.5px;
 }
 
 .name--short {
@@ -110,14 +113,14 @@ p {
   border-radius: 9999px;
   color: $color-font-price-primary;
   display: inline-block;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
-  height: 30px;
+  height: 20px;
   letter-spacing: 2px;
-  line-height: 30px;
+  line-height: 22px;
   padding: 0 10px;
   position: absolute;
-  right: 10px;
+  right: 5px;
   top: 50%;
   text-align: center;
   transform: translate(0, -50%);

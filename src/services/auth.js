@@ -14,9 +14,10 @@ const getTabs = () =>
   Future((reject, resolve) => chrome.tabs.query({}, resolve));
 
 const getArrayTabsIfRedirected = query => {
-  return Future((reject, resolve) => {
+  return Future((rej, res) => {
+    const errorMsg = "Login to view cryptos";
     const tabs = query.filter(t => t.url.includes(SUCCESS_URI));
-    return tabs.length === 0 ? reject("Login to view cryptos") : resolve(tabs);
+    return tabs.length === 0 ? rej(errorMsg) : res(tabs);
   });
 };
 

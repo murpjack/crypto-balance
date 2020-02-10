@@ -2,9 +2,14 @@
   font-family: "Roboto";
   src: url("./../fonts/Roboto-Regular.woff2") format("woff2");
 }
+@font-face {
+  font-family: "Playfair";
+  src: url("./../fonts/Playfair-Regular.woff2") format("woff2");
+}
 
 /// Font Families ///
-$font-primary: "Roboto";
+$font-primary: "Roboto, Arial";
+$font-header: "Playfair, Times New Roman";
 
 /// Colors ///
 $color-background-primary: #FFFFFF;

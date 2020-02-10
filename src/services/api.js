@@ -14,10 +14,9 @@ export const getRate = rate => {
   const right = ({ data }) => {
     const { amount } = data.data;
     return {
-      [rate]: {
-        status: "Success",
-        content: { value: getDecimalValue(amount) }
-      }
+      status: "Success",
+      code: rate,
+      value: getDecimalValue(amount)
     };
   };
 
@@ -41,8 +40,7 @@ export const getAccounts = () => {
       return getF(url, options(access_token));
     })
     .map(({ data }) => getSelectedAccounts(data.data))
-    .map(setAccountObj);
-  // .fork(console.error, x => console.log(9, x));
+    .map(list => list.map(setAccountObj));
 };
 
 function exchangeCodeForAccessToken() {
@@ -58,39 +56,56 @@ function exchangeCodeForAccessToken() {
 }
 
 const getSelectedAccounts = accounts => {
-  accounts.filter(account => {
+  const filtered = accounts.filter(account => {
     const { currency } = account;
-    selectedAssets.map(name => {
+    for (let i = 0; i < selectedAssets.length; i++) {
+      const name = selectedAssets[i];
       if (name === currency.code) return account;
-    });
+    }
   });
+  return filtered;
 };
 
-const setAccountObj = ({ currency, balance }) => {
+const setAccountObj = account => {
+  const { currency, balance } = account;
+
   const { amount } = balance;
   const { code, name } = currency;
+
   const value = getDecimalValue(parseFloat(amount));
   return {
-    [code]: {
-      status: "Success",
-      content: {
-        name: name,
-        amount: amount,
-        value: value
-      }
-    }
+    status: "Success",
+    code: code,
+    name: name,
+    amount: amount,
+    value: value
   };
 };
 
-function getAllRates() {
+const addCurrentAccountValue = data => {
+  const [accounts, rates] = data;
+  const accountsValues = accounts.map(account => {
+    const accName = account.code;
+    rates.map(rate => {
+      const rateName = rate.code;
+
+      if (accName === rateName) {
+        const a = account;
+        const r = rate;
+        a.value = getDecimalValue(a.amount * r.value);
+      }
+    });
+    return account;
+  });
+  return [accountsValues, rates];
+};
+
+export function getAllRates() {
   const ratesList = selectedAssets.map(getRate);
   return Future.parallel(selectedAssets.length, ratesList);
 }
 
-export const getRatesAndAccounts = Future.both(
-  getAccounts(),
-  getAllRates()
-).fork(console.error, console.log);
-// export const getRatesAndAccounts = getAllRates();
+export const getRatesAndAccounts = () =>
+  Future.both(getAccounts(), getAllRates()).map(addCurrentAccountValue);
 
-export default { getAccounts, getRatesAndAccounts };
+export default { getAccounts, getRatesAndAccounts, getAllRates };

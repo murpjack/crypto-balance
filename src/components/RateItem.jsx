@@ -1,11 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 // TODO: getImageName in object not in component
-// import { getImageName, getFullName } from "../helpers";
+import getFullName from "../libs/getFullName";
+import getImageName from "../libs/getImageName";
 
-export default function RateItem({ code, value }) {
+export default function RateItem({ rate }) {
+  const { code, value } = rate;
   return (
-    <li id={code} className="rate">
+    <div id={code} className="rate">
       <img
         src={`./images/32/color/${getImageName(code)}.png`}
         className="rate__image"
@@ -17,11 +19,9 @@ export default function RateItem({ code, value }) {
       <div className={`crypto--${code}`}>
         <p className="rate__value value">{value}</p>
       </div>
-    </li>
+    </div>
   );
 }
 RateItem.propTypes = {
-  code: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired
+  rate: PropTypes.object.isRequired
 };

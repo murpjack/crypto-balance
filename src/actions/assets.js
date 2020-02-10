@@ -18,8 +18,11 @@ export const assetsFetchError = (dispatch, { loaded }) =>
     payload: { loadedAssets: loaded }
   });
 
-export const assetsFetchSuccess = (dispatch, accounts, rates) =>
-  dispatch({
-    type: ASSETS_FETCH_SUCCESS,
-    payload: { accounts: accounts, rates: rates }
-  });
+export const getAssetsSuccess = ([accounts, rates]) => ({
+  type: ASSETS_FETCH_SUCCESS,
+  payload: { accounts: accounts, rates: rates }
+});
+
+export default {
+  getAssetsSuccess
+};
