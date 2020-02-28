@@ -22,6 +22,7 @@ export default function RateItem({ rate }) {
     </div>
   );
 }
+
 RateItem.propTypes = {
   rate: PropTypes.object.isRequired
 };

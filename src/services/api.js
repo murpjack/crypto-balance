@@ -1,6 +1,6 @@
 import Future from "fluture/index.js";
 
-import selectedAssets from "../constants/selectedAssets";
+import selectedAssets from "../constants/selected";
 import api from "../constants/api";
 
 import { getF, postF } from "../libs/requestsF";
