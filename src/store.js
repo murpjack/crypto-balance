@@ -1,5 +1,9 @@
-import { useReducer } from "react";
-import { createContainer } from 'react-tracked';
+import {
+  useReducer
+} from "react";
+import {
+  createContainer
+} from 'react-tracked';
 import selectedAssets from "./constants/selected";
 
 import {
@@ -7,7 +11,10 @@ import {
   LOGIN_USER
 } from "./actions";
 
-export function reducer(state=initialState, { type, payload }) {
+export function reducer(state = initialState, {
+  type,
+  payload
+}) {
   switch (type) {
     case ASSETS_FETCH_SUCCESS:
       return {
@@ -26,10 +33,14 @@ export function reducer(state=initialState, { type, payload }) {
   }
 }
 
+const LOGGED_IN = "L";
+// const RATES = "R";
+// const ACCOUNTS = "AC";
+
 export const initialState = {
   selectedAssets: selectedAssets,
   currency: "GBP",
-  loggedIn: false,
+  loggedIn: localStorage.getItem(LOGGED_IN) !== null ? false : JSON.parse(localStorage.getItem(TODO_LIST)),
   accounts: setData(selectedAssets),
   rates: setData(selectedAssets),
   loadedAssets: false
@@ -38,7 +49,10 @@ export const initialState = {
 function setData(cryptoArray) {
   return cryptoArray
     .map(r => ({
-      [r]: { status: "NotAsked", content: "Loading Cryptos" }
+      [r]: {
+        status: "NotAsked",
+        content: "Loading Cryptos"
+      }
     }))
     .reduce((acc, v) => Object.assign(acc, v), {});
 }

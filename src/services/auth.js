@@ -10,8 +10,7 @@ export default function tryLogin() {
     .map(setCodeToStorage);
 }
 
-const getTabs = () =>
-  Future((reject, resolve) => chrome.tabs.query({}, resolve));
+const getTabs = () => Future((rej, res) => chrome.tabs.query({}, res));
 
 const getArrayTabsIfRedirected = query => {
   return Future((rej, res) => {
