@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Calypso",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "browser_action": {
     "default_popup": "extension.html",
