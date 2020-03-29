@@ -10,9 +10,9 @@ export default function LoginPage() {
 
   return (
     <div className="calypso__signin signin">
-      <img className="signin__image" src="./images/logo-chrome.png" />
       <h1 className="signin__title">Calypso</h1>
-      <p className="signin__text">Check Crypto Currencies</p>
+      <p className="signin__subtitle">Check Crypto Currencies</p>
+      <img className="signin__image" src="./images/logo-chrome.png" />
       <a
         className="signin__button"
         href={signinUrl}
@@ -21,7 +21,7 @@ export default function LoginPage() {
       >
         Sign in
       </a>
-      <p className="signin__text">by Jack Murphy</p>
+      <p className="signin__text">{"</> by Jack Murphy"}</p>
     </div>
   );
 }

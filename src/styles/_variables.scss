@@ -3,13 +3,13 @@
   src: url("./../fonts/Roboto-Regular.woff2") format("woff2");
 }
 @font-face {
-  font-family: "Playfair";
-  src: url("./../fonts/Playfair-Regular.woff2") format("woff2");
+  font-family: "Josefin Sans";
+  src: url("./../fonts/Josefin-Sans-Regular.woff2") format("woff2");
 }
 
 /// Font Families ///
-$font-primary: "Roboto, Arial";
-$font-header: "Playfair, Times New Roman";
+$font-primary: "Josefin Sans", "Times New Roman";
+$font-secondary: "Roboto", "Arial";
 
 /// Colors ///
 $color-background-primary: #FFFFFF;
@@ -22,7 +22,3 @@ $color-font-header: #FFFFFF;
 
 $color-background-price-primary: #C8EFFF;
 $color-font-price-primary: #05668D;
-$color-background-price-increase: #C3FFF2;
-$color-font-price-increase: #02C39A;
-$color-background-price-decrease: #FFD2D2;
-$color-font-price-decrease: #FF3231;

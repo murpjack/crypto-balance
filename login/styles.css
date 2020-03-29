@@ -1,11 +1,11 @@
 @font-face {
-  font-family: "Roboto";
-  src: url("Roboto-Regular.woff2")format("woff2");
+  font-family: "Josefin Sans";
+  src: url("./Josefin-Sans-Regular.woff2") format("woff2");
 }
 
 body {
   background-color: #1652f0;
-  font-family: "Roboto";
+  font-family: "Josefin Sans", "Arial";
   min-height: 80vh;
 }
 
@@ -16,42 +16,59 @@ body {
   height: 540px;
   margin: 120px auto 70px;
   padding: 10px 20px;
-  width: 480px;
+  position: relative;
+  text-align: center;
+  width: 380px;
 }
 
 .message__image {
-  min-height: 175px;
+  background-color: #fff;
+  border-radius: 50%;
+  font-size: 10px;
+  height: 8em;
+  left: 50%;
+  position: absolute;
+  top: -4em;
+  transform: translateX(-50%);
+  width: 8em;
 }
 
 .message__image:before {
-  border-radius: 50%;
-  border: 2px solid green;
+  background-image: url(./logo-chrome.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 85%;
   content: "";
-  height: 130px;
-  width: 130px;
+  height: 100%;
+  width: 100%;
   display: block;
-  margin: 30px auto 0;
+  margin: -2px auto 0;
 }
 
 .message__title {
-  color: #222;
+  color: #016c92;
   display: block;
-  font-size: 20px;
-  height: 22px;
-  letter-spacing: 2px;
-  line-height: 22px;
-  margin: 0;
+  font-family: "Josefin Sans", "Arial";
+  font-size: 30px;
+  letter-spacing: 1px;
+  line-height: 40px;
+  margin: 60px 0 0;
   padding: 0;
   text-align: center;
 }
 
 .message__text {
-  font-size: 13px;
+  color: #016c92;
+  display: inline-block;
+  font-family: "Josefin Sans", "Arial";
+  font-size: 18px;
   letter-spacing: 1px;
   line-height: 25px;
-  margin: 0;
-  padding: 10px 0 30px;
+  margin: 0 auto;
+  max-width: 280px;
+  padding: 10px 0 0px;
   text-align: center;
+  width: 100%;
 }
 
 .message__text--icon {
@@ -61,4 +78,19 @@ body {
 .message__text>svg {
   margin-bottom: -3px;
   margin-right: 5px;
+}
+
+.message__text--redirect {
+  position: absolute;
+  bottom: 15px;
+  left: 0;
+  width: 100%;
+  right: 0;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+#counter {
+  display: inline-block;
+  min-width: 35px;
 }

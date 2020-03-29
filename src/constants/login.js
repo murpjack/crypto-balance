@@ -10,10 +10,13 @@ export const AUTHORIZATION_CODE = "authorization_code";
 
 export const TEMPORARY_CODE = "TEMPORARY_CODE";
 
+export const LOGGED_IN = "L";
+
 export default {
   CLIENT_ID,
   CLIENT_SECRET,
   SUCCESS_URI,
   AUTHORIZATION_CODE,
-  TEMPORARY_CODE
+  TEMPORARY_CODE,
+  LOGGED_IN
 };

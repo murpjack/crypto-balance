@@ -1,54 +1,64 @@
 .signin {
-  background-color: #061c57;
-  color: #fff;
+  // background-color: #1652f0;
+  background-color: #fff;
+  color: #016c92;
+  height: 100%;
   text-align: center;
+  width: 340px;
 
   &__image {
     display: inline-block;
     height: 130px;
-    margin: 40px 0 20px;
-    left: 5px;
+    margin: 30px 0 60px;
+    left: 1%;
     position: relative;
     transform: rotate(60deg);
     width: 130px;
   }
 
   &__title {
-    font-family: $font-header;
+    font-family: $font-primary;
     font-size: 35px;
-    letter-spacing: 3px;
+    letter-spacing: 5px;
+    line-height: 45px;
+    padding-top: 35px;
   }
 
-  &__text {
-    font-size: 13px;
-    height: 50px;
+  &__subtitle {
+    font-family: $font-secondary;
+    font-size: 12px;
+    font-weight: 600;
     letter-spacing: 2px;
-    line-height: 50px;
+    line-height: 15px;
     margin: 0;
-    padding: 10px 0;
+    padding: 5px 0 10px;
     text-align: center;
   }
 
   &__button {
-    background-color: #1652f0;
-    border: 2px solid #1652f0;
-    border-radius: 6px;
-    box-shadow: 0px 2px 2px 0px #111;
+    border: 2px solid #016c92;
+    border-radius: 5px;
     box-sizing: border-box;
-    color: white;
-    height: 35px;
-    line-height: 30px;
-    width: 140px;
-    display: inline-block;
-    letter-spacing: 3px;
+    color: #016c92;
+    display: block;
+    font-family: $font-primary;
+    font-size: 12px;
     font-weight: 600;
-    font-size: 14px;
+    height: 40px;
+    letter-spacing: 3px;
+    line-height: 36px;
+    margin: 0 auto 40px;
     text-decoration: none;
+    width: 165px;
+  }
 
-    &:hover {
-      // color: #1652f0;
-      background-color: #012a95;
-      border-color: #012a95;
-    }
+  &__text {
+    font-family: $font-primary;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin: 0 0 25px;
+    padding-bottom: 0;
+    text-align: center;
   }
 }

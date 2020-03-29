@@ -1,20 +1,11 @@
-import {
-  useReducer
-} from "react";
-import {
-  createContainer
-} from 'react-tracked';
+import { useReducer } from "react";
+import { createContainer } from "react-tracked";
 import selectedAssets from "./constants/selected";
+import getCurrencySymbol from "./libs/getCurrencySymbol";
 
-import {
-  ASSETS_FETCH_SUCCESS,
-  LOGIN_USER
-} from "./actions";
+import { ASSETS_FETCH_SUCCESS, LOGIN_USER } from "./actions";
 
-export function reducer(state = initialState, {
-  type,
-  payload
-}) {
+export function reducer(state = initialState, { type, payload }) {
   switch (type) {
     case ASSETS_FETCH_SUCCESS:
       return {
@@ -33,14 +24,10 @@ export function reducer(state = initialState, {
   }
 }
 
-const LOGGED_IN = "L";
-// const RATES = "R";
-// const ACCOUNTS = "AC";
-
 export const initialState = {
   selectedAssets: selectedAssets,
-  currency: "GBP",
-  loggedIn: localStorage.getItem(LOGGED_IN) !== null ? false : JSON.parse(localStorage.getItem(TODO_LIST)),
+  currencySymbol: getCurrencySymbol("GBP"),
+  loggedIn: false,
   accounts: setData(selectedAssets),
   rates: setData(selectedAssets),
   loadedAssets: false
@@ -61,12 +48,6 @@ const useValue = () => useReducer(reducer, initialState);
 
 export const {
   Provider,
-  useTracked
+  useTrackedState,
+  useUpdate: useDispatch
 } = createContainer(useValue);
-
-export default {
-  reducer,
-  initialState,
-  Provider,
-  useTracked
-}

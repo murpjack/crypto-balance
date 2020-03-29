@@ -1,31 +1,31 @@
 import React from "react";
-import { useTracked, useTrackedState } from '../store';
+import { useTrackedState } from "../store";
 
 import AccountItem from "./AccountItem";
 import RateItem from "./RateItem";
 
 export default function CryptosPage() {
-  const [state, dispatch] = useTracked();
+  const state = useTrackedState();
   const { accounts, rates } = state;
-  console.log(3, state);
 
   return (
-    <>
-      <div className="header">
-        <h1 className="header__title">Calypso</h1>
-      </div>
+    <div className="assets">
       <div>
-        <h2>Prices</h2>
-        <div>
-          {rates.map((r, idx) => <RateItem key={idx} rate={r} /> )}
+        <h2 className="assets__header">Prices</h2>
+        <div className="assets__list">
+          {rates.map((r, idx) => (
+            <RateItem key={idx} rate={r} />
+          ))}
         </div>
       </div>
       <div>
-        <h2>Accounts</h2>
-        <div>
-          {accounts.map((a, idx) => <AccountItem key={idx} account={a} /> )}
+        <h2 className="assets__header">Accounts</h2>
+        <div className="assets__list">
+          {accounts.map((a, idx) => (
+            <AccountItem key={idx} account={a} />
+          ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }

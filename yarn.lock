@@ -6461,10 +6461,10 @@ react-is@^16.8.1, react-is@^16.8.4:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
   integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
 
-react-tracked@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/react-tracked/-/react-tracked-1.1.1.tgz#c94338ec41d7fb65909140ccb91b9504a65edd08"
-  integrity sha512-5NbQqeqMY3Idu3d5a8k+PFRzPxhvLyhuXqiXKe85Lp2jQZoREbQ43Ne4EMhnpM+7YdBcazDvmAcNbnM1nF4N7A==
+react-tracked@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-tracked/-/react-tracked-1.2.0.tgz#aa65734d021d671ce6b016487a0a9997f33a5a0d"
+  integrity sha512-hE5ZTrFlobiTEP1Hx9CWHQ+JrQ17rmM8Spog0MYcFbMXiehUonWkugGHODTdA0wiQ7GEYqOldlmdbmpzG76bWw==
 
 react@^16.9.0:
   version "16.12.0"
