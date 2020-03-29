@@ -1,24 +1,13 @@
 @font-face {
-  font-family: "Roboto";
-  src: url("./../fonts/Roboto-Regular.woff2") format("woff2");
-}
-@font-face {
   font-family: "Josefin Sans";
   src: url("./../fonts/Josefin-Sans-Regular.woff2") format("woff2");
 }
 
 /// Font Families ///
-$font-primary: "Josefin Sans", "Times New Roman";
-$font-secondary: "Roboto", "Arial";
+$font-family: "Josefin Sans", "Times New Roman";
 
 /// Colors ///
-$color-background-primary: #FFFFFF;
-$color-border-primary: #DDDDDD;
-$color-font-primary: #444444;
-$color-font-secondary: #333333;
-
-$color-background-header: #05668D;
-$color-font-header: #FFFFFF;
-
-$color-background-price-primary: #C8EFFF;
-$color-font-price-primary: #05668D;
+$color-background: #fff;
+$color-border-asset: #eee;
+$color-font-primary: #016c92;
+$color-font-secondary: #444;
