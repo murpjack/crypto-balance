@@ -1,12 +1,25 @@
 @import "variables";
+@import "signin";
 
 #cExtension {
-  color: $color-font-primary;
-  font-size: 14px;
-  font-family: $font-primary;
+  font-size: 12px;
+  font-family: $font-family;
   margin: 0;
   min-height: 300px;
-  width: 340px;
+}
+
+.assets {
+  padding-top: 20px;
+  width: 460px;
+
+  &__header {
+    text-align: left;
+    padding: 20px 10px 5px;
+    letter-spacing: 2px;
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
 }
 
 h1,
@@ -17,61 +30,44 @@ p {
   padding: 0;
 }
 
-.header {
-  background-color: $color-background-header;
-  color: $color-font-header;
-  font-family: $font-primary;
-  text-align: center;
-}
-
-.header__title {
-  font-size: 16px;
-  letter-spacing: 2px;
-  padding: 12px 0;
-}
-
-.rates__container {
-  background-color: $color-background-primary;
-  display: block;
+// /* Rate style */
+.rate {
+  border: 1px solid $color-border-asset;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-block;
+  height: 50px;
   margin: 0;
   position: relative;
+  width: 50%;
+
+  &__image {
+    display: inline-block;
+    float: left;
+    height: 30px;
+    padding: 10px 5px 10px 10px;
+    width: 30px;
+  }
+
+  &__name {
+    display: inline-block;
+    height: 30px;
+    padding: 10px 0;
+    width: 170px;
+  }
 }
 
-.rates__container:after {
-  background-color: $color-background-primary;
-  content: "";
-  display: block;
-  height: 100%;
-  left: 0;
-  opacity: 0;
+.rate__message {
+  line-height: 25px;
+  height: 25px;
+  box-sizing: border-box;
   position: absolute;
-  top: 0;
-  transition: opacity 0.3s ease-in-out;
-  width: 0;
-}
-// /* Rate style */
-
-.rate {
-  border: 2px solid $color-border-primary;
-  cursor: pointer;
-  height: 60px;
-  margin: -2px;
-  position: relative;
-}
-
-.rate__image {
-  display: inline-block;
-  float: left;
-  height: 30px;
-  padding: 15px 10px;
-  width: 30px;
-}
-
-.rate__name {
-  display: inline-block;
-  height: 30px;
-  padding: 15px 0;
-  width: 170px;
+  text-align: center;
+  bottom: 10px;
+  width: 100%;
+  font-weight: 600;
+  letter-spacing: 2px;
+  font-size: 13px;
 }
 
 .name--bat {
@@ -79,28 +75,30 @@ p {
 }
 
 .name--full {
-  font-size: 14px;
-  letter-spacing: 2px;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .name--short {
   color: #05668d;
   font-size: 13px;
-  letter-spacing: 1px;
+  font-weight: 700;
+  letter-spacing: 2px;
   text-transform: uppercase;
 }
 
 .rate__value {
-  background-color: $color-background-price-primary;
-  border: 2px solid transparent;
   border-radius: 9999px;
-  color: $color-font-price-primary;
+  color: $color-font-primary;
   display: inline-block;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
-  height: 30px;
+  height: 20px;
   letter-spacing: 2px;
-  line-height: 30px;
+  line-height: 22px;
   padding: 0 10px;
   position: absolute;
   right: 10px;
@@ -108,78 +106,26 @@ p {
   text-align: center;
   transform: translate(0, -50%);
 }
+// Transition to this naming convention
 
-.value--down {
-  background-color: $color-background-price-decrease;
-  color: $color-font-price-decrease;
-}
-
-.footer {
-  height: 43px;
-}
-// /*==== Refresh button ====*/
-// /* container */
-
-.refresh {
-  bottom: 7px;
-  cursor: pointer;
-  display: inline-block;
-  height: 28px;
-  margin: 0;
-  position: absolute;
-  right: 15px;
-  width: 28px;
-  transform: rotate(0deg);
-}
-/* Loop */
-.refresh__arrow {
-  border: 4px solid $color-background-header;
-  border-radius: 50%;
-  display: inline-block;
-  margin: 0;
-  height: 20px;
-  width: 20px;
-}
-/* Arrow head */
-.refresh__arrow:before {
-  border: solid $color-background-header;
-  border-width: 3px 3px 0 0;
-  height: 7px;
-  width: 7px;
-  display: block;
-  content: "";
-  position: absolute;
-  top: 2px;
-  left: 19px;
-  transform: rotate(90deg);
-}
-/* White space */
-.refresh__arrow:after {
-  background-color: $color-background-primary;
-  height: 6px;
-  width: 8px;
-  display: block;
-  content: "";
-  position: absolute;
-  top: 12px;
-  left: 20px;
-}
-
-.refresh--rotate {
-  animation: likeARecordBaby 0.4s 1 ease-in-out;
-}
-@keyframes likeARecordBaby {
-  0% {
-    transform: rotate(0deg);
+.asset {
+  &__numbers {
+    height: 30px;
+    overflow: hidden;
+    margin-right: 5px;
+    max-width: 30%;
+    padding: 10px 0;
+    position: absolute;
+    right: 10px;
+    top: 0;
   }
 
-  100% {
-    transform: rotate(355deg);
+  &__value {
+    color: #05668D;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    line-height: 15px;
+    text-align: right;
   }
 }
-
-.rates__container--refresh:after {
-  opacity: 0.4;
-  width: 100%;
-}
-/* END Refresh button */
