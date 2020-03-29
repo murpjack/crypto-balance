@@ -17,7 +17,7 @@ export default function Calypso() {
   const { loggedIn, loadedAssets } = state;
 
   useEffect(() => {
-    const errorMessage = err => console.error(`oh no, you have a ${err}!`);
+    const errorMessage = err => console.error("Please sign in");
     if (!loggedIn) {
       tryLogin().fork(errorMessage, () => dispatch(loginUser));
     } else {
