@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/bin/node /home/jack/.yarn/bin/yarn.js add -D axios
+  /usr/bin/node /home/jack/.yarn/bin/yarn.js add minimist@^1.2.2
 
 PATH: 
   /home/jack/gems/bin:/home/jack/.yarn/bin:/home/jack/.config/yarn/global/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/jack/.local/bin:/home/user_directory/Android/Sdk/tools:/home/user_directory/Android/Sdk/platform-tools:/home/jack/Android/Sdk/platform-tools:/home/jack/Android/Sdk/tools:/home/jack/npm/bin
@@ -14,8 +14,13 @@ Platform:
   linux x64
 
 Trace: 
-  Error: getaddrinfo ENOTFOUND registry.yarnpkg.com registry.yarnpkg.com:443
-      at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:67:26)
+  SyntaxError: /home/jack/git/calypso/package.json: Unexpected token < in JSON at position 1710
+      at JSON.parse (<anonymous>)
+      at /home/jack/.yarn/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/home/jack/.yarn/lib/cli.js:304:30)
+      at /home/jack/.yarn/lib/cli.js:315:13
+      at <anonymous>
 
 npm manifest: 
   {
@@ -26,7 +31,7 @@ npm manifest:
     },
     "license": "MIT",
     "name": "Calypso",
-    "version": "1.1.0",
+    "version": "2.0.0",
     "description": "Follow Bitcoin and friends, without opening anymore tabs in your browser",
     "main": "dist/bundle.js",
     "scripts": {
@@ -39,7 +44,10 @@ npm manifest:
       "url": "git+https://github.com/murpjack/crypto-balance.git"
     },
     "keywords": [
-      "crypto"
+      "Crypto",
+      "Chrome-extension",
+      "Javascript",
+      "Fluture"
     ],
     "babel": {
       "presets": [
@@ -72,14 +80,21 @@ npm manifest:
       "react": "^16.9.0",
       "react-combine-reducers": "^1.0.2",
       "react-dom": "^16.9.0",
+      "react-tracked": "^1.2.0",
       "redux": "^4.0.4",
       "sass-loader": "^7.1.0",
       "style-loader": "^0.23.1",
+  <<<<<<< HEAD
+      "svjsl": "1.8.4",
+      "url-loader": "^2.1.0",
+  =======
+  >>>>>>> 69845afd63d5b599c5049494547160841b428478
       "webpack": "^4.39.1",
       "webpack-cli": "^3.3.9",
       "webpack-dev-server": "^3.10.1"
     },
     "devDependencies": {
+      "axios": "^0.19.2",
       "babel-eslint": "^10.0.3"
     }
   }
@@ -1396,9 +1411,9 @@ Lockfile:
     integrity sha512-7evsyfH1cLOCdAzZAd43Cic04yKydNx0cF+7tiA19p1XnLLPU4dpCQOqpjqwokFe//vS0QqfqqjCS2JkiIs0cA==
   
   acorn@^5.5.3:
-    version "5.7.3"
-    resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.7.3.tgz#67aa231bf8812974b85235a96771eb6bd07ea279"
-    integrity sha512-T/zvzYRfbVojPWahDsE5evJdHb3oJoQfFbsrKM7w5Zcs++Tr257tia3BmMP8XYVjp1S9RZXQMh7gao96BlqZOw==
+    version "5.7.4"
+    resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.7.4.tgz#3e8d8a9947d0599a1796d10225d7432f4a4acf5e"
+    integrity sha512-1D++VG7BhrtvQpNbBzovKNc1FLGGEE/oGe7b9xJm/RFHMBeUaUGpluV9RLjZa47YFdPcDAenEYuq9pQPcMdLJg==
   
   acorn@^6.0.1, acorn@^6.2.1:
     version "6.4.0"
@@ -1670,6 +1685,13 @@ Lockfile:
     version "1.9.0"
     resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.9.0.tgz#24390e6ad61386b0a747265754d2a17219de862c"
     integrity sha512-Uvq6hVe90D0B2WEnUqtdgY1bATGz3mw33nH9Y+dmA+w5DHvUmBgkr5rM/KCHpCsiFNRUfokW/szpPPgMK2hm4A==
+  
+  axios@^0.19.2:
+    version "0.19.2"
+    resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
+    integrity sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==
+    dependencies:
+      follow-redirects "1.5.10"
   
   babel-eslint@^10.0.3:
     version "10.0.3"
@@ -2597,6 +2619,13 @@ Lockfile:
     dependencies:
       ms "2.0.0"
   
+  debug@=3.1.0:
+    version "3.1.0"
+    resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
+    integrity sha512-OX8XqP7/1a9cqkxYw2yXss15f26NKWBpDXQd0/uK/KPqdQhxbPa994hnzjcE2VqQpDslf55723cKPUOGSmMY3g==
+    dependencies:
+      ms "2.0.0"
+  
   debug@^3.0.0, debug@^3.1.1, debug@^3.2.5, debug@^3.2.6:
     version "3.2.6"
     resolved "https://registry.yarnpkg.com/debug/-/debug-3.2.6.tgz#e83d17de16d8a7efb7717edbe5fb10135eee629b"
@@ -3504,6 +3533,13 @@ Lockfile:
       concurrify "^1.1.1"
       sanctuary-show "^1.0.0"
       sanctuary-type-identifiers "^2.0.0"
+  
+  follow-redirects@1.5.10:
+    version "1.5.10"
+    resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.5.10.tgz#7b7a9f9aea2fdff36786a94ff643ed07f4ff5e2a"
+    integrity sha512-0V5l4Cizzvqt5D44aTXbFZz+FtyXV1vrDN6qrelxtfYQKW0KO0W2T/hkE8xvGa/540LkZlkaUjO4ailYTFtHVQ==
+    dependencies:
+      debug "=3.1.0"
   
   follow-redirects@^1.0.0:
     version "1.9.0"
@@ -6530,6 +6566,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
     integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
   
+  react-tracked@^1.2.0:
+    version "1.2.0"
+    resolved "https://registry.yarnpkg.com/react-tracked/-/react-tracked-1.2.0.tgz#aa65734d021d671ce6b016487a0a9997f33a5a0d"
+    integrity sha512-hE5ZTrFlobiTEP1Hx9CWHQ+JrQ17rmM8Spog0MYcFbMXiehUonWkugGHODTdA0wiQ7GEYqOldlmdbmpzG76bWw==
+  
   react@^16.9.0:
     version "16.12.0"
     resolved "https://registry.yarnpkg.com/react/-/react-16.12.0.tgz#0c0a9c6a142429e3614834d5a778e18aa78a0b83"
@@ -7594,10 +7635,17 @@ Lockfile:
     dependencies:
       has-flag "^3.0.0"
   
+  <<<<<<< HEAD
+  svjsl@1.8.4:
+    version "1.8.4"
+    resolved "https://registry.yarnpkg.com/svjsl/-/svjsl-1.8.4.tgz#4bf5df7a8901fb2287ada2686c950527fa47e37a"
+    integrity sha512-U+RX1x7Tslxx68GAr1F9wBaRAjCA9cFliOSOvtWqVuVg0IRUdStsMYah/3Q8gluRomD/h3co7q4MYU62kTwzmA==
+  =======
   symbol-observable@^1.2.0:
     version "1.2.0"
     resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
     integrity sha512-e900nM8RRtGhlV36KGEU9k65K3mPb1WV70OdjfxlG2EAuM1noi/E/BaW/uMhL7bPEssK8QV57vN3esixjUvcXQ==
+  >>>>>>> 69845afd63d5b599c5049494547160841b428478
   
   symbol-tree@^3.2.2:
     version "3.2.4"

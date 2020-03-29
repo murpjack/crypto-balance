@@ -35,6 +35,7 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
     "@testing-library/react": "^9.3.2",
+    "acorn": "^7.1.1",
     "babel-loader": "^8.0.6",
     "copy-webpack-plugin": "^5.0.4",
     "cryptocurrency-icons": "^0.13.0",
@@ -48,6 +49,7 @@
     "fluture": "^11.0.3",
     "html-webpack-plugin": "^3.2.0",
     "jest": "^24.9.0",
+    "minimist": "^1.2.2",
     "node-fetch": "^2.6.0",
     "node-sass": "^4.12.0",
     "prettier": "^1.18.2",
@@ -58,12 +60,9 @@
     "react-tracked": "^1.2.0",
     "redux": "^4.0.4",
     "sass-loader": "^7.1.0",
+    "serialize-javascript": "^2.1.1",
     "style-loader": "^0.23.1",
-<<<<<<< HEAD
-    "svjsl": "1.8.4",
     "url-loader": "^2.1.0",
-=======
->>>>>>> 69845afd63d5b599c5049494547160841b428478
     "webpack": "^4.39.1",
     "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.10.1"
