@@ -1,11 +1,25 @@
 {
   "manifest_version": 2,
   "name": "Calypso",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "browser_action": {
     "default_popup": "extension.html",
     "default_icon": "images/logo-favicon-tablet.png"
   },
-  "permissions": ["activeTab"]
+  "permissions": [
+    "activeTab",
+    "storage",
+    "identity",
+    "tabs",
+    "https://api.coinbase.com/v2/accounts/*",
+    "https://www.coinbase.com/oauth/*",
+    "http://murphyme.co.uk/success.html/*"
+  ],
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": [
+      "bundle.js"
+    ]
+  }]
 }

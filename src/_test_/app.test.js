@@ -1,8 +1,7 @@
-const fetch = require("node-fetch")
-const Future = require('fluture')
+const fetch = require("node-fetch");
+const Future = require("fluture");
 
 describe("fetchRate", () => {
-
   it("Default state set to NotAsked", () => {
     const selectedRates = ["BTC", "ETC", "ETH", "LTC", "XRP"];
     const setDefaultState = r => ({
@@ -11,7 +10,9 @@ describe("fetchRate", () => {
       }
     });
     const defaultState = selectedRates.map(setDefaultState);
-    defaultState.map((s, idx) => expect(s[selectedRates[idx]].status).toEqual("NotAsked"))
+    defaultState.map((s, idx) =>
+      expect(s[selectedRates[idx]].status).toEqual("NotAsked")
+    );
   });
 
   it("FetchRate item", () => {
@@ -33,7 +34,7 @@ describe("fetchRate", () => {
       }
     });
 
-    const createRateObject = res => res.errors ? failure : success;
+    const createRateObject = res => (res.errors ? failure : success);
     const isSuccess = obj => expect(obj["BTC"].status).toEqual("Success");
 
     const fetchF = Future.encaseP(fetch);
@@ -43,6 +44,5 @@ describe("fetchRate", () => {
       .value(isSuccess);
 
     Future.of(newObject);
-
   });
 });

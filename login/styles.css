@@ -1,0 +1,96 @@
+@font-face {
+  font-family: "Josefin Sans";
+  src: url("./Josefin-Sans-Regular.woff2") format("woff2");
+}
+
+body {
+  background-color: #1652f0;
+  font-family: "Josefin Sans", "Arial";
+  min-height: 80vh;
+}
+
+.message__container {
+  background-color: #fff;
+  border-radius: 4px;
+  box-sizing: border-box;
+  height: 540px;
+  margin: 120px auto 70px;
+  padding: 10px 20px;
+  position: relative;
+  text-align: center;
+  width: 380px;
+}
+
+.message__image {
+  background-color: #fff;
+  border-radius: 50%;
+  font-size: 10px;
+  height: 8em;
+  left: 50%;
+  position: absolute;
+  top: -4em;
+  transform: translateX(-50%);
+  width: 8em;
+}
+
+.message__image:before {
+  background-image: url(./logo-chrome.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 85%;
+  content: "";
+  height: 100%;
+  width: 100%;
+  display: block;
+  margin: -2px auto 0;
+}
+
+.message__title {
+  color: #016c92;
+  display: block;
+  font-family: "Josefin Sans", "Arial";
+  font-size: 30px;
+  letter-spacing: 1px;
+  line-height: 40px;
+  margin: 60px 0 0;
+  padding: 0;
+  text-align: center;
+}
+
+.message__text {
+  color: #016c92;
+  display: inline-block;
+  font-family: "Josefin Sans", "Arial";
+  font-size: 18px;
+  letter-spacing: 1px;
+  line-height: 25px;
+  margin: 0 auto;
+  max-width: 280px;
+  padding: 10px 0 0px;
+  text-align: center;
+  width: 100%;
+}
+
+.message__text--icon {
+  margin-bottom: -3px;
+}
+
+.message__text>svg {
+  margin-bottom: -3px;
+  margin-right: 5px;
+}
+
+.message__text--redirect {
+  position: absolute;
+  bottom: 15px;
+  left: 0;
+  width: 100%;
+  right: 0;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+#counter {
+  display: inline-block;
+  min-width: 35px;
+}

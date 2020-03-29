@@ -6,11 +6,12 @@
   },
   "license": "MIT",
   "name": "Calypso",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "Follow Bitcoin and friends, without opening anymore tabs in your browser",
   "main": "dist/bundle.js",
   "scripts": {
     "build": "webpack --config webpack.config.js",
+    "build_dev": "webpack-dev-server --mode development",
     "test": "jest --coverage"
   },
   "repository": {
@@ -18,7 +19,10 @@
     "url": "git+https://github.com/murpjack/crypto-balance.git"
   },
   "keywords": [
-    "crypto"
+    "Crypto",
+    "Chrome-extension",
+    "Javascript",
+    "Fluture"
   ],
   "babel": {
     "presets": [
@@ -41,7 +45,7 @@
     "eslint-plugin-react": "^7.14.3",
     "fetch-mock": "^8.0.0",
     "file-loader": "^4.2.0",
-    "fluture": "^11.0.2",
+    "fluture": "^11.0.3",
     "html-webpack-plugin": "^3.2.0",
     "jest": "^24.9.0",
     "node-fetch": "^2.6.0",
@@ -49,12 +53,18 @@
     "prettier": "^1.18.2",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
+    "react-combine-reducers": "^1.0.2",
     "react-dom": "^16.9.0",
+    "react-tracked": "^1.2.0",
+    "redux": "^4.0.4",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
-    "url-loader": "^2.1.0",
     "webpack": "^4.39.1",
-    "webpack-cli": "^3.3.6",
-    "webpack-dev-server": "^3.7.2"
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.10.1"
+  },
+  "devDependencies": {
+    "axios": "^0.19.2",
+    "babel-eslint": "^10.0.3"
   }
 }
