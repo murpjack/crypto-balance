@@ -7385,6 +7385,11 @@ supports-color@^5.3.0:
   dependencies:
     has-flag "^3.0.0"
 
+svjsl@1.8.4:
+  version "1.8.4"
+  resolved "https://registry.yarnpkg.com/svjsl/-/svjsl-1.8.4.tgz#4bf5df7a8901fb2287ada2686c950527fa47e37a"
+  integrity sha512-U+RX1x7Tslxx68GAr1F9wBaRAjCA9cFliOSOvtWqVuVg0IRUdStsMYah/3Q8gluRomD/h3co7q4MYU62kTwzmA==
+
 symbol-tree@^3.2.2:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.4.tgz#430637d248ba77e078883951fb9aa0eed7c63fa2"
