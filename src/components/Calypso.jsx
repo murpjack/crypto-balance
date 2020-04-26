@@ -1,34 +1,40 @@
 import React, { useEffect } from "react";
-
 import { useDispatch, useTrackedState } from "../store";
 import Future from "fluture/index.js";
 
 import LoginPage from "./LoginPage";
 import CryptosPage from "./CryptosPage";
 
-import { getRatesAndAccounts } from "../services/api";
-import tryLogin from "../services/auth";
+import {
+  getTempCode,
+  checkTempCode,
+  getRatesAndAccounts
+} from "../services/api";
 
-import { loginUser, getAssetsSuccess } from "../actions";
+import { ASSETS_UNLOADED, getAssetsSuccess } from "../actions";
+import { TEMPORARY_CODE, REFRESH_TOKEN, EXPIRES_IN } from "../constants/login";
 
 export default function Calypso() {
   const dispatch = useDispatch();
   const state = useTrackedState();
-  const { loggedIn, loadedAssets } = state;
+  const { loadedAssets } = state;
 
   useEffect(() => {
-    const errorMessage = () => console.error("Please sign in");
-    console.log(window.location);
-    // if (!loggedIn) {
-    //   tryLogin().fork(errorMessage, () => dispatch(loginUser));
-    // } else {
-    //   if (!loadedAssets) {
-    //     getRatesAndAccounts()
-    //       .map(getAssetsSuccess)
-    //       .fork(errorMessage, dispatch);
-    //   }
-    // }
-  }, [loggedIn]);
+    // if tempCode in Storage
+    //    getData ->
+    //      (err -> remove token/refresh/expires from storage, unload assets)
+    //      (res -> setData)
+    getTempCode()
+      .chain(checkTempCode)
+      .chain(getRatesAndAccounts)
+      .map(getAssetsSuccess)
+      .fork(clearLocalStorage, dispatch);
 
-  return <>{loggedIn && loadedAssets ? <CryptosPage /> : <LoginPage />}</>;
+    function clearLocalStorage() {
+      dispatch({ type: ASSETS_UNLOADED });
+      chrome.storage.local.remove([TEMPORARY_CODE, REFRESH_TOKEN, EXPIRES_IN]);
+    }
+  }, []);
+
+  return <>{loadedAssets ? <CryptosPage /> : <LoginPage />}</>;
 }

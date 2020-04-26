@@ -1,12 +1,12 @@
 import Future from "fluture/index.js";
 
 import selectedAssets from "../constants/selected";
-import api from "../constants/api";
+import { rateUrl, accountUrl, tempCodeUrl } from "../constants/api";
 
 import { getF, postF } from "../libs/requestsF";
 
 import getDecimalValue from "../libs/getDecimalValue";
-import { TEMPORARY_CODE } from "../constants/login";
+import { TEMPORARY_CODE, REFRESH_TOKEN, EXPIRES_IN } from "../constants/login";
 
 export const getRate = rate => {
   const setRateObj = res => (res.errors ? left(res) : right(res));
@@ -27,33 +27,43 @@ export const getRate = rate => {
     }
   });
 
-  const url = api.rate(rate);
-
-  return getF(url).map(setRateObj);
+  return getF(rateUrl(rate)).map(setRateObj);
 };
 
-export const getAccounts = () => {
-  return exchangeCodeForAccessToken()
-    .chain(data => {
-      const { access_token } = data;
-      const { url, options } = api.accounts;
-      return getF(url, options(access_token));
-    })
-    .map(({ data }) => getSelectedAccounts(data.data))
-    .map(list => list.map(setAccountObj));
-};
+export const getTempCode = () =>
+  Future((rej, res) => chrome.storage.local.get([TEMPORARY_CODE], res));
 
-function exchangeCodeForAccessToken() {
-  const code = localStorage.getItem(TEMPORARY_CODE);
-  const { url, options } = api.tempCode;
-
-  const token = postF(url(code), options).map(response => {
-    if (response.status === 200) return response.data;
+// storage API returns a string or an empty object, handle outcome
+export const checkTempCode = data => {
+  return Future((rej, res) => {
+    if (typeof data === "string") {
+      return res(data);
+    }
+    rej("Not logged in");
   });
+};
 
-  return token;
-  //TODO: add setTimeout using expires_in time and refresh_token to stay loggedin
+function getAccessToken(data) {
+  if (typeof data === "string") {
+    const { url, options } = tempCodeUrl;
+    const token = postF(url(data), options)
+      .map(response => response.status === 200 && response.data)
+      .map(data => {
+        console.log("data", data);
+        // chrome.storage.local.set({ [EXPIRES_IN]: expires_in });
+        // chrome.storage.local.set({ [TEMPORARY_CODE]: temporaryCode });
+        // chrome.storage.local.set({ [REFRESH_TOKEN]: refreshToken });
+        return data;
+      });
+    return token;
+  }
 }
+
+export const makeAccountRequest = data => {
+  const { access_token } = data;
+  const { url, options } = accountUrl;
+  return getF(url, options(access_token));
+};
 
 const getSelectedAccounts = accounts => {
   const filtered = accounts.filter(account => {
@@ -63,6 +73,7 @@ const getSelectedAccounts = accounts => {
       if (name === currency.code) return account;
     }
   });
+
   return filtered;
 };
 
@@ -81,6 +92,15 @@ const setAccountObj = account => {
     value: value
   };
 };
+
+function getAccount() {
+  return getTempCode()
+    .chain(checkTempCode)
+    .chain(getAccessToken)
+    .chain(makeAccountRequest)
+    .map(({ data }) => getSelectedAccounts(data.data))
+    .map(list => list.map(setAccountObj));
+}
 
 const addCurrentAccountValue = data => {
   const [accounts, rates] = data;
@@ -106,6 +126,12 @@ export function getAllRates() {
 }
 
 export const getRatesAndAccounts = () =>
-  Future.both(getAccounts(), getAllRates()).map(addCurrentAccountValue);
+  Future.both(getAccount(), getAllRates()).map(addCurrentAccountValue);
 
-export default { getAccounts, getRatesAndAccounts, getAllRates };
+export default {
+  getTempCode,
+  checkTempCode,
+  makeAccountRequest,
+  getRatesAndAccounts,
+  getAllRates
+};

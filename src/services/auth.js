@@ -42,6 +42,7 @@ function getCodeFromParams(query) {
 const encodeTempCode = code => encodeURIComponent(code);
 
 const setCodeToStorage = code => {
-  localStorage.setItem(TEMPORARY_CODE, code);
+  chrome.storage.local.set({ [TEMPORARY_CODE]: code });
+  // localStorage.setItem(TEMPORARY_CODE, code);
   return code;
 };

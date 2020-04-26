@@ -1,6 +1,7 @@
-const EXPIRES_IN = "EXPIRES_IN";
-// const TEMPORARY_CODE = "TEMPORARY_CODE";
+const TEMPORARY_CODE = "TEMPORARY_CODE";
 const REFRESH_TOKEN = "REFRESH_TOKEN";
+const EXPIRES_IN = "EXPIRES_IN";
+
 console.log("bg script");
 // Just for test purposes
 // let a = 0;

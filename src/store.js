@@ -3,16 +3,23 @@ import { createContainer } from "react-tracked";
 import selectedAssets from "./constants/selected";
 import getCurrencySymbol from "./libs/getCurrencySymbol";
 
-import { ASSETS_FETCH_SUCCESS, LOGIN_USER } from "./actions";
+import { ASSETS_LOADED, ASSETS_UNLOADED, LOGIN_USER } from "./actions";
 
 export function reducer(state = initialState, { type, payload }) {
   switch (type) {
-    case ASSETS_FETCH_SUCCESS:
+    case ASSETS_LOADED:
       return {
         ...state,
         accounts: payload.accounts,
         rates: payload.rates,
         loadedAssets: true
+      };
+    case ASSETS_UNLOADED:
+      return {
+        ...state,
+        accounts: setData(selectedAssets),
+        rates: setData(selectedAssets),
+        loadedAssets: false
       };
     case LOGIN_USER:
       return {
