@@ -55,6 +55,10 @@ const options = {
         to: path.join(__dirname, "dist")
       },
       {
+        from: path.join(__dirname, "src", "background.js"),
+        to: path.join(__dirname, "dist")
+      },
+      {
         from: path.join(__dirname, "src", "images"),
         to: path.join(__dirname, "dist", "images")
       }
