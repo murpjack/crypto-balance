@@ -10,8 +10,6 @@
   "permissions": [
     "storage",
     "identity",
-    "tabs",
-    "alarms",
     "https://api.coinbase.com/v2/accounts/*",
     "https://www.coinbase.com/oauth/*",
     "http://murphyme.co.uk/success.html/*"

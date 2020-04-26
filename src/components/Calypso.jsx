@@ -18,15 +18,16 @@ export default function Calypso() {
 
   useEffect(() => {
     const errorMessage = () => console.error("Please sign in");
-    if (!loggedIn) {
-      tryLogin().fork(errorMessage, () => dispatch(loginUser));
-    } else {
-      if (!loadedAssets) {
-        getRatesAndAccounts()
-          .map(getAssetsSuccess)
-          .fork(errorMessage, dispatch);
-      }
-    }
+    console.log(window.location);
+    // if (!loggedIn) {
+    //   tryLogin().fork(errorMessage, () => dispatch(loginUser));
+    // } else {
+    //   if (!loadedAssets) {
+    //     getRatesAndAccounts()
+    //       .map(getAssetsSuccess)
+    //       .fork(errorMessage, dispatch);
+    //   }
+    // }
   }, [loggedIn]);
 
   return <>{loggedIn && loadedAssets ? <CryptosPage /> : <LoginPage />}</>;

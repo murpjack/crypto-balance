@@ -3,24 +3,24 @@ import { SUCCESS_URI, TEMPORARY_CODE } from "../constants/login";
 
 export default function tryLogin() {
   return getTabs()
-    .chain(getArrayTabsIfRedirected)
-    .map(getParameters)
+    .chain(getParameters)
     .map(getCodeFromParams)
     .map(encodeTempCode)
     .map(setCodeToStorage);
 }
 
-const getTabs = () => Future((rej, res) => chrome.tabs.query({}, res));
+const tabOptions = { active: true, lastFocusedWindow: true };
+const getTabs = () => Future((rej, res) => chrome.tabs.query(tabOptions, res));
 
-const getArrayTabsIfRedirected = query => {
+const getParameters = tabs => {
   return Future((rej, res) => {
-    const errorMsg = "Login to view cryptos";
-    const tabs = query.filter(t => t.url.includes(SUCCESS_URI));
-    return tabs.length === 0 ? rej(errorMsg) : res(tabs);
+    const url = tabs[0].url;
+    if (url.includes(SUCCESS_URI)) {
+      return res(url.slice(SUCCESS_URI.length + 1));
+    }
+    return rej("Login to view cryptos");
   });
 };
-
-const getParameters = arr => arr[0].url.slice(SUCCESS_URI.length + 1);
 
 function getCodeFromParams(query) {
   if (!query) return false;
