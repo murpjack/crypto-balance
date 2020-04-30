@@ -2,27 +2,45 @@ import Future from "fluture/index.js";
 import { SUCCESS_URI, TEMPORARY_CODE } from "../constants/login";
 
 export default function tryLogin() {
-  return getTabs()
+  return getTempCode()
+    .chain(checkTempCode)
+    .chain(getTabs)
     .chain(getParameters)
-    .map(getCodeFromParams)
-    .map(encodeTempCode)
-    .map(setCodeToStorage);
+    .map(codeFromParams);
 }
+
+const getTempCode = () => {
+  return Future((rej, res) => chrome.storage.local.get([TEMPORARY_CODE], res));
+};
+
+// storage API returns a string or an empty object, handle outcome
+// If value is an object get a tempCode
+const checkTempCode = data => {
+  return Future((rej, res) => {
+    if (typeof data === "string") {
+      return rej();
+    }
+    return res("Not logged in");
+  });
+};
 
 const tabOptions = { active: true, lastFocusedWindow: true };
 const getTabs = () => Future((rej, res) => chrome.tabs.query(tabOptions, res));
 
 const getParameters = tabs => {
   return Future((rej, res) => {
-    const url = tabs[0].url;
-    if (url.includes(SUCCESS_URI)) {
-      return res(url.slice(SUCCESS_URI.length + 1));
+    if (tabs.length > 0) {
+      const url = tabs[0].url;
+      if (url.includes(SUCCESS_URI)) {
+        return res(url.slice(SUCCESS_URI.length + 1));
+      }
+      return rej("Login to view cryptos");
     }
     return rej("Login to view cryptos");
   });
 };
 
-function getCodeFromParams(query) {
+function codeFromParams(query) {
   if (!query) return false;
 
   const q = query.split("#")[0];
@@ -38,11 +56,3 @@ function getCodeFromParams(query) {
   });
   return code;
 }
-
-const encodeTempCode = code => encodeURIComponent(code);
-
-const setCodeToStorage = code => {
-  chrome.storage.local.set({ [TEMPORARY_CODE]: code });
-  // localStorage.setItem(TEMPORARY_CODE, code);
-  return code;
-};

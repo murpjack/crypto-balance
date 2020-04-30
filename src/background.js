@@ -1,26 +1,59 @@
-const TEMPORARY_CODE = "TEMPORARY_CODE";
-const REFRESH_TOKEN = "REFRESH_TOKEN";
-const EXPIRES_IN = "EXPIRES_IN";
-
-console.log("bg script");
-// Just for test purposes
-// let a = 0;
-// chrome.runtime.onInstalled.addListener(() => {
-//   chrome.storage.local.set({ [REFRESH_TOKEN]: a });
-// });
-
-chrome.storage.onChanged.addListener(changes => {
-  if (changes[REFRESH_TOKEN]) {
-    const timeLeft = changes[EXPIRES_IN] ? changes[EXPIRES_IN] : 5000;
-    // const temporaryCode = changes[TEMPORARY_CODE];
-    // const refreshToken = changes[REFRESH_TOKEN];
-    setTimeout(() => {
-      // Make call, set these values
-      // a += 1;
-      // chrome.storage.local.set({ [TEMPORARY_CODE]: a });
-      // chrome.storage.local.set({ [REFRESH_TOKEN]: a });
-      // chrome.storage.local.set({ [TEMPORARY_CODE]: temporaryCode });
-      // chrome.storage.local.set({ [REFRESH_TOKEN]: refreshToken });
-    }, timeLeft);
-  }
-});
+// import Future from "fluture/index.js";
+// import { postF } from "./libs/requestsF";
+//
+// import {
+//   CLIENT_ID,
+//   CLIENT_SECRET,
+//   SUCCESS_URI,
+//   TEMPORARY_CODE,
+//   REFRESH_TOKEN
+// } from "./constants/login";
+//
+// export function makeFirstCall(changes) {
+//   const tempCodeUrl =
+//     `https://api.coinbase.com/oauth/token` +
+//     `?grant_type=authorization_code` +
+//     `&code=${changes[TEMPORARY_CODE].newValue}` +
+//     `&client_id=${CLIENT_ID}` +
+//     `&client_secret=${CLIENT_SECRET}` +
+//     `&redirect_uri=${SUCCESS_URI}`;
+//
+//   const options = {
+//     method: "POST",
+//     headers: {
+//       "Access-Control-Allow-Origin": "*",
+//       "CB-Version": "2019-12-12"
+//     }
+//   };
+//
+//   return postF(tempCodeUrl, options)
+//     .map(response => response.status === 200 && response.data)
+//     .map(storeTokens);
+// }
+//
+// export function makeRefreshCall(changes) {
+//   const refreshTokenUrl =
+//     `https://api.coinbase.com/oauth/token` +
+//     `?grant_type=refresh_token` +
+//     `&refresh_token=${changes[REFRESH_TOKEN].newValue}` +
+//     `&client_id=${CLIENT_ID}` +
+//     `&client_secret=${CLIENT_SECRET}`;
+//
+//   const options = {
+//     method: "POST",
+//     headers: {
+//       "Access-Control-Allow-Origin": "*",
+//       "CB-Version": "2019-12-12"
+//     }
+//   };
+//
+//   postF(refreshTokenUrl, options)
+//     .map(response => response.status === 200 && response.data)
+//     .map(storeTokens);
+// }
+//
+// function storeTokens(data) {
+//   localStorage.setItem(REFRESH_TOKEN, data.refresh_token);
+//   return data;
+// }
+//

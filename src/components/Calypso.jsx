@@ -5,34 +5,42 @@ import Future from "fluture/index.js";
 import LoginPage from "./LoginPage";
 import CryptosPage from "./CryptosPage";
 
-import {
-  getTempCode,
-  checkTempCode,
-  getRatesAndAccounts
-} from "../services/api";
+import { getRatesAndAccounts } from "../services/api";
+import tryLogin from "../services/auth";
 
-import { ASSETS_UNLOADED, getAssetsSuccess } from "../actions";
-import { TEMPORARY_CODE, REFRESH_TOKEN, EXPIRES_IN } from "../constants/login";
+import { getAssetsSuccess } from "../actions";
+import { tempCodeForAccess, refreshForAccess } from "../constants/api";
 
 export default function Calypso() {
   const dispatch = useDispatch();
   const state = useTrackedState();
-  const { loadedAssets } = state;
+  const { refresh_token, loadedAssets } = state;
+  console.log("state", state);
 
   useEffect(() => {
-    // if tempCode in Storage
-    //    getData ->
-    //      (err -> remove token/refresh/expires from storage, unload assets)
-    //      (res -> setData)
-    getTempCode()
-      .chain(checkTempCode)
-      .chain(getRatesAndAccounts)
-      .map(getAssetsSuccess)
-      .fork(clearLocalStorage, dispatch);
-
-    function clearLocalStorage() {
-      dispatch({ type: ASSETS_UNLOADED });
-      chrome.storage.local.remove([TEMPORARY_CODE, REFRESH_TOKEN, EXPIRES_IN]);
+    if (refresh_token) {
+      refreshForAccess(refresh_token)
+        .map(e => {
+          console.log(1, e);
+          return e;
+        })
+        .chain(getRatesAndAccounts)
+        .map(e => {
+          console.log(2, e);
+          return e;
+        })
+        .map(getAssetsSuccess)
+        .map(e => {
+          console.log(3, e);
+          return e;
+        })
+        .fork(() => {}, dispatch);
+    } else {
+      tryLogin()
+        .chain(tempCodeForAccess)
+        .chain(getRatesAndAccounts)
+        .map(getAssetsSuccess)
+        .fork(() => {}, dispatch);
     }
   }, []);
 

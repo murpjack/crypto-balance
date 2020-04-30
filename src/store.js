@@ -1,9 +1,9 @@
 import { useReducer } from "react";
 import { createContainer } from "react-tracked";
 import selectedAssets from "./constants/selected";
-import getCurrencySymbol from "./libs/getCurrencySymbol";
 
-import { ASSETS_LOADED, ASSETS_UNLOADED, LOGIN_USER } from "./actions";
+import { REFRESH_TOKEN } from "./constants/login";
+import { ASSETS_LOADED, ASSETS_UNLOADED } from "./actions";
 
 export function reducer(state = initialState, { type, payload }) {
   switch (type) {
@@ -21,22 +21,17 @@ export function reducer(state = initialState, { type, payload }) {
         rates: setData(selectedAssets),
         loadedAssets: false
       };
-    case LOGIN_USER:
-      return {
-        ...state,
-        loggedIn: payload.loggedIn
-      };
     default:
       return state;
   }
 }
 
 export const initialState = {
-  selectedAssets: selectedAssets,
-  currencySymbol: getCurrencySymbol("GBP"),
-  loggedIn: false,
-  accounts: setData(selectedAssets),
+  refresh_token: localStorage.getItem(REFRESH_TOKEN)
+    ? localStorage.getItem(REFRESH_TOKEN)
+    : null,
   rates: setData(selectedAssets),
+  accounts: setData(selectedAssets),
   loadedAssets: false
 };
 

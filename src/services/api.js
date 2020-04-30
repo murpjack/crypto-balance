@@ -1,12 +1,8 @@
 import Future from "fluture/index.js";
 
 import selectedAssets from "../constants/selected";
-import { rateUrl, accountUrl, tempCodeUrl } from "../constants/api";
-
-import { getF, postF } from "../libs/requestsF";
-
-import getDecimalValue from "../libs/getDecimalValue";
-import { TEMPORARY_CODE, REFRESH_TOKEN, EXPIRES_IN } from "../constants/login";
+import { getAccountData, getRateData } from "../constants/api";
+import getImageName from "../libs/getImageName";
 
 export const getRate = rate => {
   const setRateObj = res => (res.errors ? left(res) : right(res));
@@ -16,6 +12,7 @@ export const getRate = rate => {
     return {
       status: "Success",
       code: rate,
+      imageName: getImageName(rate),
       value: getDecimalValue(amount)
     };
   };
@@ -27,43 +24,20 @@ export const getRate = rate => {
     }
   });
 
-  return getF(rateUrl(rate)).map(setRateObj);
+  return getRateData(rate).map(setRateObj);
 };
 
-export const getTempCode = () =>
-  Future((rej, res) => chrome.storage.local.get([TEMPORARY_CODE], res));
-
-// storage API returns a string or an empty object, handle outcome
-export const checkTempCode = data => {
-  return Future((rej, res) => {
-    if (typeof data === "string") {
-      return res(data);
-    }
-    rej("Not logged in");
-  });
-};
-
-function getAccessToken(data) {
-  if (typeof data === "string") {
-    const { url, options } = tempCodeUrl;
-    const token = postF(url(data), options)
-      .map(response => response.status === 200 && response.data)
-      .map(data => {
-        console.log("data", data);
-        // chrome.storage.local.set({ [EXPIRES_IN]: expires_in });
-        // chrome.storage.local.set({ [TEMPORARY_CODE]: temporaryCode });
-        // chrome.storage.local.set({ [REFRESH_TOKEN]: refreshToken });
-        return data;
-      });
-    return token;
-  }
+export function getAllRates() {
+  const ratesList = selectedAssets.map(getRate);
+  return Future.parallel(selectedAssets.length, ratesList);
 }
 
-export const makeAccountRequest = data => {
-  const { access_token } = data;
-  const { url, options } = accountUrl;
-  return getF(url, options(access_token));
-};
+function getAccount(access_token) {
+  console.log("aT", access_token);
+  return getAccountData(access_token)
+    .map(({ data }) => getSelectedAccounts(data.data))
+    .map(list => list.map(setAccountObj));
+}
 
 const getSelectedAccounts = accounts => {
   const filtered = accounts.filter(account => {
@@ -88,19 +62,17 @@ const setAccountObj = account => {
     status: "Success",
     code: code,
     name: name,
+    imageName: getImageName(code),
     amount: amount,
     value: value
   };
 };
 
-function getAccount() {
-  return getTempCode()
-    .chain(checkTempCode)
-    .chain(getAccessToken)
-    .chain(makeAccountRequest)
-    .map(({ data }) => getSelectedAccounts(data.data))
-    .map(list => list.map(setAccountObj));
-}
+export const getRatesAndAccounts = access_token => {
+  return Future.both(getAccount(access_token), getAllRates()).map(
+    addCurrentAccountValue
+  );
+};
 
 const addCurrentAccountValue = data => {
   const [accounts, rates] = data;
@@ -117,21 +89,13 @@ const addCurrentAccountValue = data => {
     });
     return account;
   });
+
   return [accountsValues, rates];
 };
 
-export function getAllRates() {
-  const ratesList = selectedAssets.map(getRate);
-  return Future.parallel(selectedAssets.length, ratesList);
+function getDecimalValue(amount) {
+  const roundUpValue = parseFloat(amount).toFixed(2);
+  return roundUpValue;
 }
 
-export const getRatesAndAccounts = () =>
-  Future.both(getAccount(), getAllRates()).map(addCurrentAccountValue);
-
-export default {
-  getTempCode,
-  checkTempCode,
-  makeAccountRequest,
-  getRatesAndAccounts,
-  getAllRates
-};
+export default getRatesAndAccounts;
