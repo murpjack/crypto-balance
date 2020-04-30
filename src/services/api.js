@@ -33,7 +33,6 @@ export function getAllRates() {
 }
 
 function getAccount(access_token) {
-  console.log("aT", access_token);
   return getAccountData(access_token)
     .map(({ data }) => getSelectedAccounts(data.data))
     .map(list => list.map(setAccountObj));

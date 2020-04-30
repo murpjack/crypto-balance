@@ -15,25 +15,12 @@ export default function Calypso() {
   const dispatch = useDispatch();
   const state = useTrackedState();
   const { refresh_token, loadedAssets } = state;
-  console.log("state", state);
 
   useEffect(() => {
     if (refresh_token) {
       refreshForAccess(refresh_token)
-        .map(e => {
-          console.log(1, e);
-          return e;
-        })
         .chain(getRatesAndAccounts)
-        .map(e => {
-          console.log(2, e);
-          return e;
-        })
         .map(getAssetsSuccess)
-        .map(e => {
-          console.log(3, e);
-          return e;
-        })
         .fork(() => {}, dispatch);
     } else {
       tryLogin()
