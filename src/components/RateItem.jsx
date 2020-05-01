@@ -11,12 +11,8 @@ export default function RateItem({ rate }) {
         className="rate__image"
         title={name}
       />
-      <div className="rate__name name">
-        <p className="name--short">{code}</p>
-      </div>
-      <div className={`crypto--${code}`}>
-        <p className="rate__value value">{"£" + value}</p>
-      </div>
+      <div className="rate__code">{code}</div>
+      <p className="rate__value">{"£" + value}</p>
     </div>
   );
 }

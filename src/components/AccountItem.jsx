@@ -11,11 +11,9 @@ export default function AccountItem({ account }) {
         className="rate__image"
         title={name}
       />
-      <div className="rate__name name">
-        <p className="name--short">{code}</p>
-      </div>
-      <div className={`asset__numbers crypto--${code}`}>
-        <p className="asset__value value">{"£" + value}</p>
+      <div className="rate__code">{code}</div>
+      <div className="asset__numbers">
+        <p className="asset__value">{"£" + value}</p>
         <p className="rate__amount">{amount}</p>
       </div>
     </div>

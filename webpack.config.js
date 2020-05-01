@@ -7,8 +7,7 @@ const options = {
   mode: "development",
 
   entry: {
-    bundle: path.join(__dirname, "src", "index.jsx"),
-    background: path.join(__dirname, "src", "background.js")
+    bundle: path.join(__dirname, "src", "index.jsx")
   },
 
   output: {
@@ -55,10 +54,6 @@ const options = {
       },
       {
         from: path.join(__dirname, "src", "manifest.json"),
-        to: path.join(__dirname, "dist")
-      },
-      {
-        from: path.join(__dirname, "src", "background.js"),
         to: path.join(__dirname, "dist")
       },
       {
