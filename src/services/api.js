@@ -3,6 +3,7 @@ import Future from "fluture/index.js";
 import selectedAssets from "../constants/selected";
 import { getAccountData, getRateData } from "../constants/api";
 import getImageName from "../libs/getImageName";
+import getFullName from "../libs/getFullName";
 
 export const getRate = rate => {
   const setRateObj = res => (res.errors ? left(res) : right(res));
@@ -12,6 +13,7 @@ export const getRate = rate => {
     return {
       status: "Success",
       code: rate,
+      name: getFullName(rate),
       imageName: getImageName(rate),
       value: getDecimalValue(amount)
     };

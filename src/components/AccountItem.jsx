@@ -6,9 +6,12 @@ export default function AccountItem({ account }) {
 
   return (
     <div id={code} className="rate">
-      <img src={`./images/32/color/${imageName}.png`} className="rate__image" />
+      <img
+        src={`./images/32/color/${imageName}.png`}
+        className="rate__image"
+        title={name}
+      />
       <div className="rate__name name">
-        <p className="name--full">{name}</p>
         <p className="name--short">{code}</p>
       </div>
       <div className={`asset__numbers crypto--${code}`}>
