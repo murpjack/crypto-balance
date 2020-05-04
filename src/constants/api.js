@@ -6,6 +6,11 @@ const getF = (url, options) => Future.tryP(() => axios.get(url, options));
 const postF = Future.encaseP(axios.post);
 const baseUrl = "https://api.coinbase.com";
 
+export const signinUrl =
+  `https://www.coinbase.com/oauth/authorize?client_id=${CLIENT_ID}` +
+  `&redirect_uri=${encodeURIComponent(SUCCESS_URI)}` +
+  "&response_type=code&scope=wallet%3Aaccounts%3Aread&account=all";
+
 export function tempCodeForAccess(code) {
   const url =
     `${baseUrl}/oauth/token` +
@@ -49,7 +54,6 @@ export function refreshForAccess(token) {
 }
 
 function storeTokens(data) {
-  console.log("d.stored", data);
   localStorage.setItem(REFRESH_TOKEN, data.refresh_token);
   return data.access_token;
 }
@@ -70,6 +74,7 @@ export function getRateData(rate) {
 }
 
 export default {
+  signinUrl,
   tempCodeForAccess,
   refreshForAccess,
   getAccountData,

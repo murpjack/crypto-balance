@@ -37,7 +37,7 @@ function setData(cryptoArray) {
   return cryptoArray.map(rate => ({
     status: "NotAsked",
     code: rate,
-    content: "Loading Cryptos",
+    content: "Loading",
     name: getFullName(rate),
     imageName: getImageName(rate)
   }));

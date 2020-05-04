@@ -2,21 +2,22 @@ import React, { useEffect } from "react";
 import { useDispatch, useTrackedState } from "../store";
 import Future from "fluture/index.js";
 
-import AccountItem from "./AccountItem";
-import RateItem from "./RateItem";
-import PlaceholderItem from "./PlaceholderItem";
+import Asset from "./Asset";
 
 import { getAccount, getAllRates } from "../services/api";
 import tryLogin from "../services/auth";
 
 import { ratesPayload, accountPayload } from "../actions";
-import { tempCodeForAccess, refreshForAccess } from "../constants/api";
+import {
+  signinUrl,
+  tempCodeForAccess,
+  refreshForAccess
+} from "../constants/api";
 
 export default function Calypso() {
   const dispatch = useDispatch();
   const state = useTrackedState();
   const { refresh_token, accountData, rates } = state;
-  console.log("state", state);
 
   useEffect(() => {
     getAllRates()
@@ -47,14 +48,15 @@ export default function Calypso() {
     }
     return false;
   }
+
   return (
     <div className="assets">
       <div className="assets__content">
         <h2 className="assets__header">Current rates</h2>
         <div className="assets__list">
-          {rates[0].status === "Success"
-            ? rates.map((r, idx) => <RateItem key={idx} rate={r} />)
-            : rates.map((r, idx) => <PlaceholderItem key={idx} rate={r} />)}
+          {rates.map((r, idx) => (
+            <Asset key={idx} asset={r} />
+          ))}
         </div>
       </div>
       <div className="assets__content">
@@ -63,20 +65,32 @@ export default function Calypso() {
             <h2 className="assets__header">Account</h2>
             <div className="assets__list">
               {accountData.map((a, idx) => (
-                <AccountItem key={idx} account={a} />
+                <Asset key={idx} asset={a} />
               ))}
             </div>
           </>
         ) : (
-          <p>Sign in with Coinbase 🥮</p>
+          <SigninContent />
         )}
       </div>
-      <p className="signin__text">
-        {"</>"} with <span className="icon--heart"></span> by Jack Murphy
+      <p className="madeby">
+        <span className="icon icon--code">{"</>"}</span> by Jack Murphy
       </p>
     </div>
   );
 }
-// : (
-//   <p>Sign in with Coinbase 🥮</p>
-// )}
+
+const SigninContent = () => (
+  <>
+    <img className="signin__image" src="./images/logo-chrome-rotated.png" />
+    <p className="signin__text">View your cryptocurrency portfolio</p>
+    <a
+      className="signin__button"
+      href={signinUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Sign in with Coinbase
+    </a>
+  </>
+);
