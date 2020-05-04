@@ -12,6 +12,10 @@
   padding-top: 20px;
   width: 350px;
 
+  &__content {
+    min-height: 240px;
+  }
+
   &__header {
     text-align: left;
     padding: 20px 10px 5px;
@@ -19,6 +23,12 @@
     font-size: 13px;
     text-transform: uppercase;
     font-weight: 600;
+  }
+
+  &__list {
+    &:nth-child(2n-1) {
+      background-color: red;
+    }
   }
 }
 
@@ -49,7 +59,7 @@ p {
     height: 2px;
     left: 0;
     position: absolute;
-    width: 90%;
+    width: 96%;
   }
 
   &__image {
@@ -68,8 +78,7 @@ p {
     font-weight: 700;
     line-height: 52px;
     letter-spacing: 2px;
-    padding: 0;
-    padding-left: 4px;
+    padding: 0 0 0 4px;
     text-transform: uppercase;
   }
 }
@@ -110,4 +119,12 @@ p {
     line-height: 15px;
     text-align: right;
   }
+}
+
+.icon--heart {
+  background-image: url("../images/heavy-black-heart_2764.png");
+  background-size: contain;
+  display: inline-block;
+  height: 13px;
+  width: 13px;
 }

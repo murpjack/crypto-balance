@@ -3,23 +3,22 @@ import { createContainer } from "react-tracked";
 import selectedAssets from "./constants/selected";
 
 import { REFRESH_TOKEN } from "./constants/login";
-import { ASSETS_LOADED, ASSETS_UNLOADED } from "./actions";
+import { ACCOUNT_LOADED, RATES_LOADED } from "./actions";
+
+import getImageName from "./libs/getImageName";
+import getFullName from "./libs/getFullName";
 
 export function reducer(state = initialState, { type, payload }) {
   switch (type) {
-    case ASSETS_LOADED:
+    case RATES_LOADED:
       return {
         ...state,
-        accounts: payload.accounts,
-        rates: payload.rates,
-        loadedAssets: true
+        rates: payload.rates
       };
-    case ASSETS_UNLOADED:
+    case ACCOUNT_LOADED:
       return {
         ...state,
-        accounts: setData(selectedAssets),
-        rates: setData(selectedAssets),
-        loadedAssets: false
+        accountData: payload.account
       };
     default:
       return state;
@@ -31,19 +30,18 @@ export const initialState = {
     ? localStorage.getItem(REFRESH_TOKEN)
     : null,
   rates: setData(selectedAssets),
-  accounts: setData(selectedAssets),
-  loadedAssets: false
+  accountData: setData(selectedAssets)
 };
 
 function setData(cryptoArray) {
-  return cryptoArray
-    .map(r => ({
-      [r]: {
-        status: "NotAsked",
-        content: "Loading Cryptos"
-      }
-    }))
-    .reduce((acc, v) => Object.assign(acc, v), {});
+  return cryptoArray.map(rate => ({
+    status: "NotAsked",
+    code: rate,
+    content: "Loading Cryptos",
+    name: getFullName(rate),
+    imageName: getImageName(rate)
+  }));
+  // .reduce((acc, v) => Object.assign(acc, v), {});
 }
 
 const useValue = () => useReducer(reducer, initialState);

@@ -34,69 +34,46 @@ export function getAllRates() {
   return Future.parallel(selectedAssets.length, ratesList);
 }
 
-function getAccount(access_token) {
+export function getAccount(access_token, rates) {
   return getAccountData(access_token)
-    .map(({ data }) => getSelectedAccounts(data.data))
-    .map(list => list.map(setAccountObj));
+    .map(getSelectedAssets)
+    .map(assets => setAccountData(assets, rates));
 }
 
-const getSelectedAccounts = accounts => {
-  const filtered = accounts.filter(account => {
-    const { currency } = account;
+function getSelectedAssets(assets) {
+  const accountData = assets.data.data;
+  const filtered = accountData.filter(account => {
     for (let i = 0; i < selectedAssets.length; i++) {
       const name = selectedAssets[i];
-      if (name === currency.code) return account;
+      if (name === account.currency.code) return account;
     }
   });
-
   return filtered;
-};
+}
 
-const setAccountObj = account => {
-  const { currency, balance } = account;
-
-  const { amount } = balance;
-  const { code, name } = currency;
-
-  const value = getDecimalValue(parseFloat(amount));
-  return {
-    status: "Success",
-    code: code,
-    name: name,
-    imageName: getImageName(code),
-    amount: amount,
-    value: value
-  };
-};
-
-export const getRatesAndAccounts = access_token => {
-  return Future.both(getAccount(access_token), getAllRates()).map(
-    addCurrentAccountValue
-  );
-};
-
-const addCurrentAccountValue = data => {
-  const [accounts, rates] = data;
-  const accountsValues = accounts.map(account => {
-    const accName = account.code;
-    rates.map(rate => {
-      const rateName = rate.code;
-
-      if (accName === rateName) {
-        const a = account;
-        const r = rate;
-        a.value = getDecimalValue(a.amount * r.value);
-      }
-    });
-    return account;
+function setAccountData(accountData, rates) {
+  return accountData.map(account => {
+    const { currency, balance } = account;
+    const { amount } = balance;
+    const { code, name } = currency;
+    const imageName = getImageName(code);
+    const r = rates.filter(rate => code === rate.code)[0];
+    const value = getDecimalValue(amount * r.value);
+    const asset = {
+      status: "Success",
+      code,
+      name,
+      imageName,
+      amount,
+      value
+    };
+    return asset;
   });
-
-  return [accountsValues, rates];
-};
+}
 
 function getDecimalValue(amount) {
   const roundUpValue = parseFloat(amount).toFixed(2);
   return roundUpValue;
 }
 
-export default getRatesAndAccounts;
+export default { getAllRates, getAccount };

@@ -49,6 +49,7 @@ export function refreshForAccess(token) {
 }
 
 function storeTokens(data) {
+  console.log("d.stored", data);
   localStorage.setItem(REFRESH_TOKEN, data.refresh_token);
   return data.access_token;
 }
