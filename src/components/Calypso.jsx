@@ -46,7 +46,10 @@ export default function Calypso() {
 
   function AccountDataIsLoaded() {
     if (typeof accountData !== "undefined") {
-      return accountData[0].status === "Success";
+      return (
+        accountData[0].status === "Success" ||
+        (refresh_token && accountData[0].status === "NotAsked")
+      );
     }
     return false;
   }

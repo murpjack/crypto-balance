@@ -37,7 +37,8 @@ export function getAllRates() {
 export function getAccount(access_token, rates) {
   return getAccountData(access_token)
     .map(getSelectedAssets)
-    .map(assets => setAccountData(assets, rates));
+    .map(assets => setAccountData(assets, rates))
+    .map(assets => [...assets].sort(alphabetiseAssets));
 }
 
 function getSelectedAssets(assets) {
@@ -69,6 +70,20 @@ function setAccountData(accountData, rates) {
     };
     return asset;
   });
+}
+
+function alphabetiseAssets(a, b) {
+  // Use toUpperCase() to ignore character casing
+  const assetA = a.code.toUpperCase();
+  const assetB = b.code.toUpperCase();
+
+  let comparison = 0;
+  if (assetA > assetB) {
+    comparison = 1;
+  } else if (assetA < assetB) {
+    comparison = -1;
+  }
+  return comparison;
 }
 
 function getDecimalValue(amount) {
