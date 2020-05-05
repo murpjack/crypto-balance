@@ -8,7 +8,6 @@
     "default_icon": "images/logo-favicon-tablet.png"
   },
   "permissions": [
-    "activeTab",
     "storage",
     "identity",
     "tabs",

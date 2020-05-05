@@ -1,23 +1,29 @@
 import { useReducer } from "react";
 import { createContainer } from "react-tracked";
 import selectedAssets from "./constants/selected";
-import getCurrencySymbol from "./libs/getCurrencySymbol";
 
-import { ASSETS_FETCH_SUCCESS, LOGIN_USER } from "./actions";
+import { REFRESH_TOKEN } from "./constants/login";
+import { ACCOUNT_LOADED, RATES_LOADED, REFRESH_TOKEN_REMOVED } from "./actions";
+
+import getImageName from "./libs/getImageName";
+import getFullName from "./libs/getFullName";
 
 export function reducer(state = initialState, { type, payload }) {
   switch (type) {
-    case ASSETS_FETCH_SUCCESS:
+    case RATES_LOADED:
       return {
         ...state,
-        accounts: payload.accounts,
-        rates: payload.rates,
-        loadedAssets: true
+        rates: payload.rates
       };
-    case LOGIN_USER:
+    case ACCOUNT_LOADED:
       return {
         ...state,
-        loggedIn: payload.loggedIn
+        accountData: payload.account
+      };
+    case REFRESH_TOKEN_REMOVED:
+      return {
+        ...state,
+        refresh_token: null
       };
     default:
       return state;
@@ -25,23 +31,22 @@ export function reducer(state = initialState, { type, payload }) {
 }
 
 export const initialState = {
-  selectedAssets: selectedAssets,
-  currencySymbol: getCurrencySymbol("GBP"),
-  loggedIn: false,
-  accounts: setData(selectedAssets),
+  refresh_token: localStorage.getItem(REFRESH_TOKEN)
+    ? localStorage.getItem(REFRESH_TOKEN)
+    : null,
   rates: setData(selectedAssets),
-  loadedAssets: false
+  accountData: setData(selectedAssets)
 };
 
 function setData(cryptoArray) {
-  return cryptoArray
-    .map(r => ({
-      [r]: {
-        status: "NotAsked",
-        content: "Loading Cryptos"
-      }
-    }))
-    .reduce((acc, v) => Object.assign(acc, v), {});
+  return cryptoArray.map(rate => ({
+    status: "NotAsked",
+    code: rate,
+    value: "££",
+    name: getFullName(rate),
+    imageName: getImageName(rate)
+  }));
+  // .reduce((acc, v) => Object.assign(acc, v), {});
 }
 
 const useValue = () => useReducer(reducer, initialState);

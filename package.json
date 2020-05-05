@@ -49,7 +49,6 @@
     "fluture": "^11.0.3",
     "html-webpack-plugin": "^3.2.0",
     "jest": "^24.9.0",
-    "minimist": "^1.2.2",
     "node-fetch": "^2.6.0",
     "node-sass": "^4.12.0",
     "prettier": "^1.18.2",
@@ -69,6 +68,7 @@
   },
   "devDependencies": {
     "axios": "^0.19.2",
-    "babel-eslint": "^10.0.3"
+    "babel-eslint": "^10.0.3",
+    "minimist": ">=1.2.3"
   }
 }

@@ -1,12 +1,9 @@
 import Future from "fluture/index.js";
 
 import selectedAssets from "../constants/selected";
-import api from "../constants/api";
-
-import { getF, postF } from "../libs/requestsF";
-
-import getDecimalValue from "../libs/getDecimalValue";
-import { TEMPORARY_CODE } from "../constants/login";
+import { getAccountData, getRateData } from "../constants/api";
+import getImageName from "../libs/getImageName";
+import getFullName from "../libs/getFullName";
 
 export const getRate = rate => {
   const setRateObj = res => (res.errors ? left(res) : right(res));
@@ -16,6 +13,8 @@ export const getRate = rate => {
     return {
       status: "Success",
       code: rate,
+      name: getFullName(rate),
+      imageName: getImageName(rate),
       value: getDecimalValue(amount)
     };
   };
@@ -27,77 +26,7 @@ export const getRate = rate => {
     }
   });
 
-  const url = api.rate(rate);
-
-  return getF(url).map(setRateObj);
-};
-
-export const getAccounts = () => {
-  return exchangeCodeForAccessToken()
-    .chain(data => {
-      const { access_token } = data;
-      const { url, options } = api.accounts;
-      return getF(url, options(access_token));
-    })
-    .map(({ data }) => getSelectedAccounts(data.data))
-    .map(list => list.map(setAccountObj));
-};
-
-function exchangeCodeForAccessToken() {
-  const code = localStorage.getItem(TEMPORARY_CODE);
-  const { url, options } = api.tempCode;
-
-  const token = postF(url(code), options).map(response => {
-    if (response.status === 200) return response.data;
-  });
-
-  return token;
-  //TODO: add setTimeout using expires_in time and refresh_token to stay loggedin
-}
-
-const getSelectedAccounts = accounts => {
-  const filtered = accounts.filter(account => {
-    const { currency } = account;
-    for (let i = 0; i < selectedAssets.length; i++) {
-      const name = selectedAssets[i];
-      if (name === currency.code) return account;
-    }
-  });
-  return filtered;
-};
-
-const setAccountObj = account => {
-  const { currency, balance } = account;
-
-  const { amount } = balance;
-  const { code, name } = currency;
-
-  const value = getDecimalValue(parseFloat(amount));
-  return {
-    status: "Success",
-    code: code,
-    name: name,
-    amount: amount,
-    value: value
-  };
-};
-
-const addCurrentAccountValue = data => {
-  const [accounts, rates] = data;
-  const accountsValues = accounts.map(account => {
-    const accName = account.code;
-    rates.map(rate => {
-      const rateName = rate.code;
-
-      if (accName === rateName) {
-        const a = account;
-        const r = rate;
-        a.value = getDecimalValue(a.amount * r.value);
-      }
-    });
-    return account;
-  });
-  return [accountsValues, rates];
+  return getRateData(rate).map(setRateObj);
 };
 
 export function getAllRates() {
@@ -105,7 +34,61 @@ export function getAllRates() {
   return Future.parallel(selectedAssets.length, ratesList);
 }
 
-export const getRatesAndAccounts = () =>
-  Future.both(getAccounts(), getAllRates()).map(addCurrentAccountValue);
+export function getAccount(access_token, rates) {
+  return getAccountData(access_token)
+    .map(getSelectedAssets)
+    .map(assets => setAccountData(assets, rates))
+    .map(assets => [...assets].sort(alphabetiseAssets));
+}
 
-export default { getAccounts, getRatesAndAccounts, getAllRates };
+function getSelectedAssets(assets) {
+  const accountData = assets.data.data;
+  const filtered = accountData.filter(account => {
+    for (let i = 0; i < selectedAssets.length; i++) {
+      const name = selectedAssets[i];
+      if (name === account.currency.code) return account;
+    }
+  });
+  return filtered;
+}
+
+function setAccountData(accountData, rates) {
+  return accountData.map(account => {
+    const { currency, balance } = account;
+    const { amount } = balance;
+    const { code, name } = currency;
+    const imageName = getImageName(code);
+    const r = rates.filter(rate => code === rate.code)[0];
+    const value = getDecimalValue(amount * r.value);
+    const asset = {
+      status: "Success",
+      code,
+      name,
+      imageName,
+      amount,
+      value
+    };
+    return asset;
+  });
+}
+
+function alphabetiseAssets(a, b) {
+  // Use toUpperCase() to ignore character casing
+  const assetA = a.code.toUpperCase();
+  const assetB = b.code.toUpperCase();
+
+  let comparison = 0;
+  if (assetA > assetB) {
+    comparison = 1;
+  } else if (assetA < assetB) {
+    comparison = -1;
+  }
+  return comparison;
+}
+
+function getDecimalValue(amount) {
+  const roundUpValue = parseFloat(amount).toFixed(2);
+  return roundUpValue;
+}
+
+export default { getAllRates, getAccount };

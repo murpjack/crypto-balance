@@ -1,16 +1,19 @@
 @import "variables";
-@import "signin";
 
 #cExtension {
   font-size: 12px;
   font-family: $font-family;
-  margin: 0;
-  min-height: 300px;
+  margin: 0 0 35px;
+  min-height: 500px;
 }
 
 .assets {
   padding-top: 20px;
-  width: 460px;
+  width: 350px;
+
+  &__content {
+    min-height: 240px;
+  }
 
   &__header {
     text-align: left;
@@ -22,24 +25,33 @@
   }
 }
 
-h1,
 h2,
-h3,
 p {
   margin: 0;
   padding: 0;
 }
 
-// /* Rate style */
-.rate {
+.asset {
   border: 1px solid $color-border-asset;
   box-sizing: border-box;
-  cursor: pointer;
   display: inline-block;
   height: 50px;
   margin: 0;
   position: relative;
   width: 50%;
+
+  // abreviated name, BTC, BCH, XRP...
+  &__code {
+    box-sizing: border-box;
+    color: #000;
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 50px;
+    letter-spacing: 2px;
+    padding: 0 0 0 4px;
+    text-transform: uppercase;
+  }
 
   &__image {
     display: inline-block;
@@ -49,83 +61,84 @@ p {
     width: 30px;
   }
 
-  &__name {
-    display: inline-block;
-    height: 30px;
-    padding: 10px 0;
-    width: 170px;
-  }
-}
-
-.rate__message {
-  line-height: 25px;
-  height: 25px;
-  box-sizing: border-box;
-  position: absolute;
-  text-align: center;
-  bottom: 10px;
-  width: 100%;
-  font-weight: 600;
-  letter-spacing: 2px;
-  font-size: 13px;
-}
-
-.name--bat {
-  padding: 13px 0;
-}
-
-.name--full {
-  font-size: 12px;
-  letter-spacing: 0.5px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.name--short {
-  color: #05668d;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.rate__value {
-  border-radius: 9999px;
-  color: $color-font-primary;
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 600;
-  height: 20px;
-  letter-spacing: 2px;
-  line-height: 22px;
-  padding: 0 10px;
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  text-align: center;
-  transform: translate(0, -50%);
-}
-// Transition to this naming convention
-
-.asset {
   &__numbers {
-    height: 30px;
+    box-sizing: border-box;
+    height: 50px;
     overflow: hidden;
-    margin-right: 5px;
-    max-width: 30%;
-    padding: 10px 0;
+    margin: 0;
+    max-width: 42%;
+    padding: 0;
     position: absolute;
     right: 10px;
     top: 0;
   }
 
   &__value {
-    color: #05668D;
-    font-size: 13px;
+    color: $color-font-primary;
     font-weight: 600;
     letter-spacing: 2px;
-    line-height: 15px;
+    line-height: 50px;
+    padding: 0;
     text-align: right;
   }
+
+  // style only when amount precedes value in component
+  p:nth-last-child(2) {
+    line-height: 15px;
+    padding: 12px 0 0;
+  }
+}
+
+.icon {
+  height: 0.8em;
+  width: 0.8em;
+}
+
+.signin {
+  &__image {
+    display: block;
+    height: 100px;
+    margin: 0 auto;
+    padding-top: 15px;
+    width: 100px;
+  }
+
+  &__button {
+    background-color: #1051F4;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    display: block;
+    font-weight: 600;
+    height: 35px;
+    letter-spacing: 1px;
+    line-height: 37px;
+    margin: 30px auto 40px;
+    text-align: center;
+    text-decoration: none;
+    width: 165px;
+
+    &:hover {
+      color: #ccc;
+    }
+  }
+
+  &__text {
+    letter-spacing: 1px;
+    padding: 20px 0 0;
+    text-align: center;
+  }
+}
+
+.madeby {
+  bottom: 10px;
+  color: $color-font-primary;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin: 0;
+  padding-bottom: 0;
+  position: absolute;
+  text-align: center;
+  width: 100%;
 }

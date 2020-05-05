@@ -6,11 +6,13 @@ const CopyPlugin = require("copy-webpack-plugin");
 const options = {
   mode: "development",
 
-  entry: path.join(__dirname, "src", "index.jsx"),
+  entry: {
+    bundle: path.join(__dirname, "src", "index.jsx")
+  },
 
   output: {
     path: path.join(__dirname, "dist"),
-    filename: "bundle.js"
+    filename: "[name].js"
   },
 
   module: {

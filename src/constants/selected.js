@@ -1,11 +1,11 @@
 export const selectedAssets = [
-  "BTC",
   "BCH",
+  "BTC",
   "DAI",
   "ETC",
   "ETH",
   "LTC",
-  "XRP",
-  "XLM"
+  "XLM",
+  "XRP"
 ];
 export default selectedAssets;

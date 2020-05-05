@@ -10,6 +10,12 @@ export const AUTHORIZATION_CODE = "authorization_code";
 
 export const TEMPORARY_CODE = "TEMPORARY_CODE";
 
+export const REFRESH_TOKEN = "REFRESH_TOKEN";
+
+export const ACCESS_TOKEN = "ACCESS_TOKEN";
+
+export const EXPIRES_IN = "EXPIRES_IN";
+
 export const LOGGED_IN = "L";
 
 export default {
@@ -18,5 +24,7 @@ export default {
   SUCCESS_URI,
   AUTHORIZATION_CODE,
   TEMPORARY_CODE,
-  LOGGED_IN
+  REFRESH_TOKEN,
+  ACCESS_TOKEN,
+  EXPIRES_IN
 };
