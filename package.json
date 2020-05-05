@@ -6,7 +6,7 @@
   },
   "license": "MIT",
   "name": "Calypso",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Follow Bitcoin and friends, without opening anymore tabs in your browser",
   "main": "dist/bundle.js",
   "scripts": {
