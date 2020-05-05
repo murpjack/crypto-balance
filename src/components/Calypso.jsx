@@ -7,7 +7,7 @@ import Asset from "./Asset";
 import { getAccount, getAllRates } from "../services/api";
 import tryLogin from "../services/auth";
 
-import { ratesPayload, accountPayload } from "../actions";
+import { removeRefreshToken, ratesPayload, accountPayload } from "../actions";
 import {
   signinUrl,
   tempCodeForAccess,
@@ -22,7 +22,7 @@ export default function Calypso() {
   useEffect(() => {
     getAllRates()
       .map(ratesPayload)
-      .fork(() => {}, dispatch);
+      .fork(() => removeRefreshToken(dispatch), dispatch);
   }, []);
 
   useEffect(() => {
@@ -32,13 +32,13 @@ export default function Calypso() {
           refreshForAccess(refresh_token)
             .chain(access_token => getAccount(access_token, rates))
             .map(accountPayload)
-            .fork(() => {}, dispatch);
+            .fork(() => removeRefreshToken(dispatch), dispatch);
         } else {
           tryLogin()
             .chain(tempCodeForAccess)
             .chain(access_token => getAccount(access_token, rates))
             .map(accountPayload)
-            .fork(() => {}, dispatch);
+            .fork(() => removeRefreshToken(dispatch), dispatch);
         }
       }
     }
