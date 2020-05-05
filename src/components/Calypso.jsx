@@ -27,17 +27,19 @@ export default function Calypso() {
 
   useEffect(() => {
     if (typeof rates !== "undefined") {
-      if (refresh_token && rates[0].status === "Success") {
-        refreshForAccess(refresh_token)
-          .chain(access_token => getAccount(access_token, rates))
-          .map(accountPayload)
-          .fork(() => {}, dispatch);
-      } else {
-        tryLogin()
-          .chain(tempCodeForAccess)
-          .chain(access_token => getAccount(access_token, rates))
-          .map(accountPayload)
-          .fork(() => {}, dispatch);
+      if (rates[0].status === "Success") {
+        if (refresh_token) {
+          refreshForAccess(refresh_token)
+            .chain(access_token => getAccount(access_token, rates))
+            .map(accountPayload)
+            .fork(() => {}, dispatch);
+        } else {
+          tryLogin()
+            .chain(tempCodeForAccess)
+            .chain(access_token => getAccount(access_token, rates))
+            .map(accountPayload)
+            .fork(() => {}, dispatch);
+        }
       }
     }
   }, [rates]);
@@ -48,7 +50,6 @@ export default function Calypso() {
     }
     return false;
   }
-
   return (
     <div className="assets">
       <div className="assets__content">

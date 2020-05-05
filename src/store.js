@@ -38,7 +38,6 @@ function setData(cryptoArray) {
     status: "NotAsked",
     code: rate,
     value: "££",
-    content: "Loading",
     name: getFullName(rate),
     imageName: getImageName(rate)
   }));
