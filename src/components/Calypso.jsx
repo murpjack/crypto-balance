@@ -22,6 +22,7 @@ export default function Calypso() {
   useEffect(() => {
     getAllRates()
       .map(ratesPayload)
+      // .fork(console.error, console.log);
       .fork(() => removeRefreshToken(dispatch), dispatch);
   }, []);
 
@@ -45,7 +46,11 @@ export default function Calypso() {
   }, [rates]);
 
   function AccountDataIsLoaded() {
-    if (typeof accountData !== "undefined") {
+    if (
+      accountData &&
+      typeof accountData !== "undefined" &&
+      accountData.length > 0
+    ) {
       return (
         accountData[0].status === "Success" ||
         (refresh_token && accountData[0].status === "NotAsked")
@@ -63,20 +68,18 @@ export default function Calypso() {
           ))}
         </div>
       </div>
-      <div className="assets__content">
-        {AccountDataIsLoaded() ? (
-          <>
-            <h2 className="assets__header">Account</h2>
-            <div className="assets__list">
-              {accountData.map((a, idx) => (
-                <Asset key={idx} asset={a} />
-              ))}
-            </div>
-          </>
-        ) : (
-          <SigninContent />
-        )}
-      </div>
+      {AccountDataIsLoaded() ? (
+        <div className="assets__content">
+          <h2 className="assets__header">Account</h2>
+          <div className="assets__list">
+            {accountData.map((a, idx) => (
+              <Asset key={idx} asset={a} />
+            ))}
+          </div>
+        </div>
+      ) : (
+        <SigninContent />
+      )}
       <p className="madeby">
         <span className="icon icon--code">{"</>"}</span> by Jack Murphy
       </p>
@@ -85,7 +88,7 @@ export default function Calypso() {
 }
 
 const SigninContent = () => (
-  <>
+  <div className="assets__content signin">
     <img className="signin__image" src="./images/logo-chrome-rotated.png" />
     <p className="signin__text">View your cryptocurrency portfolio</p>
     <a
@@ -96,5 +99,5 @@ const SigninContent = () => (
     >
       Sign in with Coinbase
     </a>
-  </>
+  </div>
 );

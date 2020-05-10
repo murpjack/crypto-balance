@@ -2,11 +2,8 @@ import { useReducer } from "react";
 import { createContainer } from "react-tracked";
 import selectedAssets from "./constants/selected";
 
-import { REFRESH_TOKEN } from "./constants/login";
+import { REFRESH_TOKEN, ACCOUNT_CODES } from "./constants/login";
 import { ACCOUNT_LOADED, RATES_LOADED, REFRESH_TOKEN_REMOVED } from "./actions";
-
-import getImageName from "./libs/getImageName";
-import getFullName from "./libs/getFullName";
 
 export function reducer(state = initialState, { type, payload }) {
   switch (type) {
@@ -35,7 +32,10 @@ export const initialState = {
     ? localStorage.getItem(REFRESH_TOKEN)
     : null,
   rates: setData(selectedAssets),
-  accountData: setData(selectedAssets)
+  // ACCOUNT_CODES is an array of codes used to create a smooth on loading account assets UX
+  accountData: localStorage.getItem(ACCOUNT_CODES)
+    ? localStorage.getItem(ACCOUNT_CODES)
+    : null
 };
 
 function setData(cryptoArray) {
@@ -43,8 +43,7 @@ function setData(cryptoArray) {
     status: "NotAsked",
     code: rate,
     value: "££",
-    name: getFullName(rate),
-    imageName: getImageName(rate)
+    imageName: rate.toLowerCase()
   }));
   // .reduce((acc, v) => Object.assign(acc, v), {});
 }

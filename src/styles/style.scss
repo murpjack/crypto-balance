@@ -12,7 +12,12 @@
   width: 350px;
 
   &__content {
-    min-height: 240px;
+    height: 240px;
+    overflow: auto;
+  }
+
+  .signin {
+    overflow: unset;
   }
 
   &__header {
@@ -39,7 +44,6 @@ p {
   margin: 0;
   position: relative;
   width: 50%;
-
   // abreviated name, BTC, BCH, XRP...
   &__code {
     box-sizing: border-box;
@@ -81,7 +85,6 @@ p {
     padding: 0;
     text-align: right;
   }
-
   // style only when amount precedes value in component
   p:nth-last-child(2) {
     line-height: 15px;
