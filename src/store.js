@@ -34,7 +34,7 @@ export const initialState = {
   rates: setData(selectedAssets),
   // ACCOUNT_CODES is an array of codes used to create a smooth on loading account assets UX
   accountData: localStorage.getItem(ACCOUNT_CODES)
-    ? localStorage.getItem(ACCOUNT_CODES)
+    ? setData(JSON.parse(localStorage.getItem(ACCOUNT_CODES)))
     : null
 };
 

@@ -12,9 +12,9 @@ export const accountPayload = account => ({
   payload: { account }
 });
 
-export const ratesPayload = rates => ({
+export const ratesPayload = data => ({
   type: RATES_LOADED,
-  payload: { rates }
+  payload: { rates: data.rates }
 });
 
 export function removeRefreshToken(dispatch) {
