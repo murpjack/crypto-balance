@@ -69,9 +69,17 @@ export function getAccountData(access_token) {
   return getF(url, options);
 }
 
-export function getRateData(rate) {
-  return getF(`${baseUrl}/v2/prices/${rate}-GBP/spot`);
+// export function getRateData(rate) {
+//   return getF(`${baseUrl}/v2/prices/${rate}-GBP/spot`);
+// }
+
+export function getRateData() {
+  // returns object of {code: exchange-rate}
+  return getF(`${baseUrl}/v2/exchange-rates?currency=GBP`);
+  // .value(res =>    console.log("res", res.data.data.rates)
+  // );
 }
+getRateData();
 
 export default {
   signinUrl,

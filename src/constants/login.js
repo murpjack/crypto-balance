@@ -12,11 +12,9 @@ export const TEMPORARY_CODE = "TEMPORARY_CODE";
 
 export const REFRESH_TOKEN = "REFRESH_TOKEN";
 
+export const ACCOUNT_CODES = "ACCOUNT_CODES";
+
 export const ACCESS_TOKEN = "ACCESS_TOKEN";
-
-export const EXPIRES_IN = "EXPIRES_IN";
-
-export const LOGGED_IN = "L";
 
 export default {
   CLIENT_ID,
@@ -25,6 +23,6 @@ export default {
   AUTHORIZATION_CODE,
   TEMPORARY_CODE,
   REFRESH_TOKEN,
-  ACCESS_TOKEN,
-  EXPIRES_IN
+  ACCOUNT_CODES,
+  ACCESS_TOKEN
 };

@@ -5,20 +5,22 @@ export const ACCOUNT_LOADED = "ACCOUNT_LOADED";
 export const ASSETS_UNLOADED = "ASSETS_UNLOADED";
 export const REFRESH_TOKEN_REMOVED = "REFRESH_TOKEN_REMOVED";
 
-import { REFRESH_TOKEN } from "./constants/login";
+import { REFRESH_TOKEN, ACCOUNT_CODES } from "./constants/login";
 
 export const accountPayload = account => ({
   type: ACCOUNT_LOADED,
   payload: { account }
 });
 
-export const ratesPayload = rates => ({
+export const ratesPayload = data => ({
   type: RATES_LOADED,
-  payload: { rates }
+  payload: { rates: data.rates }
 });
 
 export function removeRefreshToken(dispatch) {
   localStorage.removeItem(REFRESH_TOKEN);
+  // ACCOUNT_CODES is an array of codes used to create a smooth on loading account assets UX
+  localStorage.removeItem(ACCOUNT_CODES);
   dispatch({ type: REFRESH_TOKEN_REMOVED });
 }
 

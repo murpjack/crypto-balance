@@ -5,9 +5,8 @@ export default function Asset({ asset }) {
   return (
     <div className="asset">
       <img
-        src={`./images/32/color/${asset.imageName}.png`}
+        src={`./images/color/${asset.imageName}.svg`}
         className="asset__image"
-        title={asset.name}
       />
       <div className="asset__code">{asset.code}</div>
       <div className="asset__numbers">
