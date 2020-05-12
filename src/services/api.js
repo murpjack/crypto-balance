@@ -33,31 +33,6 @@ export function getAllRates() {
   return getRateData().map(res => (res.errors ? left(res) : right(res)));
 }
 
-// export const getRate = rate => {
-//   const left = res => ({
-//     status: "Failure",
-//     code: rate,
-//     error: `Oh no Jimmy, that looks like a [resource ${res.errors[0].id}]!`
-//   });
-//
-//   const right = ({ data }) => {
-//     const { amount } = data.data;
-//     return {
-//       status: "Success",
-//       code: rate,
-//       imageName: rate.toLowerCase(),
-//       value: getDecimalValue(amount)
-//     };
-//   };
-//
-//   return getRateData(rate).map(res => (res.errors ? left(res) : right(res)));
-// };
-//
-// export function getAllRates() {
-//   const ratesList = selectedAssets.map(getRate);
-//   return Future.parallel(selectedAssets.length, ratesList);
-// }
-
 export function getAccount(access_token, rates) {
   return getAccountData(access_token)
     .map(getSelectedAssets)
