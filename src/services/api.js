@@ -35,25 +35,34 @@ export function getAllRates() {
 
 export function getAccount(access_token, rates) {
   return getAccountData(access_token)
-    .map(getSelectedAssets)
+  .map(e => {console.log("accounts", e); return e})
+  .map(getSelectedAssets)
     .map(assets => setAccountData(assets, rates))
     .map(assets => [...assets].sort(alphabetiseAssets));
 }
 
 function getSelectedAssets(assets) {
   const accountData = assets.data.data;
+  console.log(1, selectedAssets)
+
   const filtered = accountData.filter(account => {
+    console.log(1, account)
     for (let i = 0; i < selectedAssets.length; i++) {
       const name = selectedAssets[i];
+    console.log(2, name,  account.currency)
+      
       const balance = account.balance.amount;
       // Check that currency is in use
-      if (name === account.currency.code && parseFloat(balance) !== 0)
+      console.log("B",balance, parseFloat(balance))
+      if (name === account.currency && parseFloat(balance) != 0) {
+       console.log("filtered", account)
         return account;
+      }
     }
   });
   // This is an array of cryptos which exist in account with no additional data.
   // It is used to reduce jumpiness when logged in but call has not loaded account rates yet
-  const cryptoArray = filtered.map(account => account.currency.code);
+  const cryptoArray = filtered.map(account => account.currency);
   localStorage.setItem(ACCOUNT_CODES, JSON.stringify(cryptoArray));
   return filtered;
 }
@@ -62,13 +71,12 @@ function setAccountData(accountData, rates) {
   const data = accountData.map(account => {
     const { currency, balance } = account;
     const { amount } = balance;
-    const { code } = currency;
-    const imageName = code.toLowerCase();
-    const r = rates.filter(rate => code === rate.code)[0];
+    const imageName = currency.toLowerCase();
+    const r = rates.filter(rate => currency === rate.code)[0];
     const value = getDecimalValue(amount * r.value);
     const asset = {
       status: "Success",
-      code,
+      code: currency,
       imageName,
       amount,
       value
