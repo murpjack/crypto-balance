@@ -29,12 +29,12 @@ export function reducer(state = initialState, { type, payload }) {
 const accountCodes = localStorage.getItem(ACCOUNT_CODES);
 
 export const initialState = {
-  refresh_token: localStorage.getItem(REFRESH_TOKEN) ?
-    localStorage.getItem(REFRESH_TOKEN) : null,
+  refresh_token: localStorage.getItem(REFRESH_TOKEN)
+    ? localStorage.getItem(REFRESH_TOKEN)
+    : null,
   rates: setRateData(selectedAssets),
   // ACCOUNT_CODES is an array of codes used to create a smooth on loading account assets UX
-  accountData: accountCodes ?
-    setAccountData(JSON.parse(accountCodes)) : null
+  accountData: accountCodes ? setAccountData(JSON.parse(accountCodes)) : null
 };
 
 function setRateData(cryptoArray) {

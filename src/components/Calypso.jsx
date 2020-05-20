@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useTrackedState } from "../store";
-import Future from "fluture/index.js";
+import { Future } from "fluture/index.js";
 
 import Asset from "./Asset";
 
@@ -22,7 +22,6 @@ export default function Calypso() {
   useEffect(() => {
     getAllRates()
       .map(ratesPayload)
-      // .fork(console.error, console.log);
       .fork(() => removeRefreshToken(dispatch), dispatch);
   }, []);
 
@@ -45,7 +44,7 @@ export default function Calypso() {
     }
   }, [rates]);
 
-  function AccountDataIsLoaded() {
+  function accountDataIsLoaded() {
     if (
       accountData &&
       typeof accountData !== "undefined" &&
@@ -60,63 +59,62 @@ export default function Calypso() {
   }
 
   // get total balance when there is an account with
-  const accountBalance = AccountDataIsLoaded() ? accountData.reduce((tot, curr) => tot += parseFloat(curr.value), 0).toFixed(2) : 0;
+  const accountBalance = accountDataIsLoaded()
+    ? accountData
+        .reduce((tot, curr) => (tot += parseFloat(curr.value)), 0)
+        .toFixed(2)
+    : 0;
 
-  console.log(accountBalance);
-  return ( <
-    div className = "assets" >
-    <
-    div className = "assets__content" >
-    <
-    h2 className = "assets__header" > Current rates < /h2> <
-    div className = "assets__list" > {
-      rates.map((r, idx) => ( <
-        Asset key = { idx } asset = { r }
-        />
-      ))
-    } <
-    /div> < /
-    div > {
-      AccountDataIsLoaded() ? ( <
-        >
-        <
-        div className = "assets__content" >
-        <
-        h2 className = "assets__header" > Account < /h2> <
-        div className = "assets__list" > {
-          accountData.map((a, idx) => ( <
-            Asset key = { idx } asset = { a }
-            />
-          ))
-        } <
-        /div> < /
-        div > <
-        div className = "assets__header assets__header--total" > { "Account balance ≈ £" + accountBalance } < /div> < / >
-      ) : ( <
-        SigninContent / >
-      )
-    } <
-    a className = "madeby"
-    href = { "https://github.com/murpjack" } target = "_blank"
-    rel = "noopener noreferrer" >
-    <
-    span className = "icon icon--code" > { "</>" } < /span> by Jack Murphy < /
-    a > <
-    /div>
+  return (
+    <div className="assets">
+      <div className="assets__content">
+        <h2 className="assets__header"> Current rates </h2>
+        <div className="assets__list">
+          {rates.map((r, idx) => (
+            <Asset key={idx} asset={r} />
+          ))}
+        </div>
+      </div>
+      {accountDataIsLoaded() ? (
+        <>
+          <div className="assets__content">
+            <h2 className="assets__header"> Account </h2>
+            <div className="assets__list">
+              {accountData.map((a, idx) => (
+                <Asset key={idx} asset={a} />
+              ))}
+            </div>
+          </div>
+          <div className="assets__header assets__header--total">
+            {"Account balance ≈ £" + accountBalance}
+          </div>
+        </>
+      ) : (
+        <SigninContent />
+      )}
+      <a
+        className="madeby"
+        href={"https://github.com/murpjack"}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span className="icon icon--code"> {"</>"} </span> by Jack Murphy
+      </a>
+    </div>
   );
 }
 
-const SigninContent = () => ( <
-  div className = "assets__content signin" >
-  <
-  img className = "signin__image"
-  src = "./images/logo-chrome-rotated.png" / >
-  <
-  p className = "signin__text" > View your cryptocurrency portfolio < /p> <
-  a className = "signin__button"
-  href = { signinUrl } target = "_blank"
-  rel = "noopener noreferrer" >
-  Sign in with Coinbase <
-  /a> < /
-  div >
+const SigninContent = () => (
+  <div className="assets__content signin">
+    <img className="signin__image" src="./images/logo-chrome-rotated.png" />
+    <p className="signin__text"> View your cryptocurrency portfolio </p>
+    <a
+      className="signin__button"
+      href={signinUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Sign in with Coinbase
+    </a>
+  </div>
 );

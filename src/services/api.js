@@ -35,27 +35,20 @@ export function getAllRates() {
 
 export function getAccount(access_token, rates) {
   return getAccountData(access_token)
-    .map(e => { console.log("accounts", e); return e })
     .map(getSelectedAssets)
-    .map(assets => setAccountData(assets, rates))
-  // .map(assets => [...assets].sort(alphabetiseAssets));
+    .map(assets => setAccountData(assets, rates));
 }
 
 function getSelectedAssets(assets) {
   const accountData = assets.data.data;
-  // console.log(1, selectedAssets)
 
   const filtered = accountData.filter(account => {
-    // console.log(1, account)
     for (let i = 0; i < selectedAssets.length; i++) {
       const name = selectedAssets[i];
-      // console.log(2, name,  account.currency)
 
       const balance = account.balance.amount;
       // Check that currency is in use
-      // console.log("B",balance, parseFloat(balance))
       if (name === account.balance.currency && parseFloat(balance) != 0) {
-        // console.log("filtered", account)
         return account;
       }
     }
@@ -71,7 +64,7 @@ function getSelectedAssets(assets) {
 
 function setAccountData(accountData, rates) {
   const data = accountData.map(account => {
-    const { currency, balance } = account;
+    const { balance } = account;
     const { amount } = balance;
     const imageName = balance.currency.toLowerCase();
     const r = rates.filter(rate => balance.currency === rate.code)[0];
