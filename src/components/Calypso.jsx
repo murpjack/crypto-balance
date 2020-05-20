@@ -58,46 +58,65 @@ export default function Calypso() {
     }
     return false;
   }
-  return (
-    <div className="assets">
-      <div className="assets__content">
-        <h2 className="assets__header">Current rates</h2>
-        <div className="assets__list">
-          {rates.map((r, idx) => (
-            <Asset key={idx} asset={r} />
-          ))}
-        </div>
-      </div>
-      {AccountDataIsLoaded() ? (
-        <div className="assets__content">
-          <h2 className="assets__header">Account</h2>
-          <div className="assets__list">
-            {accountData.map((a, idx) => (
-              <Asset key={idx} asset={a} />
-            ))}
-          </div>
-        </div>
-      ) : (
-        <SigninContent />
-      )}
-      <p className="madeby">
-        <span className="icon icon--code">{"</>"}</span> by Jack Murphy
-      </p>
-    </div>
+
+  // get total balance when there is an account with
+  const accountBalance = AccountDataIsLoaded() ? accountData.reduce((tot, curr) => tot += parseFloat(curr.value), 0).toFixed(2) : 0;
+
+  console.log(accountBalance);
+  return ( <
+    div className = "assets" >
+    <
+    div className = "assets__content" >
+    <
+    h2 className = "assets__header" > Current rates < /h2> <
+    div className = "assets__list" > {
+      rates.map((r, idx) => ( <
+        Asset key = { idx } asset = { r }
+        />
+      ))
+    } <
+    /div> < /
+    div > {
+      AccountDataIsLoaded() ? ( <
+        >
+        <
+        div className = "assets__content" >
+        <
+        h2 className = "assets__header" > Account < /h2> <
+        div className = "assets__list" > {
+          accountData.map((a, idx) => ( <
+            Asset key = { idx } asset = { a }
+            />
+          ))
+        } <
+        /div> < /
+        div > <
+        div className = "assets__header assets__header--total" > { "Account balance ≈ £" + accountBalance } < /div> < / >
+      ) : ( <
+        SigninContent / >
+      )
+    } <
+    a className = "madeby"
+    href = { "https://github.com/murpjack" } target = "_blank"
+    rel = "noopener noreferrer" >
+    <
+    span className = "icon icon--code" > { "</>" } < /span> by Jack Murphy < /
+    a > <
+    /div>
   );
 }
 
-const SigninContent = () => (
-  <div className="assets__content signin">
-    <img className="signin__image" src="./images/logo-chrome-rotated.png" />
-    <p className="signin__text">View your cryptocurrency portfolio</p>
-    <a
-      className="signin__button"
-      href={signinUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Sign in with Coinbase
-    </a>
-  </div>
+const SigninContent = () => ( <
+  div className = "assets__content signin" >
+  <
+  img className = "signin__image"
+  src = "./images/logo-chrome-rotated.png" / >
+  <
+  p className = "signin__text" > View your cryptocurrency portfolio < /p> <
+  a className = "signin__button"
+  href = { signinUrl } target = "_blank"
+  rel = "noopener noreferrer" >
+  Sign in with Coinbase <
+  /a> < /
+  div >
 );

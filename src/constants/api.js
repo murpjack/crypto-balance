@@ -61,8 +61,9 @@ function storeTokens(data) {
 export function getAccountData(access_token) {
   const url = `${baseUrl}/v2/accounts/`;
   const options = {
+    method: "GET",
     headers: {
-      method: "GET",
+      "CB-Version": "2019-12-12",
       Authorization: "Bearer " + access_token
     }
   };

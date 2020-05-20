@@ -16,12 +16,12 @@ export function getAllRates() {
     // so we map through an array of rate[keys] --> setRateData
     const ratesArray = selectedAssets.map(code => {
       // The value returned is asset value per 1GBP, so we divide 1 by value to get to invert value
-      const value = 1 / parseFloat(rates[code]);
+      const value = parseFloat(1 / rates[code]);
       return {
         status: "Success",
         code,
         imageName: code.toLowerCase(),
-        value: getDecimalValue(value)
+        value: parseFloat(value).toFixed(2)
       };
     });
     return {
@@ -35,48 +35,50 @@ export function getAllRates() {
 
 export function getAccount(access_token, rates) {
   return getAccountData(access_token)
-  .map(e => {console.log("accounts", e); return e})
-  .map(getSelectedAssets)
+    .map(e => { console.log("accounts", e); return e })
+    .map(getSelectedAssets)
     .map(assets => setAccountData(assets, rates))
-    .map(assets => [...assets].sort(alphabetiseAssets));
+  // .map(assets => [...assets].sort(alphabetiseAssets));
 }
 
 function getSelectedAssets(assets) {
   const accountData = assets.data.data;
-  console.log(1, selectedAssets)
+  // console.log(1, selectedAssets)
 
   const filtered = accountData.filter(account => {
-    console.log(1, account)
+    // console.log(1, account)
     for (let i = 0; i < selectedAssets.length; i++) {
       const name = selectedAssets[i];
-    console.log(2, name,  account.currency)
-      
+      // console.log(2, name,  account.currency)
+
       const balance = account.balance.amount;
       // Check that currency is in use
-      console.log("B",balance, parseFloat(balance))
-      if (name === account.currency && parseFloat(balance) != 0) {
-       console.log("filtered", account)
+      // console.log("B",balance, parseFloat(balance))
+      if (name === account.balance.currency && parseFloat(balance) != 0) {
+        // console.log("filtered", account)
         return account;
       }
     }
   });
+  const alphabetised = [...filtered].sort(alphabetiseAssets);
   // This is an array of cryptos which exist in account with no additional data.
   // It is used to reduce jumpiness when logged in but call has not loaded account rates yet
-  const cryptoArray = filtered.map(account => account.currency);
+  const cryptoArray = alphabetised.map(account => account.balance.currency);
   localStorage.setItem(ACCOUNT_CODES, JSON.stringify(cryptoArray));
-  return filtered;
+
+  return alphabetised;
 }
 
 function setAccountData(accountData, rates) {
   const data = accountData.map(account => {
     const { currency, balance } = account;
     const { amount } = balance;
-    const imageName = currency.toLowerCase();
-    const r = rates.filter(rate => currency === rate.code)[0];
-    const value = getDecimalValue(amount * r.value);
+    const imageName = balance.currency.toLowerCase();
+    const r = rates.filter(rate => balance.currency === rate.code)[0];
+    const value = parseFloat(amount * r.value).toFixed(2);
     const asset = {
       status: "Success",
-      code: currency,
+      code: balance.currency,
       imageName,
       amount,
       value
@@ -88,8 +90,8 @@ function setAccountData(accountData, rates) {
 
 function alphabetiseAssets(a, b) {
   // Use toUpperCase() to ignore character casing
-  const assetA = a.code.toUpperCase();
-  const assetB = b.code.toUpperCase();
+  const assetA = a.balance.currency;
+  const assetB = b.balance.currency;
 
   let comparison = 0;
   if (assetA > assetB) {
@@ -98,11 +100,6 @@ function alphabetiseAssets(a, b) {
     comparison = -1;
   }
   return comparison;
-}
-
-function getDecimalValue(amount) {
-  const roundUpValue = parseFloat(amount).toFixed(2);
-  return roundUpValue;
 }
 
 export default { getAllRates, getAccount };

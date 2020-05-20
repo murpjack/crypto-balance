@@ -16,8 +16,7 @@ const options = {
   },
 
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.(s*)css$/,
         use: ["style-loader", "css-loader", "sass-loader"]
       },
@@ -47,8 +46,7 @@ const options = {
       pageHeader: "Crypto rates",
       hash: true
     }),
-    new CopyPlugin([
-      {
+    new CopyPlugin([{
         from: path.join(__dirname, "src", "fonts"),
         to: path.join(__dirname, "dist", "fonts")
       },

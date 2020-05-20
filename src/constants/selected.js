@@ -7,6 +7,7 @@ export const selectedAssets = [
   "EOS",
   "ETC",
   "ETH",
+  // "GBP",
   "KNC",
   "LINK",
   "LTC",

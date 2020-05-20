@@ -26,23 +26,33 @@ export function reducer(state = initialState, { type, payload }) {
       return state;
   }
 }
+const accountCodes = localStorage.getItem(ACCOUNT_CODES);
 
 export const initialState = {
-  refresh_token: localStorage.getItem(REFRESH_TOKEN)
-    ? localStorage.getItem(REFRESH_TOKEN)
-    : null,
-  rates: setData(selectedAssets),
+  refresh_token: localStorage.getItem(REFRESH_TOKEN) ?
+    localStorage.getItem(REFRESH_TOKEN) : null,
+  rates: setRateData(selectedAssets),
   // ACCOUNT_CODES is an array of codes used to create a smooth on loading account assets UX
-  accountData: localStorage.getItem(ACCOUNT_CODES)
-    ? setData(JSON.parse(localStorage.getItem(ACCOUNT_CODES)))
-    : null
+  accountData: accountCodes ?
+    setAccountData(JSON.parse(accountCodes)) : null
 };
 
-function setData(cryptoArray) {
+function setRateData(cryptoArray) {
   return cryptoArray.map(rate => ({
     status: "NotAsked",
     code: rate,
-    value: "££",
+    value: "0.00",
+    imageName: rate.toLowerCase()
+  }));
+  // .reduce((acc, v) => Object.assign(acc, v), {});
+}
+
+function setAccountData(cryptoArray) {
+  return cryptoArray.map(rate => ({
+    status: "NotAsked",
+    code: rate,
+    amount: "0.000000",
+    value: "0.00",
     imageName: rate.toLowerCase()
   }));
   // .reduce((acc, v) => Object.assign(acc, v), {});
