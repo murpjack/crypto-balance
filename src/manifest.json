@@ -14,7 +14,7 @@
   },
   "icons": {
     "16": "images/chrome-extension-icons/icon-16.png",
-    "48": "images/chrome-extension-icons/icon-32.png",
+    "32": "images/chrome-extension-icons/icon-32.png",
     "48": "images/chrome-extension-icons/icon-48.png",
     "128": "images/chrome-extension-icons/icon-128.png"
   },
